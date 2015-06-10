@@ -95,8 +95,15 @@ public class Product {
     }
 
     public Product addImage(ProductImage image) {
-        this.imageList.add(image);
         image.setProduct(this);
+        this.imageList.add(image);
+        return this;
+    }
+
+    public Product createImage(String imageUrl, int order) {
+        ProductImage image = new ProductImage(imageUrl, order);
+        image.setProduct(this);
+        this.imageList.add(image);
         return this;
     }
 }

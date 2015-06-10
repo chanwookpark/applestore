@@ -28,6 +28,11 @@ public class ProductImage {
         this.imageOrder = 0;
     }
 
+    public ProductImage(String imageUrl, int order) {
+        this.imageUrl = imageUrl;
+        this.imageOrder = order;
+    }
+
     @ManyToOne
     @JoinColumn(name = "productId")
     @JsonIgnore // TODO 제거
