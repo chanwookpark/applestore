@@ -1,12 +1,13 @@
 package applestore.api.catalog;
 
-import applestore.api.catalog.model.solr.CategoryProduct;
-import applestore.api.catalog.repository.solr.CategoryProductSolrRepository;
 import applestore.api.AppleStoreApiApp;
 import applestore.api.catalog.model.jpa.DisplayCategory;
 import applestore.api.catalog.model.jpa.Product;
+import applestore.api.catalog.model.jpa.ProductImage;
+import applestore.api.catalog.model.solr.CategoryProduct;
 import applestore.api.catalog.repository.jpa.DisplayCategoryJpaRepository;
 import applestore.api.catalog.repository.jpa.ProductJpaRepository;
+import applestore.api.catalog.repository.solr.CategoryProductSolrRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import static org.junit.Assert.assertThat;
 @SpringApplicationConfiguration(classes = AppleStoreApiApp.class)
 //@Transactional
 public class CatalogServiceData {
+
+    public static final String MACBOOK_IMAGE = "http://store.storeimages.cdn-apple.com/4598/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/select/macbook-select-gold-201501";
 
     @Autowired
     ProductJpaRepository pr;
@@ -46,12 +49,13 @@ public class CatalogServiceData {
         DisplayCategory ds3 = new DisplayCategory("watch");
         DisplayCategory ds4 = new DisplayCategory("pad");
 
-        ds1.addProduct(new Product("M101", "MacBook Pro 2010 early"));
-        ds1.addProduct(new Product("M102", "MacBook Pro 2010 mid"));
-        ds1.addProduct(new Product("M103", "MacBook Pro 2011 mid"));
-        ds1.addProduct(new Product("M104", "MacBook Pro 2011 late"));
-        ds1.addProduct(new Product("M105", "MacBook Pro 2012 mid"));
-        ds1.addProduct(new Product("M106", "MacBook Pro 2013 early"));
+        // 우선 한 이미지로~~
+        ds1.addProduct(new Product("M101", "MacBook Pro 2010 early").addImage(new ProductImage(MACBOOK_IMAGE)));
+        ds1.addProduct(new Product("M102", "MacBook Pro 2010 mid").addImage(new ProductImage(MACBOOK_IMAGE)));
+        ds1.addProduct(new Product("M103", "MacBook Pro 2011 mid").addImage(new ProductImage(MACBOOK_IMAGE)));
+        ds1.addProduct(new Product("M104", "MacBook Pro 2011 late").addImage(new ProductImage(MACBOOK_IMAGE)));
+        ds1.addProduct(new Product("M105", "MacBook Pro 2012 mid").addImage(new ProductImage(MACBOOK_IMAGE)));
+        ds1.addProduct(new Product("M106", "MacBook Pro 2013 early").addImage(new ProductImage(MACBOOK_IMAGE)));
         cr.saveAndFlush(ds1);
 
         ds2.addProduct(new Product("P101", "iPhone 3"));

@@ -2,9 +2,9 @@ package applestore.api.catalog.model;
 
 import applestore.api.catalog.model.jpa.DisplayCategory;
 import applestore.api.catalog.model.jpa.Product;
+import org.springframework.data.domain.Page;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author chanwook
@@ -13,9 +13,9 @@ public class CategoryProductList implements Serializable {
     private long categoryId;
     private String categoryName;
 
-    private final List<Product> productList;
+    private final Page<Product> productList;
 
-    public CategoryProductList(DisplayCategory category, List<Product> productList) {
+    public CategoryProductList(DisplayCategory category, Page<Product> productList) {
         //TODO model converting
         this.categoryId = category.getCategoryId();
         this.categoryName = category.getCategoryName();
@@ -30,7 +30,7 @@ public class CategoryProductList implements Serializable {
         return categoryName;
     }
 
-    public List<Product> getProductList() {
+    public Page<Product> getProductList() {
         return productList;
     }
 }

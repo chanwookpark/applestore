@@ -1,8 +1,15 @@
 package applestore.api.catalog.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chanwook on 2015. 6. 9..
@@ -21,6 +28,9 @@ public class Product {
     //TODO 모델 분리요..
     @JsonIgnore
     private DisplayCategory displayCategory;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductImage> imageList = new ArrayList<ProductImage>();
 
     public Product() {
     }
@@ -52,5 +62,28 @@ public class Product {
 
     public void setDisplayCategory(DisplayCategory displayCategory) {
         this.displayCategory = displayCategory;
+    }
+
+    public List<ProductImage> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<ProductImage> imageList) {
+        this.imageList = imageList;
+    }
+
+    public static Specification hasCategory(final DisplayCategory category) {
+        return new Specification() {
+            @Override
+            public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
+                return cb.equal(root.join("displayCategory").get("categoryId"), category.getCategoryId());
+            }
+        };
+    }
+
+    public Product addImage(ProductImage image) {
+        this.imageList.add(image);
+        image.setProduct(this);
+        return this;
     }
 }
