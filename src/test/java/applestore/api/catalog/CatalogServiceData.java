@@ -22,7 +22,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AppleStoreApiApp.class)
 //@Transactional
-public class CatalogServiceTests {
+public class CatalogServiceData {
 
     @Autowired
     ProductJpaRepository pr;
@@ -35,8 +35,8 @@ public class CatalogServiceTests {
 
     @Test
     public void createData() throws Exception {
-        cr.deleteAll();
         pr.deleteAll();
+        cr.deleteAll();
 
         cr.flush();
         pr.flush();
@@ -80,7 +80,7 @@ public class CatalogServiceTests {
         for (Product p : pr.findAll()) {
             CategoryProduct cp = new CategoryProduct(String.valueOf(index++), p.getProductId(), p.getDisplayCategory().getCategoryId());
             sr.save(cp);
-            System.out.println("[CP 생성]" + cp);
+            System.out.println("[데이터 생성]" + cp);
         }
 
         System.out.println(">> 인덱스 생성: " + index + "개의 인덱스를 생성했습니다.");

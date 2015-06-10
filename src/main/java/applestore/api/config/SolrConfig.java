@@ -16,6 +16,7 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
  */
 @Configuration
 @EnableSolrRepositories(basePackages = "applestore.api",
+        repositoryImplementationPostfix = "Impl",
         includeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "applestore..*SolrRepository"))
 public class SolrConfig {
 

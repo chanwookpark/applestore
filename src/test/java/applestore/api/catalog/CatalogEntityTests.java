@@ -32,8 +32,8 @@ public class CatalogEntityTests {
 
     @Test
     public void create() throws Exception {
-        cr.deleteAll();
         pr.deleteAll();
+        cr.deleteAll();
 
         DisplayCategory ds = new DisplayCategory("mac");
         ds.addProduct(new Product("mac001", "macbook-pro-2010-mid"));

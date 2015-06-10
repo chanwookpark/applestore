@@ -2,7 +2,9 @@ package applestore.api.catalog;
 
 import applestore.api.AppleStoreApiApp;
 import applestore.api.catalog.model.solr.CategoryProduct;
-import applestore.api.catalog.repository.solr.CategoryProductSolrCustom;
+import applestore.api.catalog.repository.solr.CategoryProductSolrRepository;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,40 +30,49 @@ import static org.junit.Assert.assertThat;
 public class CatalogSolrTests {
 
     @Autowired
-    CategoryProductSolrCustom cr;
+    CategoryProductSolrRepository sr;
 
     @Autowired
     SolrTemplate template;
 
+    @Ignore("ID 자동생성이 되지 않아서 일단 무시..")
+    @Test
+    public void generateId() throws Exception {
+        final CategoryProduct cp = new CategoryProduct("XXX", 100);
+        final UpdateResponse response = template.saveBean(cp);
+        System.out.println("id: " + response.getResponse().get("id"));
+        template.commit();
+    }
+
     @Test
     public void findCategorizedProduct() throws Exception {
-        template.saveBean(new CategoryProduct("1", "M101", 1));
-        template.saveBean(new CategoryProduct("2", "M102", 1));
-        template.saveBean(new CategoryProduct("3", "M103", 1));
-        template.saveBean(new CategoryProduct("4", "M104", 1));
-        template.saveBean(new CategoryProduct("5", "M105", 1));
-        template.saveBean(new CategoryProduct("6", "P101", 2));
-        template.saveBean(new CategoryProduct("7", "W101", 3));
+        template.saveBean(new CategoryProduct("100", "M101", 1000));
+        template.saveBean(new CategoryProduct("200", "M102", 1000));
+        template.saveBean(new CategoryProduct("300", "M103", 1000));
+        template.saveBean(new CategoryProduct("400", "M104", 1000));
+        template.saveBean(new CategoryProduct("500", "M105", 1000));
+        template.saveBean(new CategoryProduct("600", "P101", 1002));
+        template.saveBean(new CategoryProduct("700", "W101", 1003));
         template.commit();
 
-        Page<CategoryProduct> page = cr.findByCategoryId(1, new PageRequest(0, 3));
+        Page<CategoryProduct> page = sr.findByCategoryId(1000, new PageRequest(0, 3));
         assertThat(page.getSize(), is(3));
-        assertThat(page.getContent().get(0).getId(), is("1"));
-        assertThat(page.getContent().get(1).getId(), is("2"));
-        assertThat(page.getContent().get(2).getId(), is("3"));
+        assertThat(page.getContent().get(0).getId(), is("100"));
+        assertThat(page.getContent().get(1).getId(), is("200"));
+        assertThat(page.getContent().get(2).getId(), is("300"));
     }
 
     @Test
     public void sandbox() throws Exception {
-//        cr.deleteAll();
+//        sr.deleteAll();
 //
-//        cr.save(new CategoryProduct("1", "mac001", 1));
-//        cr.save(new CategoryProduct("2", "mac002", 1));
-//        cr.save(new CategoryProduct("3", "mac003", 1));
-//        cr.save(new CategoryProduct("4", "mac004", 2));
-//        cr.save(new CategoryProduct("5", "mac005", 3));
+//        sr.save(new CategoryProduct("1", "mac001", 1));
+//        sr.save(new CategoryProduct("2", "mac002", 1));
+//        sr.save(new CategoryProduct("3", "mac003", 1));
+//        sr.save(new CategoryProduct("4", "mac004", 2));
+//        sr.save(new CategoryProduct("5", "mac005", 3));
 //
-//        for (CategoryProduct cp : cr.findAll()) {
+//        for (CategoryProduct cp : sr.findAll()) {
 //            System.out.println("CP: " + cp);
 //        }
 

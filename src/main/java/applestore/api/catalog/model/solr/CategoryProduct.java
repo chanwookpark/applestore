@@ -10,6 +10,7 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 @SolrDocument(solrCoreName = "collection1")
 public class CategoryProduct {
 
+    //TODO Solr ID 자동생성할 수 있게..
     @Id
     @Field
     private String id;
@@ -25,6 +26,11 @@ public class CategoryProduct {
 
     public CategoryProduct(String id, String productId, long categoryId) {
         this.id = id;
+        this.productId = productId;
+        this.categoryId = categoryId;
+    }
+
+    public CategoryProduct(String productId, long categoryId) {
         this.productId = productId;
         this.categoryId = categoryId;
     }

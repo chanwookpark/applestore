@@ -1,5 +1,7 @@
 package applestore.api.catalog.model.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -12,18 +14,20 @@ public class Product {
     private String productId;
 
     @Column
-    private String name;
+    private String productName;
 
     @ManyToOne
     @JoinColumn(name = "categoryId")
+    //TODO 모델 분리요..
+    @JsonIgnore
     private DisplayCategory displayCategory;
 
     public Product() {
     }
 
-    public Product(String productId, String name) {
+    public Product(String productId, String productName) {
         this.productId = productId;
-        this.name = name;
+        this.productName = productName;
     }
 
     public String getProductId() {
@@ -34,12 +38,12 @@ public class Product {
         this.productId = productId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public DisplayCategory getDisplayCategory() {

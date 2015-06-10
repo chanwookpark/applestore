@@ -14,10 +14,10 @@ public class DisplayCategory {
     @GeneratedValue
     private long categoryId;
 
-    @Column
+    @Column(length = 100)
     private String categoryName;
 
-    @OneToMany(mappedBy = "displayCategory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "displayCategory", cascade = CascadeType.PERSIST)
     private List<Product> productList = new ArrayList<Product>();
 
     public DisplayCategory() {
