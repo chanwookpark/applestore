@@ -27,6 +27,11 @@ public class CatalogServiceData {
 
     public static final String MACBOOK_IMAGE = "http://store.storeimages.cdn-apple.com/4598/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/select/macbook-select-gold-201501";
 
+    public static final String CATEGORY_IMAGE_URL_MAC = "http://store.storeimages.cdn-apple.com/4599/store.apple.com/rs-web/rel/assets/as-toolkit/lateralnav/icons/mac.svg";
+    public static final String CATEGORY_IMAGE_URL_IPHONE = "http://store.storeimages.cdn-apple.com/4599/store.apple.com/rs-web/rel/assets/as-toolkit/lateralnav/icons/iphone.svg";
+    public static final String CATEGORY_IMAGE_URL_WATCH = "http://store.storeimages.cdn-apple.com/4599/store.apple.com/rs-web/rel/assets/as-toolkit/lateralnav/icons/watch.svg";
+    public static final String CATEGORY_IMAGE_URL_IPAD = "http://store.storeimages.cdn-apple.com/4599/store.apple.com/rs-web/rel/assets/as-toolkit/lateralnav/icons/ipad.svg";
+
     @Autowired
     ProductJpaRepository pr;
 
@@ -44,10 +49,10 @@ public class CatalogServiceData {
         cr.flush();
         pr.flush();
 
-        DisplayCategory ds1 = new DisplayCategory("mac");
-        DisplayCategory ds2 = new DisplayCategory("iphone");
-        DisplayCategory ds3 = new DisplayCategory("watch");
-        DisplayCategory ds4 = new DisplayCategory("pad");
+        DisplayCategory ds1 = new DisplayCategory("mac", CATEGORY_IMAGE_URL_MAC);
+        DisplayCategory ds2 = new DisplayCategory("iphone", CATEGORY_IMAGE_URL_IPHONE);
+        DisplayCategory ds3 = new DisplayCategory("watch", CATEGORY_IMAGE_URL_WATCH);
+        DisplayCategory ds4 = new DisplayCategory("pad", CATEGORY_IMAGE_URL_IPAD);
 
         // 우선 한 이미지로~~
         ds1.addProduct(new Product("M101", "MacBook Pro 2010 early").addImage(new ProductImage(MACBOOK_IMAGE)));

@@ -72,11 +72,11 @@ public class Product {
         this.imageList = imageList;
     }
 
-    public static Specification hasCategory(final DisplayCategory category) {
+    public static Specification hasCategory(final long categoryId) {
         return new Specification() {
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
-                return cb.equal(root.join("displayCategory").get("categoryId"), category.getCategoryId());
+                return cb.equal(root.join("displayCategory").get("categoryId"), categoryId);
             }
         };
     }

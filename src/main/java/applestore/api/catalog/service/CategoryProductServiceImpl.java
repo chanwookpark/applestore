@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static applestore.api.catalog.model.jpa.Product.*;
+import static applestore.api.catalog.model.jpa.Product.hasCategory;
 
 /**
  * @author chanwook
@@ -34,7 +34,7 @@ public class CategoryProductServiceImpl implements CategoryProductService {
 
         List<Product> productList =
                 productRepository.findByProductIdIn(toProductIdList(categoryProductList));
-        final long totalCount = productRepository.count(hasCategory(category));
+        final long totalCount = productRepository.count(hasCategory(category.getCategoryId()));
 
         return new PageImpl<Product>(productList, pageRequest, totalCount);
     }
