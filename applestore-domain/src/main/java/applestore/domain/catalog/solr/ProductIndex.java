@@ -1,8 +1,11 @@
 package applestore.domain.catalog.solr;
 
+import applestore.framework.DateUtils;
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.SolrDocument;
+
+import java.util.Date;
 
 /**
  * Created by chanwook on 2015. 6. 9..
@@ -21,6 +24,9 @@ public class ProductIndex {
     @Field("categoryId_l")
     private long categoryId;
 
+    @Field("create_dt")
+    private Date created;
+
     public ProductIndex() {
     }
 
@@ -28,11 +34,13 @@ public class ProductIndex {
         this.id = id;
         this.productId = productId;
         this.categoryId = categoryId;
+        this.created = DateUtils.now();
     }
 
     public ProductIndex(String productId, long categoryId) {
         this.productId = productId;
         this.categoryId = categoryId;
+        this.created = DateUtils.now();
     }
 
     public String getId() {
@@ -59,12 +67,21 @@ public class ProductIndex {
         this.categoryId = categoryId;
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
     @Override
     public String toString() {
         return "ProductIndex{" +
                 "id='" + id + '\'' +
                 ", productId='" + productId + '\'' +
                 ", categoryId=" + categoryId +
+                ", created=" + created +
                 '}';
     }
 }

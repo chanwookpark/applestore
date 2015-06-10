@@ -38,12 +38,15 @@ public class ProductIndexJob {
     @Autowired
     DisplayCategoryJpaRepository cr;
 
+    //TODO 나중에 DB로 넣든 어디로 빼든 하자~
+    private Date recentIndexingTime;
+
     @Transactional
-    @Scheduled(fixedDelay = 60000, initialDelay = 60000)
+    @Scheduled(fixedDelay = 15000, initialDelay = 30000)
     public void indexing() {
-        Date startDate = DateUtils.now();
+        Date startTime = DateUtils.now();
         List<Product> productList = findUpdatedProduct();
-        long beforeIndexCount = sr.count();
+        long currentIndexCount = sr.count();
 
         int count = 0;
         for (Product p : productList) {
@@ -60,16 +63,21 @@ public class ProductIndexJob {
             sr.save(index);
 
             if (logger.isInfoEnabled()) {
-                logger.info("상품 인덱스 생성 완료 [" + index + "]");
+                logger.info("상품 인덱스 생성 [" + index + "]");
             }
 
             ++count;
         }
 
-        long afterIndexCount = sr.count();
+        Date endTime = DateUtils.now();
 
-        logger.info("상품 인덱스 생성 완료 [시작시간:" + startDate + ", 생성갯수(Count): " + count +
-                ", 작업전 인덱스 갯수: " + beforeIndexCount + ", 작업후 인덱스 갯수: " + afterIndexCount + "]");
+        // Solr repository로 save를 하더라도 commit 전(tx 종료 전)이라면 sr.count()를 해도 새로 추가된 row가 반영된 숫자가 나오지 않는다.
+        // 그래서 before나 after나 숫자가 동일하다. 다음에 돌려야 제대로 반영된 숫자가 나옴
+
+        logger.info("상품 인덱스 JOB 실행 완료 [시작시간:" + startTime + ", 종료시간:" + endTime +
+                ", 신규 인덱스 생성(Count): " + count + ", 작업전 인덱스 갯수: " + currentIndexCount + "]");
+
+        this.recentIndexingTime = endTime;
     }
 
     private List<Product> findUpdatedProduct() {
@@ -82,6 +90,6 @@ public class ProductIndexJob {
     }
 
     private Date getRecentIndexingTime() {
-        return DateUtils.getDate("2015-01-01 09:00:00");
+        return recentIndexingTime;
     }
 }
