@@ -11,6 +11,6 @@ import java.util.List;
 /**
  * @author chanwook
  */
-public interface CategoryProductService {
+public interface CatalogService {
     Page<Product> findProductList(DisplayCategory category, Pageable pageRequest);
 }

@@ -4,7 +4,7 @@ import applestore.api.catalog.model.CategoryProductList;
 import applestore.api.catalog.model.jpa.DisplayCategory;
 import applestore.api.catalog.model.jpa.Product;
 import applestore.api.catalog.repository.jpa.DisplayCategoryJpaRepository;
-import applestore.api.catalog.service.CategoryProductService;
+import applestore.api.catalog.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CatalogRestController {
 
     @Autowired
-    private CategoryProductService categoryProductService;
+    private CatalogService catalogService;
 
     @Autowired
     private DisplayCategoryJpaRepository categoryRepository;
@@ -30,7 +30,7 @@ public class CatalogRestController {
     public CategoryProductList getList(@PathVariable long categoryId, Pageable pageRequest) {
 
         DisplayCategory category = categoryRepository.findOne(categoryId);
-        Page<Product> productList = categoryProductService.findProductList(category, pageRequest);
+        Page<Product> productList = catalogService.findProductList(category, pageRequest);
 
         CategoryProductList list = new CategoryProductList(category, productList);
         return list;

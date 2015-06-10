@@ -25,7 +25,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#more").click(function () {
-                $.get("/category/${category.categoryId}/list?page=${pageRequest.pageNumber}&size=${pageRequest.pageSize}",
+                $.get("/category/${category.categoryId}/productList?page=${pageRequest.pageNumber}&size=${pageRequest.pageSize}",
                         function (data) {
                             $("#contents").append(data);
                         }

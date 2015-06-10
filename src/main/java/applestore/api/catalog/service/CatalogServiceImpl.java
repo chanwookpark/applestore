@@ -21,33 +21,34 @@ import static applestore.api.catalog.model.jpa.Product.hasCategory;
  * @author chanwook
  */
 @Service
-public class CategoryProductServiceImpl implements CategoryProductService {
+public class CatalogServiceImpl implements CatalogService {
     @Autowired
-    private ProductIndexSolrRepository solrRepository;
+    private ProductIndexSolrRepository produtIndexRepository;
 
     @Autowired
     private ProductJpaRepository productRepository;
 
     @Override
     public Page<Product> findProductList(final DisplayCategory category, Pageable pageRequest) {
-        final List<ProductIndex> productIndexList = getCategoryProductList(category, pageRequest);
+        List<String> idList = getProductIdList(category, pageRequest);
+        List<Product> productList = productRepository.findByProductIdIn(idList);
 
-        List<Product> productList =
-                productRepository.findByProductIdIn(toProductIdList(productIndexList));
-        final long totalCount = productRepository.count(hasCategory(category.getCategoryId()));
+        long totalCount = productRepository.count(hasCategory(category.getCategoryId()));
 
         return new PageImpl<Product>(productList, pageRequest, totalCount);
     }
 
-    private List<ProductIndex> getCategoryProductList(DisplayCategory category, Pageable pageRequest) {
+    private List<String> getProductIdList(DisplayCategory category, Pageable pageRequest) {
         if (category == null) {
             throw new ApplicationException("카테고리 정보가 필수로 필요합니다!");
         }
-        final Page<ProductIndex> categoryProductPage = solrRepository.findByCategoryId(category.getCategoryId(), pageRequest);
-        if (categoryProductPage.getContent() == null) {
+
+        Page<ProductIndex> page = produtIndexRepository.findByCategoryId(category.getCategoryId(), pageRequest);
+        if (page.getContent() == null) {
             throw new ApplicationException(category.getCategoryId() + "에 해당하는 상품 정보가 한 건도 등록되어 있지 않습니다!");
         }
-        return categoryProductPage.getContent();
+
+        return toProductIdList(page.getContent());
     }
 
     private List<String> toProductIdList(List<ProductIndex> list) {
