@@ -35,7 +35,7 @@ public class CatalogEntityTests {
         pr.deleteAll();
         cr.deleteAll();
 
-        DisplayCategory ds = new DisplayCategory("mac", CatalogServiceData.CATEGORY_IMAGE_URL_MAC);
+        DisplayCategory ds = new DisplayCategory("mac", CatalogServiceTester.CATEGORY_IMAGE_URL_MAC);
         ds.addProduct(new Product("mac001", "macbook-pro-2010-mid"));
         ds.addProduct(new Product("mac002", "macbook-pro-2010-mid"));
         ds.addProduct(new Product("mac003", "macbook-pro-2010-mid"));

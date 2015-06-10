@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +32,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> imageList = new ArrayList<ProductImage>();
+
+    @Version
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
 
     public Product() {
     }
@@ -70,6 +75,14 @@ public class Product {
 
     public void setImageList(List<ProductImage> imageList) {
         this.imageList = imageList;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     public static Specification hasCategory(final long categoryId) {

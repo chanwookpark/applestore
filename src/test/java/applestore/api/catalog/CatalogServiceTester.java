@@ -4,10 +4,10 @@ import applestore.api.AppleStoreApiApp;
 import applestore.api.catalog.model.jpa.DisplayCategory;
 import applestore.api.catalog.model.jpa.Product;
 import applestore.api.catalog.model.jpa.ProductImage;
-import applestore.api.catalog.model.solr.CategoryProduct;
+import applestore.api.catalog.model.solr.ProductIndex;
 import applestore.api.catalog.repository.jpa.DisplayCategoryJpaRepository;
 import applestore.api.catalog.repository.jpa.ProductJpaRepository;
-import applestore.api.catalog.repository.solr.CategoryProductSolrRepository;
+import applestore.api.catalog.repository.solr.ProductIndexSolrRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AppleStoreApiApp.class)
 //@Transactional
-public class CatalogServiceData {
+public class CatalogServiceTester {
 
     public static final String MACBOOK_IMAGE = "http://store.storeimages.cdn-apple.com/4598/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/select/macbook-select-gold-201501";
 
@@ -39,7 +39,7 @@ public class CatalogServiceData {
     DisplayCategoryJpaRepository cr;
 
     @Autowired
-    CategoryProductSolrRepository sr;
+    ProductIndexSolrRepository sr;
 
     @Test
     public void createData() throws Exception {
@@ -87,7 +87,7 @@ public class CatalogServiceData {
 
         int index = 0;
         for (Product p : pr.findAll()) {
-            CategoryProduct cp = new CategoryProduct(String.valueOf(index++), p.getProductId(), p.getDisplayCategory().getCategoryId());
+            ProductIndex cp = new ProductIndex(String.valueOf(index++), p.getProductId(), p.getDisplayCategory().getCategoryId());
             sr.save(cp);
             System.out.println("[데이터 생성]" + cp);
         }

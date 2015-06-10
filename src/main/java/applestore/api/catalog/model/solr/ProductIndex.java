@@ -8,7 +8,7 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
  * Created by chanwook on 2015. 6. 9..
  */
 @SolrDocument(solrCoreName = "collection1")
-public class CategoryProduct {
+public class ProductIndex {
 
     //TODO Solr ID 자동생성할 수 있게..
     @Id
@@ -21,16 +21,16 @@ public class CategoryProduct {
     @Field("categoryId_l")
     private long categoryId;
 
-    public CategoryProduct() {
+    public ProductIndex() {
     }
 
-    public CategoryProduct(String id, String productId, long categoryId) {
+    public ProductIndex(String id, String productId, long categoryId) {
         this.id = id;
         this.productId = productId;
         this.categoryId = categoryId;
     }
 
-    public CategoryProduct(String productId, long categoryId) {
+    public ProductIndex(String productId, long categoryId) {
         this.productId = productId;
         this.categoryId = categoryId;
     }
@@ -61,7 +61,7 @@ public class CategoryProduct {
 
     @Override
     public String toString() {
-        return "CategoryProduct{" +
+        return "ProductIndex{" +
                 "id='" + id + '\'' +
                 ", productId='" + productId + '\'' +
                 ", categoryId=" + categoryId +
