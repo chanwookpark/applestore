@@ -12,4 +12,6 @@ public interface ProductIndexSolrRepository extends SolrCrudRepository<ProductIn
     Page<ProductIndex> findByCategoryId(long categoryId, Pageable request);
 
     void deleteByProductId(String productId);
+
+    ProductIndex findByCategoryIdAndProductId(long categoryId, String productId);
 }

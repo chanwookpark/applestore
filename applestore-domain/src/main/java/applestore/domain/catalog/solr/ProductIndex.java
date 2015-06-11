@@ -27,6 +27,9 @@ public class ProductIndex {
     @Field("create_dt")
     private Date created;
 
+    @Field("score_l")
+    private long score;
+
     public ProductIndex() {
     }
 
@@ -35,12 +38,7 @@ public class ProductIndex {
         this.productId = productId;
         this.categoryId = categoryId;
         this.created = DateUtils.now();
-    }
-
-    public ProductIndex(String productId, long categoryId) {
-        this.productId = productId;
-        this.categoryId = categoryId;
-        this.created = DateUtils.now();
+        this.score = 0l;
     }
 
     public String getId() {
@@ -75,6 +73,14 @@ public class ProductIndex {
         this.created = created;
     }
 
+    public long getScore() {
+        return score;
+    }
+
+    public void setScore(long score) {
+        this.score = score;
+    }
+
     @Override
     public String toString() {
         return "ProductIndex{" +
@@ -82,6 +88,12 @@ public class ProductIndex {
                 ", productId='" + productId + '\'' +
                 ", categoryId=" + categoryId +
                 ", created=" + created +
+                ", score=" + score +
                 '}';
+    }
+
+    public ProductIndex incrementScore() {
+        this.score += 1;
+        return this;
     }
 }

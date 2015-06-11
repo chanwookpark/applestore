@@ -38,7 +38,7 @@ public class CatalogSolrTests {
     @Ignore("ID 자동생성이 되지 않아서 일단 무시..")
     @Test
     public void generateId() throws Exception {
-        final ProductIndex cp = new ProductIndex("XXX", 100);
+        final ProductIndex cp = new ProductIndex("???", "XXX", 100);
         final UpdateResponse response = template.saveBean(cp);
         System.out.println("id: " + response.getResponse().get("id"));
         template.commit();
