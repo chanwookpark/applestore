@@ -91,9 +91,4 @@ public class ProductIndex {
                 ", score=" + score +
                 '}';
     }
-
-    public ProductIndex incrementScore() {
-        this.score += 1;
-        return this;
-    }
 }
