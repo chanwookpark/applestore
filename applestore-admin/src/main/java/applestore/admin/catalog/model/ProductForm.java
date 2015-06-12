@@ -15,6 +15,8 @@ public class ProductForm implements Serializable{
 
     private String mainImageUrl;
 
+    private String productStatus;
+
     public String getProductId() {
         return productId;
     }
@@ -45,5 +47,13 @@ public class ProductForm implements Serializable{
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public String getProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(String productStatus) {
+        this.productStatus = productStatus;
     }
 }

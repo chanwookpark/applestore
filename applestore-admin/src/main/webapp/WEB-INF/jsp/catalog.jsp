@@ -14,6 +14,7 @@
             <th>#</th>
             <th>ID</th>
             <th>상품명</th>
+            <th>상품상태</th>
             <th>전시 카테고리</th>
             <th>이미지(메인)</th>
             <th>액션</th>
@@ -25,17 +26,25 @@
                 <td>${status.index}</td>
                 <td>${product.productId}</td>
                 <td>${product.productName}</td>
+                <td>${product.status}</td>
                 <td>${product.displayCategory.categoryName}</td>
                 <td>${product.imageList[0].imageUrl}</td>
                 <td><button value="삭제" /></td>
             </tr>
         </c:forEach>
         <!-- 입력 form -->
-        <form action="/a/product/add" method="post">
+        <form action="/a/catalog/add" method="post">
             <tr>
                 <td>-</td>
                 <td><input type="text" name="productId" placeholder="지금은ID입력해야해요"></td>
-                <td><input type="text" name="productName"></td>
+                <td><input type="text" name="productName" placeholder="상품명도입력해요"></td>
+                <td>
+                    <select class="form-control" name="productStatus">
+                        <option value="READY">READY</option>
+                        <option value="SALES">SALES</option>
+                        <option value="SOLD_OUT">SOLD_OUT</option>
+                    </select>
+                </td>
                 <td>
                     <select class="form-control" name="categoryId">
                     <c:forEach items="${allCategories}" var="category">
@@ -43,7 +52,7 @@
                     </c:forEach>
                     </select>
                 </td>
-                <td><input type="text" name="mainImageUrl"></td>
+                <td><input type="text" name="mainImageUrl" size="100" placeholder="이미지URL을넣어요"></td>
                 <td><input type="submit" value="저장" ></td>
             </tr>
         </form>
