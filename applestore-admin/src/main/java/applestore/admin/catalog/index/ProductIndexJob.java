@@ -50,21 +50,15 @@ public class ProductIndexJob {
 
         int count = 0;
         for (Product p : productList) {
-            // 기존 인덱스 정보가 있다면? 일단 지우자
-            try {
-                sr.deleteByProductId(p.getProductId());
-            } catch (Throwable te) {
-                logger.error(p.getProductId() + "에 해당하는 인덱스 정보 삭제 실패", te);
-            }
 
-            ProductIndex index =
-                    new ProductIndex(String.valueOf(System.nanoTime()),
-                            p.getProductId(), p.getDisplayCategory().getCategoryId());
-            sr.save(index);
+            final long categoryId = p.getDisplayCategory().getCategoryId();
+            final String productId = p.getProductId();
 
-            if (logger.isInfoEnabled()) {
-                logger.info("상품 인덱스 생성 [" + index + "]");
+            // 이미 존재하는 index(category - product 매핑)면 pass
+            if (hasIndex(categoryId, productId)) {
+                continue;
             }
+            createIndex(categoryId, productId);
 
             ++count;
         }
@@ -78,6 +72,20 @@ public class ProductIndexJob {
                 ", 신규 인덱스 생성(Count): " + count + ", 작업전 인덱스 갯수: " + currentIndexCount + "]");
 
         this.recentIndexingTime = endTime;
+    }
+
+    private void createIndex(long categoryId, String productId) {
+        ProductIndex index =
+                new ProductIndex(String.valueOf(System.nanoTime()), productId, categoryId);
+        sr.save(index);
+
+        if (logger.isInfoEnabled()) {
+            logger.info("상품 인덱스 생성 [" + index + "]");
+        }
+    }
+
+    private boolean hasIndex(long categoryId, String productId) {
+        return sr.findByCategoryIdAndProductId(categoryId, productId) != null;
     }
 
     private List<Product> findUpdatedProduct() {
