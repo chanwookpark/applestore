@@ -1,10 +1,10 @@
-package applestore.front.catalog;
+package applestore.domain.catalog;
 
+import applestore.domain.AppleStoreEntityTestApp;
 import applestore.domain.catalog.entity.DisplayCategory;
 import applestore.domain.catalog.entity.Product;
 import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
 import applestore.domain.catalog.repository.ProductJpaRepository;
-import applestore.front.AppleStoreFrontApp;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
 
+import static applestore.domain.catalog.CatalogEntityDataTester.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertThat;
  * Created by chanwook on 2015. 6. 9..
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = AppleStoreFrontApp.class)
+@SpringApplicationConfiguration(classes = AppleStoreEntityTestApp.class)
 @Transactional
 public class CatalogEntityTests {
 
@@ -35,7 +36,7 @@ public class CatalogEntityTests {
         pr.deleteAll();
         cr.deleteAll();
 
-        DisplayCategory ds = new DisplayCategory("mac", CatalogServiceTester.CATEGORY_IMAGE_URL_MAC);
+        DisplayCategory ds = new DisplayCategory("mac", CATEGORY_IMAGE_URL_MAC);
         ds.addProduct(new Product("mac001", "macbook-pro-2010-mid"));
         ds.addProduct(new Product("mac002", "macbook-pro-2010-mid"));
         ds.addProduct(new Product("mac003", "macbook-pro-2010-mid"));

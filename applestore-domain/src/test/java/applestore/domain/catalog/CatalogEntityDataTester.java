@@ -1,5 +1,6 @@
-package applestore.front.catalog;
+package applestore.domain.catalog;
 
+import applestore.domain.AppleStoreEntityTestApp;
 import applestore.domain.catalog.entity.DisplayCategory;
 import applestore.domain.catalog.entity.Product;
 import applestore.domain.catalog.entity.ProductImage;
@@ -7,7 +8,6 @@ import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
 import applestore.domain.catalog.repository.ProductIndexSolrRepository;
 import applestore.domain.catalog.repository.ProductJpaRepository;
 import applestore.domain.catalog.solr.ProductIndex;
-import applestore.front.AppleStoreFrontApp;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,9 @@ import static org.junit.Assert.assertThat;
  * Created by chanwook on 2015. 6. 9..
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = AppleStoreFrontApp.class)
+@SpringApplicationConfiguration(classes = AppleStoreEntityTestApp.class)
 //@Transactional
-public class CatalogServiceTester {
+public class CatalogEntityDataTester {
 
     public static final String MACBOOK_IMAGE = "http://store.storeimages.cdn-apple.com/4598/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/select/macbook-select-gold-201501";
 

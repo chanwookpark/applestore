@@ -21,8 +21,16 @@ public class Product {
     @Id
     private String productId;
 
+    @Version
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
+
     @Column
     private String productName;
+
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
 
     @ManyToOne
     @JoinColumn(name = "categoryId")
@@ -33,17 +41,20 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> imageList = new ArrayList<ProductImage>();
 
-    @Version
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
 
     public Product() {
     }
 
     public Product(String productId, String productName) {
+        this(productId, productName, ProductStatus.SALES);
+    }
+
+    public Product(String productId, String productName, ProductStatus status) {
         this.productId = productId;
         this.productName = productName;
+        this.status = status;
     }
+
 
     public String getProductId() {
         return productId;
@@ -83,6 +94,14 @@ public class Product {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public ProductStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProductStatus status) {
+        this.status = status;
     }
 
     public static Specification hasCategory(final long categoryId) {
