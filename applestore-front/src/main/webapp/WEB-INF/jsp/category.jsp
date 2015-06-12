@@ -23,11 +23,14 @@
     </ul>
 
     <script type="text/javascript">
+        var page = ${pageRequest.pageNumber};
+        var size = ${pageRequest.pageSize};
         $(document).ready(function () {
             $("#more").click(function () {
-                $.get("/category/${category.categoryId}/productList?page=${pageRequest.pageNumber}&size=${pageRequest.pageSize}",
+                $.get("/category/${category.categoryId}/productList?page=" + page + "&size=" + size,
                         function (data) {
                             $("#contents").append(data);
+                            page = page + 1;
                         }
                 );
             });
