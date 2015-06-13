@@ -87,8 +87,9 @@ public class CatalogEntityDataTester {
 
         int index = 0;
         for (Product p : pr.findAll()) {
-            ProductIndex cp = new ProductIndex(String.valueOf(index++), p.getProductId(), p.getDisplayCategory().getCategoryId());
+            ProductIndex cp = new ProductIndex(String.valueOf(System.nanoTime()), p.getProductId(), p.getDisplayCategory().getCategoryId());
             sr.save(cp);
+            ++index;
             System.out.println("[데이터 생성]" + cp);
         }
 

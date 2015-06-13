@@ -1,5 +1,6 @@
 package applestore.admin.catalog.service;
 
+import applestore.admin.catalog.model.ProductDataSet;
 import applestore.domain.catalog.entity.Product;
 
 /**
@@ -7,4 +8,6 @@ import applestore.domain.catalog.entity.Product;
  */
 public interface ProductManagementService {
     void createProduct(Product product);
+
+    void save(ProductDataSet grid);
 }

@@ -1,21 +1,26 @@
 package applestore.admin.catalog.model;
 
+import applestore.domain.catalog.entity.Product;
+import applestore.domain.catalog.entity.ProductStatus;
+
 import java.io.Serializable;
 
 /**
  * @author chanwook
  */
-public class ProductForm implements Serializable{
+public class ProductGridRow implements Serializable {
 
     private String productId;
 
     private String productName;
 
-    private long categoryId;
-
     private String mainImageUrl;
 
     private String productStatus;
+
+    private String rowStatus;
+
+    private String categoryName;
 
     public String getProductId() {
         return productId;
@@ -33,14 +38,6 @@ public class ProductForm implements Serializable{
         this.productName = productName;
     }
 
-    public long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public String getMainImageUrl() {
         return mainImageUrl;
     }
@@ -55,5 +52,31 @@ public class ProductForm implements Serializable{
 
     public void setProductStatus(String productStatus) {
         this.productStatus = productStatus;
+    }
+
+    public String getRowStatus() {
+        return rowStatus;
+    }
+
+    public void setRowStatus(String rowStatus) {
+        this.rowStatus = rowStatus;
+    }
+
+    public Product toProduct() {
+        Product p = new Product();
+        p.setProductId(getProductId());
+        p.setProductName(getProductName());
+        p.createImage(getMainImageUrl(), 0);
+        final ProductStatus status = ProductStatus.valueOf(getProductStatus());
+        p.setStatus(status);
+        return p;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

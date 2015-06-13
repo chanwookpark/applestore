@@ -125,4 +125,12 @@ public class Product {
         this.imageList.add(image);
         return this;
     }
+
+    public boolean sellable() {
+        //TODO 제고 등은 나중에 넣어야지~~
+        if (ProductStatus.SALES.equals(this.status)) {
+            return true;
+        }
+        return false;
+    }
 }

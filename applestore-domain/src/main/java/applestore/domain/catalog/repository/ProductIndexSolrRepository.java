@@ -11,7 +11,7 @@ import org.springframework.data.solr.repository.SolrCrudRepository;
 public interface ProductIndexSolrRepository extends SolrCrudRepository<ProductIndex, String> {
     Page<ProductIndex> findByCategoryId(long categoryId, Pageable request);
 
-    void deleteByProductId(String productId);
+    void deleteByCategoryIdAndProductId(long categoryId, String productId);
 
     ProductIndex findByCategoryIdAndProductId(long categoryId, String productId);
 }
