@@ -58,27 +58,30 @@
                 <td><input type="text" name="rowList[${status.index}].mainImageUrl" size="100"
                            value="${product.imageList[0].imageUrl}"></td>
             </tr>
-        </c:forEach>
+            <c:if test="${status.last == true}">
             <tr>
-                <td>추가<input type="hidden" name="rowStatus" value="C" ></td>
-                <td><input type="text" name="productId" placeholder="ID입력하세요"></td>
-                <td><input type="text" name="productName" placeholder="상품명도입력해요"></td>
+                <c:set var="createIndex" value="${status.index+1}" />
+                <td>추가<input type="hidden" name="rowList[${createIndex}].rowStatus" value="C" ></td>
+                <td><input type="text" name="rowList[${createIndex}].productId" placeholder="ID입력하세요"></td>
+                <td><input type="text" name="rowList[${createIndex}].productName" placeholder="상품명도입력해요"></td>
                 <td>
-                    <select class="form-control" name="productStatus">
+                    <select class="form-control" name="rowList[${createIndex}].productStatus">
                         <option value="READY">READY</option>
                         <option value="SALES">SALES</option>
                         <option value="SOLD_OUT">SOLD_OUT</option>
                     </select>
                 </td>
                 <td>
-                    <select class="form-control" name="categoryName">
+                    <select class="form-control" name="rowList[${createIndex}].categoryName">
                     <c:forEach items="${allCategories}" var="category">
-                        <option value="${category.categoryId}">${category.categoryName}</option>
+                        <option value="${category.categoryName}">${category.categoryName}</option>
                     </c:forEach>
                     </select>
                 </td>
-                <td><input type="text" name="mainImageUrl" size="100" placeholder="이미지URL을넣어요"></td>
+                <td><input type="text" name="rowList[${createIndex}].mainImageUrl" size="100" placeholder="이미지URL을넣어요"></td>
             </tr>
+            </c:if>
+        </c:forEach>
         </tbody>
     </table>
     <input type="submit" value="저장" >
