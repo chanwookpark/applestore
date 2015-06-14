@@ -6,6 +6,7 @@ import applestore.domain.catalog.repository.ProductJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -25,11 +26,20 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
     @Transactional
     @Override
-    public void save(ProductDataSet grid) {
-        // 두 번 날리자~
-        pr.save(grid.getCreateList());
+    public void flushUpdatedRow(ProductDataSet grid) {
+
+        save(grid.getCreateList());
 
         update(grid.getUpdateList());
+    }
+
+    private void save(List<Product> createList) {
+        //TODO 한번에 할까?
+        for (Product p : createList) {
+            if (StringUtils.hasText(p.getProductId())) {
+                pr.save(createList);
+            }
+        }
     }
 
     private void update(List<Product> updateList) {

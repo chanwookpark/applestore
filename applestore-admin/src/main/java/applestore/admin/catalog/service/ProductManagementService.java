@@ -9,5 +9,5 @@ import applestore.domain.catalog.entity.Product;
 public interface ProductManagementService {
     void createProduct(Product product);
 
-    void save(ProductDataSet grid);
+    void flushUpdatedRow(ProductDataSet grid);
 }

@@ -55,7 +55,7 @@
                 <td>
                     <input type="text" name="rowList[${status.index}].categoryName" value="${product.displayCategory.categoryName}" readonly>
                 </td>
-                <td><input type="text" name="rowList[${status.index}].mainImageUrl" size="100"
+                <td><input type="text" name="rowList[${status.index}].mainImageUrl" size="50"
                            value="${product.imageList[0].imageUrl}"></td>
             </tr>
             <c:if test="${status.last == true}">
@@ -78,7 +78,7 @@
                     </c:forEach>
                     </select>
                 </td>
-                <td><input type="text" name="rowList[${createIndex}].mainImageUrl" size="100" placeholder="이미지URL을넣어요"></td>
+                <td><input type="text" name="rowList[${createIndex}].mainImageUrl" size="50" placeholder="이미지URL을넣어요"></td>
             </tr>
             </c:if>
         </c:forEach>

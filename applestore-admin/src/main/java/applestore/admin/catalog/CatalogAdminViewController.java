@@ -42,7 +42,7 @@ public class CatalogAdminViewController {
     @RequestMapping(value = "/a/catalog", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("grid") ProductGridForm grid) {
         final ProductDataSet ds = createDataSet(grid.getRowList());
-        ps.save(ds);
+        ps.flushUpdatedRow(ds);
 
         return "redirect:/a/catalog";
     }
