@@ -7,4 +7,8 @@ public class R2Exception extends RuntimeException {
     public R2Exception(String msg, Throwable cause) {
         super(msg, cause);
     }
+
+    public R2Exception(String msg) {
+        super(msg);
+    }
 }
