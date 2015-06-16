@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author chanwook
  */
 @Controller
-public class ProductViewController {
+public class ProductJspViewController {
 
     @Autowired
     private ProductJpaRepository pr;
@@ -20,6 +20,6 @@ public class ProductViewController {
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)
     public String view(@PathVariable String productId, ModelMap model) {
         model.put("product", pr.getOne(productId));
-        return "product";
+        return "jsp/product";
     }
 }

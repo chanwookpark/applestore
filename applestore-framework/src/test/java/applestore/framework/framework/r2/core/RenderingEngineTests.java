@@ -1,8 +1,12 @@
 package applestore.framework.framework.r2.core;
 
-import applestore.framework.r2.core.RenderingEngine;
-import applestore.framework.r2.core.RenderingEngineFactory;
+import applestore.framework.r2.dustjs.core.RenderingEngine;
+import applestore.framework.r2.dustjs.core.RenderingEngineFactory;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -27,7 +31,21 @@ public class RenderingEngineTests {
         String template = re.compile(key, "<h1>Hello!</h1><span>{name}</span>");
         assertThat(template, is(COMPILED_HTML));
         re.load(template);
-        final String rhtml = re.render(key, "{\"name\":\"chanwook\"}");
-        assertThat(rhtml, is(RENDER_HTML));
+        final String view = re.render(key, "{\"name\":\"chanwook\"}");
+        assertThat(view, is(RENDER_HTML));
+    }
+
+    @Test
+    public void template1() throws Exception {
+        RenderingEngineFactory ref = new RenderingEngineFactory();
+        RenderingEngine re = ref.getObject();
+
+        String html = new String(Files.readAllBytes(Paths.get(new ClassPathResource("/r2/dustjs/template1/template.html").getURI())));
+        String json = new String(Files.readAllBytes(Paths.get(new ClassPathResource("/r2/dustjs/template1/data.json").getURI())));
+
+        final String key = "key1";
+        final String template = re.compile(key, html);
+        re.load(template);
+        final String view = re.render(key, json);
     }
 }

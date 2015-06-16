@@ -1,7 +1,6 @@
-package applestore.framework.supports.dustjs;
+package applestore.framework.r2.dustjs.core;
 
 import applestore.framework.r2.R2Exception;
-import applestore.framework.r2.core.TemplateScriptLoader;
 
 import javax.script.ScriptEngine;
 import java.io.InputStream;

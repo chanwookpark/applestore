@@ -1,4 +1,4 @@
-package applestore.framework.r2.core;
+package applestore.framework.r2.dustjs.core;
 
 import javax.script.ScriptEngine;
 

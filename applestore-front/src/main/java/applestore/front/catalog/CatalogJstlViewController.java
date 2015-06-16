@@ -22,7 +22,7 @@ import static applestore.domain.catalog.entity.Product.hasCategory;
  * @author chanwook
  */
 @Controller
-public class CatalogViewController {
+public class CatalogJstlViewController {
 
     @Autowired
     private CatalogService catalogService;
@@ -42,10 +42,10 @@ public class CatalogViewController {
         model.put("category", category);
         model.put("totalProductCount", totalCount);
         model.put("pageRequest", pageRequest);
-        return "category";
+        return "jsp/category";
     }
 
-    @RequestMapping(value = "/category/{categoryId}/productList", method = RequestMethod.GET)
+    @RequestMapping(value = "/j/category/{categoryId}/productList", method = RequestMethod.GET)
     public String getProductList(@PathVariable long categoryId, Pageable pageRequest, ModelMap model) {
 
         DisplayCategory category = categoryRepository.findOne(categoryId);
@@ -53,6 +53,6 @@ public class CatalogViewController {
 
         model.put("category", category);
         model.put("productList", productList);
-        return "category_productList";
+        return "jsp/category_productList";
     }
 }

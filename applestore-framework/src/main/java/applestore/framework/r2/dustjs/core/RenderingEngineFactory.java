@@ -1,7 +1,6 @@
-package applestore.framework.r2.core;
+package applestore.framework.r2.dustjs.core;
 
 import applestore.framework.r2.R2Exception;
-import applestore.framework.supports.dustjs.DustViewScriptLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

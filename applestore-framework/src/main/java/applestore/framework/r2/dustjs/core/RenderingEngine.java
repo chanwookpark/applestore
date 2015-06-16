@@ -1,5 +1,6 @@
-package applestore.framework.r2.core;
+package applestore.framework.r2.dustjs.core;
 
+import applestore.framework.r2.R2Exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,14 +26,11 @@ public class RenderingEngine {
         try {
             final Object result = ((Invocable) scriptEngine).invokeFunction("dustCompile", key, html);
             if (logger.isDebugEnabled()) {
-                logger.debug("템플릿 컴파일[key: " + key + "]\n컴파일전: " + html +
-                        "컴파일후:" + result);
+                logger.debug("템플릿 컴파일[key: " + key + "]\n컴파일전: " + html + "컴파일후:" + result);
             }
             compiled = (String) result;
         } catch (Throwable e) {
-            if (logger.isErrorEnabled()) {
-                logger.error("R2 렌더링 진행중 에러가 발생했습니다 (Compile 단계)", e);
-            }
+            throw new R2Exception("템플릿 컴파일 중 에러가 발생했습니다", e);
         }
         return compiled;
     }
@@ -40,34 +38,23 @@ public class RenderingEngine {
     public void load(String template) {
         try {
             ((Invocable) scriptEngine).invokeFunction("dustLoad", template);
-            if (logger.isDebugEnabled()) {
-                logger.debug("템플릿 로딩[Template : " + template + "]");
-            }
         } catch (Throwable e) {
-            if (logger.isErrorEnabled()) {
-                logger.error("R2 렌더링 진행중 에러가 발생했습니다 (Load 단계)", e);
-            }
+            throw new R2Exception("템플릿 로딩 중 에러가 발생했습니다", e);
         }
     }
 
-    public String render(String key, String data) {
+    public String render(String key, String json) {
         String view = "";
         try {
             StringWriter successWriter = new StringWriter();
-            StringWriter errorWriter = new StringWriter();
-            if (logger.isDebugEnabled()) {
-                logger.debug("최종 렌더링 요청[key: " + key + ", data: " + data + "]");
-            }
-            ((Invocable) scriptEngine).invokeFunction("dustRender", key, data, successWriter, errorWriter);
+            ((Invocable) scriptEngine).invokeFunction("dustRender", key, json, successWriter);
 
             view = new String(successWriter.getBuffer().toString().getBytes(encoding), encoding);
             if (logger.isDebugEnabled()) {
-                logger.debug("최종 렌더링 HTML>> " + view);
+                logger.debug("최종 렌더링 완료>>" + key + ", JSON: " + json + "HTML: " + view);
             }
         } catch (Throwable e) {
-            if (logger.isErrorEnabled()) {
-                logger.error("R2 렌더링 진행중 에러가 발생했습니다 (Rendering 단계)", e);
-            }
+            throw new R2Exception("렌더링 중 에러가 발생했습니다", e);
         }
         return view;
     }
