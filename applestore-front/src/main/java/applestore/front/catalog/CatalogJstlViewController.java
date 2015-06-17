@@ -33,7 +33,7 @@ public class CatalogJstlViewController {
     @Autowired
     private ProductJpaRepository productRepository;
 
-    @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/j/category/{categoryId}", method = RequestMethod.GET)
     public String viewCategoryPage(@PathVariable long categoryId, Pageable pageRequest, ModelMap model) {
 
         DisplayCategory category = categoryRepository.findOne(categoryId);
@@ -42,7 +42,7 @@ public class CatalogJstlViewController {
         model.put("category", category);
         model.put("totalProductCount", totalCount);
         model.put("pageRequest", pageRequest);
-        return "jsp/category";
+        return "category";
     }
 
     @RequestMapping(value = "/j/category/{categoryId}/productList", method = RequestMethod.GET)
@@ -53,6 +53,6 @@ public class CatalogJstlViewController {
 
         model.put("category", category);
         model.put("productList", productList);
-        return "jsp/category_productList";
+        return "category_productList";
     }
 }

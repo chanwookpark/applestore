@@ -11,8 +11,10 @@ import org.springframework.web.servlet.view.InternalResourceView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -38,12 +40,16 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
     private RenderingEngine renderingEngine = new RenderingEngineFactory().getObject();
 
     private ObjectMapper objectMapper = new ObjectMapper();
+    private boolean usePartial = true;
 
     @Override
     protected Map<String, Object> createMergedOutputModel(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) {
         final Map<String, Object> mergedOutputModel = super.createMergedOutputModel(model, request, response);
 
         DustRenderModel dustRenderModel = (DustRenderModel) model.get("dustmodel");
+
+        //TODO 한 번 로딩하면 계속 사용하도록 개선
+        createPartial();
 
         final String templateKey = getUrl();
         final String template = getTemplate(templateKey);
@@ -57,6 +63,31 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
         mergedOutputModel.put(viewHtmlKey, view);
 
         return mergedOutputModel;
+    }
+
+    protected void createPartial() {
+        if (usePartial) {
+            try {
+                final File[] files = new ClassPathResource("/templates/partial").getFile().listFiles();
+                for (File f : files) {
+                    loadPartial(f);
+                }
+            } catch (IOException e) {
+                throw new R2Exception("Partial 로딩 중 에러가 발생했습니다.", e);
+            }
+        }
+    }
+
+    private void loadPartial(File f) {
+        final String partialTemplateKey = f.getName().replaceAll(".html", "");
+        final String partialTemplate = getTemplate(f.toURI());
+        final String compiled = renderingEngine.compile(partialTemplateKey, partialTemplate);
+        //partial은 로딩까지만 함
+        renderingEngine.load(compiled);
+
+        if (logger.isInfoEnabled()) {
+            logger.info(">> Partial 로딩 완료 [" + partialTemplateKey + "] " + partialTemplate);
+        }
     }
 
     @Override
@@ -88,16 +119,23 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
         }
     }
 
-    protected String getTemplate(String templatePath) {
+    protected String getTemplate(URI uri) {
         //TODO 개선요..
         try {
-            String template = new String(Files.readAllBytes(Paths.get(new ClassPathResource(templatePath).getURI())));
+            String template = new String(Files.readAllBytes(Paths.get(uri)));
             return template;
         } catch (IOException e) {
             throw new R2Exception("템플릿 파일 로딩 중 에러가 발생했습니다.", e);
         }
     }
 
+    private String getTemplate(String templateKey) {
+        try {
+            return getTemplate(new ClassPathResource(templateKey).getURI());
+        } catch (IOException e) {
+            throw new R2Exception("템플릿 파일 로딩 중 에러가 발생했습니다.", e);
+        }
+    }
 
     public static class DustRenderModel extends HashMap<String, Object> {
 

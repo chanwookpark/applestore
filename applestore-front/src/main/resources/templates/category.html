@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {> "header"/}
+</head>
+<body>
+    <div class="page-header">
+        <h2>
+            {#category}
+            <img src="{categoryImageUrl}">{categoryName}
+            {/category}
+            <small>({totalProductCount}개 상품 준비)</small>
+        </h2>
+    </div>
+
+    <div id="contents"></div>
+    <ul class="pager">
+        <li>
+            <a href="#" id="more">More...</a>
+        </li>
+    </ul>
+
+    <script type="text/javascript">
+        {#pageRequest}
+        var page = {pageNumber};
+        var size = {pageSize};
+        {/pageRequest}
+        $(document).ready(function () {
+            $("#more").click(function () {
+                $.get("/d/category/{category.categoryId}/productList?page=" + page + "&size=" + size,
+                        function (data) {
+                            $("#contents").append(data);
+                            page = page + 1;
+                        }
+                );
+            });
+        });
+    </script>
+
+</body>
+</html>
