@@ -105,6 +105,13 @@ public class Product {
     }
 
     public static Specification hasCategory(final long categoryId) {
+//        return new Specification() {
+//            @Override
+//            public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
+//                return cb.equal(root.join("displayCategory").get("categoryId"), categoryId);
+//            }
+//        };
+
         return new Specification() {
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
