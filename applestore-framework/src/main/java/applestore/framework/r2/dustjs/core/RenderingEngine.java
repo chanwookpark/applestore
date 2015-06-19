@@ -9,6 +9,8 @@ import javax.script.ScriptEngine;
 import java.io.StringWriter;
 
 /**
+ * JDK8 Nashorn 기반 dustjs 렌더링 엔진
+ *
  * @author chanwook
  */
 public class RenderingEngine {

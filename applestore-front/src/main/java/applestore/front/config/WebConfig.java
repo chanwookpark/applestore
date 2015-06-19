@@ -1,10 +1,14 @@
 package applestore.front.config;
 
 import applestore.framework.r2.dustjs.spring.DustjsView;
+import applestore.framework.r2.dustjs.spring.DustRenderModelHandlerMethodArgumentResolver;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import java.util.List;
 
 /**
  * @author chanwook
@@ -24,4 +28,8 @@ public class WebConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAd
         return viewResolver;
     }
 
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new DustRenderModelHandlerMethodArgumentResolver());
+    }
 }

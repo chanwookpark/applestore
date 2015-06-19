@@ -21,6 +21,9 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import static applestore.framework.r2.dustjs.spring.DustModel.MODEL_KEY;
+import static applestore.framework.r2.dustjs.spring.DustModel.PREFIX;
+
 /**
  * <pre>
  * {@link org.springframework.web.servlet.view.JstlView}를 확장해 Dust.js로 렌더링하는 HTML을
@@ -46,7 +49,7 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
     protected Map<String, Object> createMergedOutputModel(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) {
         final Map<String, Object> mergedOutputModel = super.createMergedOutputModel(model, request, response);
 
-        DustRenderModel dustRenderModel = (DustRenderModel) model.get("dustmodel");
+        final DustModel dm = (DustModel) mergedOutputModel.get(MODEL_KEY);
 
         //TODO 한 번 로딩하면 계속 사용하도록 개선
         createPartial();
@@ -55,12 +58,14 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
         final String template = getTemplate(templateKey);
         final String compiled = renderingEngine.compile(templateKey, template);
         renderingEngine.load(compiled);
-        final String json = toJson(dustRenderModel);
+        final String json = toJson(dm.toMap());
         final String view = renderingEngine.render(templateKey, json);
 
         mergedOutputModel.put(templateHtmlKey, compiled);
         mergedOutputModel.put(jsonDataKey, json);
         mergedOutputModel.put(viewHtmlKey, view);
+        // DM에 담았던 객체 정보를 그대로 mergedModel에 저장해 혹시 모를 View에서의 접근을 보장
+        mergedOutputModel.putAll(dm.toMap());
 
         return mergedOutputModel;
     }
@@ -111,8 +116,14 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
 
     }
 
-    private String toJson(DustRenderModel renderModel) {
+    private String toJson(Map<String, ?> originalModel) {
         try {
+            Map<String, Object> renderModel = new HashMap<String, Object>();
+            for (Map.Entry<String, ?> e : originalModel.entrySet()) {
+                if (e.getKey().startsWith(PREFIX)) {
+                    renderModel.put(e.getKey().replaceAll(PREFIX, ""), e.getValue());
+                }
+            }
             return objectMapper.writeValueAsString(renderModel);
         } catch (JsonProcessingException e) {
             throw new R2Exception("데이터 모델 변환 중 에러가 발생했습니다.", e);
@@ -135,10 +146,6 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
         } catch (IOException e) {
             throw new R2Exception("템플릿 파일 로딩 중 에러가 발생했습니다.", e);
         }
-    }
-
-    public static class DustRenderModel extends HashMap<String, Object> {
-
     }
 
     public void setRenderingEngine(RenderingEngine renderingEngine) {

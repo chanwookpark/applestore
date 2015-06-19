@@ -10,6 +10,8 @@ import javax.script.ScriptException;
 import java.io.FileNotFoundException;
 
 /**
+ * {@link RenderingEngine} 객체를 생성하는 팩토리 클래스
+ *
  * @author chanwook
  */
 public class RenderingEngineFactory {
