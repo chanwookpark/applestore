@@ -27,11 +27,11 @@
         {/pageRequest}
         $(document).ready(function () {
             $("#more").click(function () {
-                $.get("/d/category/{category.categoryId}/productList?page=" + page + "&size=" + size,
-                        function (data) {
-                            $("#contents").append(data);
-                            page = page + 1;
-                        }
+                $.get("/category/{category.categoryId}/productList?page=" + page + "&size=" + size,
+                    function (data) {
+                        $("#contents").append(data);
+                        page = page + 1;
+                    }
                 );
             });
         });

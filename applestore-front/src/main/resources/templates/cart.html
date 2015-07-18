@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {> "header"/}
+</head>
+<body>
+<div class="page-header">
+    <h3>장바구니 조회</h3>
+</div>
+
+<div>
+    {#cart}
+    <table>
+        <thead>
+            <tr>
+                <td>상품이름</td>
+                <td>주문수량</td>
+                <td>주문가격</td>
+            </tr>
+        </thead>
+        <tbody>
+            {#itemList}
+            <tr>
+                <td>{productId}</td>
+                <td>{orderCount}</td>
+                <td>TODO</td>
+            </tr>
+            {/itemList}
+        </tbody>
+    </table>
+    {/cart}
+    <a href="#">주문하기</a>
+</div>
+
+</body>
+</html>

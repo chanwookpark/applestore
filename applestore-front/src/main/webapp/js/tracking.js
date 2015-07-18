@@ -6,7 +6,7 @@ function push(eventType, paramId) {
         // 내가 만든 API로 보내기
         $.ajax({
             method: "POST",
-            url: "/c/category/" + /*categoryId*/ idArray[0] + "/" + /*productId*/ idArray[1]
+            url: "/category/index/" + /*categoryId*/ idArray[0] + "/" + /*productId*/ idArray[1]
         })
             .done(function (msg) {
                 console('PUSH Event Success[CATEGORY, ' + idArray[0] + ', ' + idArray[1]);
