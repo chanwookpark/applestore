@@ -1,8 +1,8 @@
 package applestore.front.cart;
 
-import applestore.domain.cart.Cart;
+import applestore.domain.cart.entity.Cart;
 import applestore.domain.order.OrderItem;
-import applestore.front.product.ProductFormForCart;
+import applestore.front.product.ProductForCartRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +24,10 @@ public class CartController {
     CartStore cartStore;
 
     @RequestMapping(value = "/cart/addItem", method = RequestMethod.POST)
-    public String addItem(ProductFormForCart form, HttpSession session) {
+    public String addItem(ProductForCartRequest request, HttpSession session) {
         Cart cart = cartStore.getCart(session);
 
-        OrderItem orderItem = createOrderItem(form);
+        OrderItem orderItem = cartService.createOrderItem(request, cart);
         cartService.addItem(cart, orderItem);
 
         return "redirect:/cart";
@@ -39,13 +39,5 @@ public class CartController {
 
         model.put("cart", cart);
         return "cart";
-    }
-
-    private OrderItem createOrderItem(ProductFormForCart form) {
-        OrderItem item = new OrderItem();
-        item.setProductId(form.getProductId());
-        item.setSkuId(form.getSelectSkuId());
-        item.setOrderCount(form.getSelectItemCount());
-        return item;
     }
 }

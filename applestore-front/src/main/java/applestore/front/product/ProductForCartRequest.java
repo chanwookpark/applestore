@@ -3,7 +3,7 @@ package applestore.front.product;
 /**
  * @author chanwook
  */
-public class ProductFormForCart {
+public class ProductForCartRequest {
 
     private String productId;
 

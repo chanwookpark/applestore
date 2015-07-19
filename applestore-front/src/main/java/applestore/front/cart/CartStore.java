@@ -1,6 +1,6 @@
 package applestore.front.cart;
 
-import applestore.domain.cart.Cart;
+import applestore.domain.cart.entity.Cart;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,4 +9,6 @@ import javax.servlet.http.HttpSession;
  */
 public interface CartStore {
     Cart getCart(HttpSession session);
+
+    void update(Cart cart);
 }
