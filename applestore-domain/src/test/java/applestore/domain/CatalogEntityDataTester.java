@@ -1,11 +1,11 @@
 package applestore.domain;
 
 import applestore.domain.catalog.entity.DisplayCategory;
-import applestore.domain.catalog.entity.Product;
-import applestore.domain.catalog.entity.ProductImage;
+import applestore.domain.product.entity.Product;
+import applestore.domain.product.entity.ProductImage;
 import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
 import applestore.domain.catalog.repository.ProductIndexSolrRepository;
-import applestore.domain.catalog.repository.ProductJpaRepository;
+import applestore.domain.product.repository.ProductJpaRepository;
 import applestore.domain.catalog.solr.ProductIndex;
 import applestore.domain.product.entity.Sku;
 import org.junit.Test;

@@ -1,7 +1,6 @@
-package applestore.domain.catalog.entity;
+package applestore.domain.product.entity;
 
-import applestore.domain.product.entity.ProductAttribute;
-import applestore.domain.product.entity.Sku;
+import applestore.domain.catalog.entity.DisplayCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -43,10 +42,10 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> imageList = new ArrayList<ProductImage>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, targetEntity = Sku.class)
     private List<Sku> skuList = new ArrayList<Sku>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "PRD_PRD_ATTRIBUTE_R",
             joinColumns = {@JoinColumn(name = "productId")},
             inverseJoinColumns = {@JoinColumn(name = "attributeId")})

@@ -1,8 +1,8 @@
 package applestore.front.catalog;
 
 import applestore.domain.catalog.entity.DisplayCategory;
-import applestore.domain.catalog.entity.Product;
-import applestore.domain.catalog.repository.ProductJpaRepository;
+import applestore.domain.product.entity.Product;
+import applestore.domain.product.repository.ProductJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static applestore.domain.catalog.entity.Product.hasCategory;
+import static applestore.domain.product.entity.Product.hasCategory;
 
 /**
  * @author chanwook

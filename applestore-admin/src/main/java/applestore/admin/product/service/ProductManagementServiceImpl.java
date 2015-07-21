@@ -1,8 +1,10 @@
-package applestore.admin.catalog.service;
+package applestore.admin.product.service;
 
 import applestore.admin.catalog.model.ProductDataSet;
-import applestore.domain.catalog.entity.Product;
-import applestore.domain.catalog.repository.ProductJpaRepository;
+import applestore.admin.product.ProductAttributeFormRequest;
+import applestore.domain.product.entity.Product;
+import applestore.domain.product.repository.ProductJpaRepository;
+import applestore.domain.product.repository.ProductAttributeJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,10 @@ import java.util.List;
 public class ProductManagementServiceImpl implements ProductManagementService {
 
     @Autowired
-    private ProductJpaRepository pr;
+    ProductJpaRepository pr;
+
+    @Autowired
+    ProductAttributeJpaRepository par;
 
     @Override
     public void createProduct(Product product) {
@@ -31,6 +36,18 @@ public class ProductManagementServiceImpl implements ProductManagementService {
         save(grid.getCreateList());
 
         update(grid.getUpdateList());
+    }
+
+    @Transactional
+    @Override
+    public void refreshAttribute(String productId, ProductAttributeFormRequest formRequest) {
+        final Product product = pr.findOne(productId);
+
+        if (formRequest.getSelectAttrId() != null) {
+            for (Long attrId : formRequest.getSelectAttrId()) {
+                product.addProductAttribute(par.findOne(attrId));
+            }
+        }
     }
 
     private void save(List<Product> createList) {

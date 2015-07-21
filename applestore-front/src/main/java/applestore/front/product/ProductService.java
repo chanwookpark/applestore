@@ -1,6 +1,6 @@
 package applestore.front.product;
 
-import applestore.domain.catalog.entity.Product;
+import applestore.domain.product.entity.Product;
 
 /**
  * @author chanwook

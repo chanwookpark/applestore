@@ -1,4 +1,4 @@
-package applestore.domain.catalog.entity;
+package applestore.domain.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

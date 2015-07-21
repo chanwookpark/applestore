@@ -1,9 +1,9 @@
 package applestore.admin.catalog.index;
 
-import applestore.domain.catalog.entity.Product;
+import applestore.domain.product.entity.Product;
 import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
 import applestore.domain.catalog.repository.ProductIndexSolrRepository;
-import applestore.domain.catalog.repository.ProductJpaRepository;
+import applestore.domain.product.repository.ProductJpaRepository;
 import applestore.domain.catalog.solr.ProductIndex;
 import applestore.framework.DateUtils;
 import org.slf4j.Logger;

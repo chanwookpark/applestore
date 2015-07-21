@@ -1,7 +1,7 @@
 package applestore.admin.catalog.model;
 
-import applestore.domain.catalog.entity.Product;
-import applestore.domain.catalog.entity.ProductStatus;
+import applestore.domain.product.entity.Product;
+import applestore.domain.product.entity.ProductStatus;
 
 import java.io.Serializable;
 

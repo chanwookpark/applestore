@@ -1,6 +1,6 @@
 package applestore.admin.catalog.model;
 
-import applestore.domain.catalog.entity.Product;
+import applestore.domain.product.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;

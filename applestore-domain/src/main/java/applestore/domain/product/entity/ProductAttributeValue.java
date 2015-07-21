@@ -1,8 +1,8 @@
 package applestore.domain.product.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author chanwook
@@ -25,7 +25,7 @@ public class ProductAttributeValue {
     private ProductAttribute attribute;
 
     @ManyToMany(mappedBy = "attributeValueList")
-    private Set<Sku> skuList = new HashSet<Sku>();
+    private List<Sku> skuList = new ArrayList<Sku>();
 
     public ProductAttributeValue() {
     }
@@ -70,18 +70,15 @@ public class ProductAttributeValue {
         return attribute;
     }
 
-    public Set<Sku> getSkuList() {
+    public List<Sku> getSkuList() {
         return skuList;
     }
 
-    public void setSkuList(Set<Sku> skuList) {
+    public void setSkuList(List<Sku> skuList) {
         this.skuList = skuList;
     }
 
     public void addSku(Sku sku) {
         this.skuList.add(sku);
-        if (!sku.getAttributeValueList().contains(this)) {
-            sku.getAttributeValueList().add(this);
-        }
     }
 }

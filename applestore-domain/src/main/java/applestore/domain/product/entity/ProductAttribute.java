@@ -1,7 +1,5 @@
 package applestore.domain.product.entity;
 
-import applestore.domain.catalog.entity.Product;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +14,13 @@ public class ProductAttribute {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long attributeId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String attributeName;
 
     @Column(nullable = false, length = 100)
     private String label;
 
+    @Column(nullable = false, unique = true)
     private int displayOrder;
 
     @ManyToMany(mappedBy = "attributeList")
@@ -89,9 +88,7 @@ public class ProductAttribute {
 
     public void addValue(ProductAttributeValue value) {
         this.attrValueList.add(value);
-        if (value.getAttribute() != null) {
-            value.setAttribute(this);
-        }
+        value.setAttribute(this);
     }
 
     public void addProductList(Product product) {

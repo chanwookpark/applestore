@@ -1,16 +1,13 @@
 package applestore.domain.product.entity;
 
-import applestore.domain.catalog.entity.Product;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author chanwook
  */
 @Entity
-@Table(name = "PRD_SKU")
 public class Sku {
 
     @Id
@@ -26,22 +23,24 @@ public class Sku {
     @Column(nullable = false)
     private long retailPrice;
 
-    @Column(nullable = false)
-    private long salesStock; //판매가능수량
+    @Column(nullable = true)
+    private long salesStock; //기본 sku는 가격을 관리만 하고 재고는 없을 수 있기 때문에
 
     @Column(nullable = true)
     private String description;
 
-    @ManyToOne(optional = false)
+    @Column(nullable = false)
+    private boolean attributeAware;
+
+    @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-            targetEntity = ProductAttributeValue.class)
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = ProductAttributeValue.class)
     @JoinTable(name = "SKU_PRODUCT_ATTRIBUTE_VALUE_R",
             joinColumns = {@JoinColumn(name = "skuId")},
             inverseJoinColumns = {@JoinColumn(name = "valueId")})
-    private Set<ProductAttributeValue> attributeValueList = new HashSet<ProductAttributeValue>();
+    private List<ProductAttributeValue> attributeValueList = new ArrayList<ProductAttributeValue>();
 
     public Sku() {
     }
@@ -52,21 +51,11 @@ public class Sku {
         this.salesStock = salesStock;
     }
 
-    public Sku(String skuName, long salesPrice, long retailPrice, long salesStock, Product product, ProductAttributeValue... values) {
+    public Sku(String skuName, long salesPrice, long retailPrice, long salesStock) {
         this.skuName = skuName;
         this.salesPrice = salesPrice;
         this.retailPrice = retailPrice;
         this.salesStock = salesStock;
-        this.product = product;
-
-        addValues(values);
-    }
-
-    private void addValues(ProductAttributeValue[] values) {
-        for (ProductAttributeValue v : values) {
-            this.attributeValueList.add(v);
-            v.addSku(this);
-        }
     }
 
     public long getSkuId() {
@@ -125,18 +114,30 @@ public class Sku {
         this.description = description;
     }
 
-    public Set<ProductAttributeValue> getAttributeValueList() {
+    public List<ProductAttributeValue> getAttributeValueList() {
         return attributeValueList;
     }
 
-    public void setAttributeValueList(Set<ProductAttributeValue> attributeValueList) {
+    public void setAttributeValueList(List<ProductAttributeValue> attributeValueList) {
         this.attributeValueList = attributeValueList;
     }
 
     public void addAttributeValue(ProductAttributeValue attrValue) {
         this.attributeValueList.add(attrValue);
-        if (!attrValue.getSkuList().contains(this)) {
-            attrValue.addSku(this);
+
+        for (Sku sku : attrValue.getSkuList()) {
+            if (skuId == sku.getSkuId()) {
+                return;
+            }
         }
+        attrValue.addSku(this);
+    }
+
+    public boolean isAttributeAware() {
+        return attributeAware;
+    }
+
+    public void setAttributeAware(boolean attributeAware) {
+        this.attributeAware = attributeAware;
     }
 }

@@ -1,7 +1,7 @@
 package applestore.front.product;
 
-import applestore.domain.catalog.entity.Product;
-import applestore.domain.catalog.repository.ProductJpaRepository;
+import applestore.domain.product.entity.Product;
+import applestore.domain.product.repository.ProductJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -3,11 +3,11 @@ package applestore.admin.catalog;
 import applestore.admin.catalog.model.ProductDataSet;
 import applestore.admin.catalog.model.ProductGridForm;
 import applestore.admin.catalog.model.ProductGridRow;
-import applestore.admin.catalog.service.ProductManagementService;
+import applestore.admin.product.service.ProductManagementService;
 import applestore.domain.catalog.entity.DisplayCategory;
-import applestore.domain.catalog.entity.Product;
+import applestore.domain.product.entity.Product;
 import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
-import applestore.domain.catalog.repository.ProductJpaRepository;
+import applestore.domain.product.repository.ProductJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,19 +32,19 @@ public class CatalogAdminViewController {
     @Autowired
     private ProductManagementService ps;
 
-    @RequestMapping(value = "/a/catalog", method = RequestMethod.GET)
+    @RequestMapping(value = "/catalog", method = RequestMethod.GET)
     public String list(ModelMap model) {
         model.put("productList", pr.findAll());
         model.put("allCategories", cr.findAll());
         return "catalog";
     }
 
-    @RequestMapping(value = "/a/catalog", method = RequestMethod.POST)
+    @RequestMapping(value = "/catalog", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("grid") ProductGridForm grid) {
         final ProductDataSet ds = createDataSet(grid.getRowList());
         ps.flushUpdatedRow(ds);
 
-        return "redirect:/a/catalog";
+        return "redirect:/catalog";
     }
 
     private ProductDataSet createDataSet(List<ProductGridRow> formList) {
