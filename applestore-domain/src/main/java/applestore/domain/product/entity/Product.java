@@ -175,4 +175,8 @@ public class Product {
         this.attributeList.add(attr);
         attr.addProductList(this);
     }
+
+    public void resetProductAttribute() {
+        this.attributeList = new ArrayList<ProductAttribute>();
+    }
 }

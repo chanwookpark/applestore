@@ -1,13 +1,13 @@
 package applestore.domain;
 
 import applestore.domain.catalog.entity.DisplayCategory;
-import applestore.domain.product.entity.Product;
-import applestore.domain.product.entity.ProductImage;
+import applestore.domain.product.entity.*;
 import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
 import applestore.domain.catalog.repository.ProductIndexSolrRepository;
+import applestore.domain.product.repository.ProductAttributeJpaRepository;
+import applestore.domain.product.repository.ProductAttributeValueJpaRepository;
 import applestore.domain.product.repository.ProductJpaRepository;
 import applestore.domain.catalog.solr.ProductIndex;
-import applestore.domain.product.entity.Sku;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +41,23 @@ public class CatalogEntityDataTester {
     @Autowired
     ProductIndexSolrRepository sr;
 
+    @Autowired
+    ProductAttributeJpaRepository par;
+
+    @Autowired
+    ProductAttributeValueJpaRepository pavr;
+
     @Test
     public void createData() throws Exception {
         pr.deleteAll();
         cr.deleteAll();
+        pavr.deleteAll();
+        par.deleteAll();
 
         cr.flush();
         pr.flush();
+        pavr.flush();
+        par.flush();
 
         DisplayCategory ds1 = new DisplayCategory("mac", CATEGORY_IMAGE_URL_MAC);
         DisplayCategory ds2 = new DisplayCategory("iphone", CATEGORY_IMAGE_URL_IPHONE);
@@ -112,5 +122,36 @@ public class CatalogEntityDataTester {
         }
 
         System.out.println(">> 인덱스 생성: " + index + "개의 인덱스를 생성했습니다.");
+
+        // PV와 PAV 생성
+        ProductAttribute attr1 = new ProductAttribute();
+        attr1.setAttributeName("color");
+        attr1.setDisplayOrder(1);
+        attr1.setLabel("색깔");
+
+        ProductAttribute attr2 = new ProductAttribute();
+        attr2.setAttributeName("size");
+        attr2.setLabel("사이즈");
+        attr2.setDisplayOrder(2);
+
+        // attr 생성
+        par.save(attr1);
+        par.save(attr2);
+        par.flush();
+
+        final ProductAttributeValue value1 = new ProductAttributeValue("red", "빨간색", attr1);
+        final ProductAttributeValue value2 = new ProductAttributeValue("blue", "파랑색", attr1);
+        final ProductAttributeValue value3 = new ProductAttributeValue("S", "Small", attr2);
+        final ProductAttributeValue value4 = new ProductAttributeValue("M", "Medium", attr2);
+        final ProductAttributeValue value5 = new ProductAttributeValue("L", "Large", attr2);
+
+        // attr value 추가 (편하게 par로 저장)
+        pavr.save(value1);
+        pavr.save(value2);
+        pavr.save(value3);
+        pavr.save(value4);
+        pavr.save(value5);
+        pavr.flush();
+
     }
 }

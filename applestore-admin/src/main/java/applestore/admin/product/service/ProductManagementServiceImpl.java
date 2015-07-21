@@ -3,8 +3,8 @@ package applestore.admin.product.service;
 import applestore.admin.catalog.model.ProductDataSet;
 import applestore.admin.product.ProductAttributeFormRequest;
 import applestore.domain.product.entity.Product;
-import applestore.domain.product.repository.ProductJpaRepository;
 import applestore.domain.product.repository.ProductAttributeJpaRepository;
+import applestore.domain.product.repository.ProductJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +43,8 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     public void refreshAttribute(String productId, ProductAttributeFormRequest formRequest) {
         final Product product = pr.findOne(productId);
 
+        // 전체 리셋
+        product.resetProductAttribute();
         if (formRequest.getSelectAttrId() != null) {
             for (Long attrId : formRequest.getSelectAttrId()) {
                 product.addProductAttribute(par.findOne(attrId));
