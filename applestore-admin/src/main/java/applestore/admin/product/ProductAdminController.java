@@ -30,7 +30,7 @@ public class ProductAdminController {
     @Autowired
     ProductManagementService service;
 
-    @RequestMapping(value = "/product/{productId}/attribute", method = RequestMethod.GET)
+    @RequestMapping(value = "/product/{productId}/detail", method = RequestMethod.GET)
     public String attributeFrom(@PathVariable String productId, ModelMap model) {
         Product product = pr.findOne(productId);
         List<ProductAttribute> attrList;
@@ -60,6 +60,14 @@ public class ProductAdminController {
                                             ProductAttributeFormRequest formRequest) {
         service.refreshAttribute(productId, formRequest);
 
-        return "redirect:/product/" + productId + "/attribute";
+        return "redirect:/product/" + productId + "/detail";
+    }
+
+    @RequestMapping("/product/{productId}/sku/create")
+    public String createSku(@PathVariable String productId, boolean shiftable) {
+
+        service.createSku(productId, shiftable);
+
+        return "redirect:/product/" + productId + "/detail";
     }
 }

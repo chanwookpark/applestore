@@ -13,4 +13,6 @@ public interface ProductManagementService {
     void flushUpdatedRow(ProductDataSet grid);
 
     void refreshAttribute(String productId, ProductAttributeFormRequest formRequest);
+
+    void createSku(String productId, boolean shiftable);
 }

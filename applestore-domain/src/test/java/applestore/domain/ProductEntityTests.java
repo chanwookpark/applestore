@@ -46,13 +46,13 @@ public class ProductEntityTests {
         // PA와 PAV 생성
         ProductAttribute attr1 = new ProductAttribute();
         attr1.setAttributeName("color-xxx");
-        attr1.setDisplayOrder(1);
+        attr1.setDisplayOrder(999999);
         attr1.setLabel("색깔");
 
         ProductAttribute attr2 = new ProductAttribute();
         attr2.setAttributeName("size-xxx");
         attr2.setLabel("사이즈");
-        attr2.setDisplayOrder(2);
+        attr2.setDisplayOrder(999998);
 
         // attr 생성
         par.save(attr1);
@@ -80,31 +80,29 @@ public class ProductEntityTests {
         pr.flush();
 
         // Sku 생성 (우선 선택적으로 만들어보자)
-        Sku sku1 = new Sku("sku1", 100, 50, 10);
-        sku1.addAttributeValue(value1);
-        sku1.addAttributeValue(value3);
-
-        Sku sku2 = new Sku("sku2", 200, 500, 30);
-        sku2.addAttributeValue(value2);
-        sku2.addAttributeValue(value4);
-        sku2.addAttributeValue(value5);
+        Sku sku1 = new Sku("sku1", 100, 50, 10, value1);
+        Sku sku2 = new Sku("sku2", 200, 500, 30, value2);
+        Sku sku3 = new Sku("sku3", 200, 500, 30, value3);
 
         sr.save(sku1);
         sr.save(sku2);
+        sr.save(sku3);
 
         product.addSku(sku1);
         product.addSku(sku2);
+        product.addSku(sku3);
         pr.save(product); // sku 생성 및 product 관계 설정
 
         final Product prdInDb = pr.findOne(product.getProductId());
 
         assertThat(prdInDb, notNullValue());
-        assertThat(prdInDb.getSkuList().size(), is(2));
+        assertThat(prdInDb.getSkuList().size(), is(3));
         assertThat(prdInDb.getAttributeList().size(), is(2));
         final Iterator<ProductAttribute> iterator = prdInDb.getAttributeList().iterator();
         assertThat(iterator.next().getAttrValueList().size(), is(2));
         assertThat(iterator.next().getAttrValueList().size(), is(3));
-        assertThat(prdInDb.getSkuList().get(0).getAttributeValueList().size(), is(2));
-        assertThat(prdInDb.getSkuList().get(1).getAttributeValueList().size(), is(3));
+        assertThat(prdInDb.getSkuList().get(0).getAttributeValue().getValueId(), is(value1.getValueId()));
+        assertThat(prdInDb.getSkuList().get(1).getAttributeValue().getValueId(), is(value2.getValueId()));
+        assertThat(prdInDb.getSkuList().get(2).getAttributeValue().getValueId(), is(value3.getValueId()));
     }
 }

@@ -64,7 +64,7 @@
                            value="${product.imageList[0].imageUrl}">
                 </td>
                 <td>
-                    <a href="/product/${product.productId}/attribute">상품속성관리</a>
+                    <a href="/product/${product.productId}/detail">상품상세관리</a>
                 </td>
             </tr>
             <c:if test="${status.last == true}">

@@ -24,7 +24,7 @@ public class ProductAttributeValue {
     @JoinColumn(name = "attributeId")
     private ProductAttribute attribute;
 
-    @ManyToMany(mappedBy = "attributeValueList")
+    @OneToMany(mappedBy = "attributeValue")
     private List<Sku> skuList = new ArrayList<Sku>();
 
     public ProductAttributeValue() {

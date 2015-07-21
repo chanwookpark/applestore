@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<h2>상품속성매핑</h2>
+
 <form action="/product/${productId}/attribute" method="POST">
     <table>
         <thead>
@@ -40,10 +42,42 @@
         </c:forEach>
         </tbody>
     </table>
-
-    <a href="/catalog" type="button">상품목록으로</a>
     <input type="submit" value="저장">
 </form>
 
+<h2>SKU 관리</h2>
+
+<form>
+    <table>
+        <thead>
+        <tr>
+            <td>SKU ID</td>
+            <td>Sku Name</td>
+            <td>판매가</td>
+            <td>소매가</td>
+            <td>재고</td>
+            <td>설명</td>
+            <td>기본SKU여부</td>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="sku" items="${product.skuList}">
+            <tr>
+                <td>${sku.skuId}</td>
+                <td>${sku.skuName}</td>
+                <td>${sku.salesPrice}</td>
+                <td>${sku.retailPrice}</td>
+                <td>${sku.salesStock}</td>
+                <td>${sku.description}</td>
+                <td>${sku.defaultSku}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <a href="/product/${productId}/sku/create">SKU생성</a>
+</form>
+<p>
+    <a href="/catalog">상품목록으로</a>
+</p>
 </body>
 </html>
