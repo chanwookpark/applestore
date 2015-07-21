@@ -16,6 +16,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    // TODO 가격은 기본 sku로 하고, sku에 추가로 가격이 적혀 있으면 그걸로 판다. 없으면 기본 sku 사용
     @RequestMapping("/product/{productId}")
     public String getView(@PathVariable String productId, DustModel model) {
 

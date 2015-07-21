@@ -1,6 +1,5 @@
-package applestore.domain.catalog;
+package applestore.domain;
 
-import applestore.domain.AppleStoreEntityTestApp;
 import applestore.domain.catalog.entity.DisplayCategory;
 import applestore.domain.catalog.entity.Product;
 import applestore.domain.catalog.entity.ProductImage;
@@ -8,6 +7,7 @@ import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
 import applestore.domain.catalog.repository.ProductIndexSolrRepository;
 import applestore.domain.catalog.repository.ProductJpaRepository;
 import applestore.domain.catalog.solr.ProductIndex;
+import applestore.domain.product.entity.Sku;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +55,30 @@ public class CatalogEntityDataTester {
         DisplayCategory ds4 = new DisplayCategory("pad", CATEGORY_IMAGE_URL_IPAD);
 
         // 우선 한 이미지로~~
-        ds1.addProduct(new Product("M101", "MacBook Pro 2010 early").addImage(new ProductImage(MACBOOK_IMAGE)));
-        ds1.addProduct(new Product("M102", "MacBook Pro 2010 mid").addImage(new ProductImage(MACBOOK_IMAGE)));
-        ds1.addProduct(new Product("M103", "MacBook Pro 2011 mid").addImage(new ProductImage(MACBOOK_IMAGE)));
-        ds1.addProduct(new Product("M104", "MacBook Pro 2011 late").addImage(new ProductImage(MACBOOK_IMAGE)));
-        ds1.addProduct(new Product("M105", "MacBook Pro 2012 mid").addImage(new ProductImage(MACBOOK_IMAGE)));
-        ds1.addProduct(new Product("M106", "MacBook Pro 2013 early").addImage(new ProductImage(MACBOOK_IMAGE)));
+        ds1.addProduct(new Product("M101", "MacBook Pro 2010 early")
+                .addImage(new ProductImage(MACBOOK_IMAGE))
+                .addSku(new Sku("Gold model", 1000, 100))
+                .addSku(new Sku("Silver model", 1000, 200)));
+        ds1.addProduct(new Product("M102", "MacBook Pro 2010 mid")
+                .addImage(new ProductImage(MACBOOK_IMAGE))
+                .addSku(new Sku("Gold model", 2000, 100))
+                .addSku(new Sku("Silver model", 2000, 200)));
+        ds1.addProduct(new Product("M103", "MacBook Pro 2011 mid")
+                .addImage(new ProductImage(MACBOOK_IMAGE))
+                .addSku(new Sku("Gold model", 3000, 100))
+                .addSku(new Sku("Silver model", 3000, 200)));
+        ds1.addProduct(new Product("M104", "MacBook Pro 2011 late")
+                .addImage(new ProductImage(MACBOOK_IMAGE))
+                .addSku(new Sku("Gold model", 4000, 100))
+                .addSku(new Sku("Silver model", 4000, 200)));
+        ds1.addProduct(new Product("M105", "MacBook Pro 2012 mid")
+                .addImage(new ProductImage(MACBOOK_IMAGE))
+                .addSku(new Sku("Gold model", 5000, 100))
+                .addSku(new Sku("Silver model", 5000, 200)));
+        ds1.addProduct(new Product("M106", "MacBook Pro 2013 early")
+                .addImage(new ProductImage(MACBOOK_IMAGE))
+                .addSku(new Sku("Gold model", 6000, 100))
+                .addSku(new Sku("Silver model", 6000, 200)));
         cr.saveAndFlush(ds1);
 
         ds2.addProduct(new Product("P101", "iPhone 3"));

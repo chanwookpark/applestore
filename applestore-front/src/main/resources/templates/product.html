@@ -12,6 +12,11 @@
     <!-- TODO SKU 별 주문 가능 수량을 확인해서 1단위로 표시하기 -->
     {#product}
     <form id="productForm" action="/cart/addItem" method="post">
+        {#skuList}
+        <ul>
+
+        </ul>
+        {/skuList}
         <ul>
             <li>
                 수량: <input type="hidden" name="productId" value="{productId}">
@@ -26,8 +31,6 @@
             </li>
             <input type="hidden" name="{_csrf.parameterName}" value="{_csrf.token}"/>
         </ul>
-
-
     </form>
     {/product}
 </div>

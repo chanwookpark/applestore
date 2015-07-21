@@ -1,5 +1,7 @@
 package applestore.domain.catalog.entity;
 
+import applestore.domain.product.entity.ProductAttribute;
+import applestore.domain.product.entity.Sku;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -25,7 +27,7 @@ public class Product {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @Column
+    @Column(length = 100, nullable = false)
     private String productName;
 
     @Column(length = 10)
@@ -41,6 +43,14 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> imageList = new ArrayList<ProductImage>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Sku> skuList = new ArrayList<Sku>();
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "PRD_PRD_ATTRIBUTE_R",
+            joinColumns = {@JoinColumn(name = "productId")},
+            inverseJoinColumns = {@JoinColumn(name = "attributeId")})
+    private List<ProductAttribute> attributeList = new ArrayList<ProductAttribute>();
 
     public Product() {
     }
@@ -54,7 +64,6 @@ public class Product {
         this.productName = productName;
         this.status = status;
     }
-
 
     public String getProductId() {
         return productId;
@@ -120,6 +129,14 @@ public class Product {
         };
     }
 
+    public List<Sku> getSkuList() {
+        return skuList;
+    }
+
+    public void setSkuList(List<Sku> skuList) {
+        this.skuList = skuList;
+    }
+
     public Product addImage(ProductImage image) {
         image.setProduct(this);
         this.imageList.add(image);
@@ -139,5 +156,24 @@ public class Product {
             return true;
         }
         return false;
+    }
+
+    public Product addSku(Sku sku) {
+        this.skuList.add(sku);
+        sku.setProduct(this);
+        return this;
+    }
+
+    public List<ProductAttribute> getAttributeList() {
+        return attributeList;
+    }
+
+    public void setAttributeList(List<ProductAttribute> attributeList) {
+        this.attributeList = attributeList;
+    }
+
+    public void addProductAttribute(ProductAttribute attr) {
+        this.attributeList.add(attr);
+        attr.addProductList(this);
     }
 }
