@@ -58,6 +58,7 @@
             <td>재고</td>
             <td>설명</td>
             <td>기본SKU여부</td>
+            <td>상태</td>
         </tr>
         </thead>
         <tbody>
@@ -70,11 +71,12 @@
                 <td>${sku.salesStock}</td>
                 <td>${sku.description}</td>
                 <td>${sku.defaultSku}</td>
+                <td>${sku.status}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a href="/product/${productId}/sku/create">SKU생성</a>
+    <a href="/product/${productId}/sku/create?shiftable=yes">SKU생성</a>
 </form>
 <p>
     <a href="/catalog">상품목록으로</a>

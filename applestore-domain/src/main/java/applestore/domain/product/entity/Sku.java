@@ -1,6 +1,7 @@
 package applestore.domain.product.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author chanwook
@@ -35,6 +36,10 @@ public class Sku {
 
     @Column(nullable = false)
     private SkuStatus status = SkuStatus.CLOSE;
+
+    @Version
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
 
     @ManyToOne
     @JoinColumn(name = "productId")
@@ -147,5 +152,13 @@ public class Sku {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 }
