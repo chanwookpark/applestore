@@ -8,9 +8,7 @@ import applestore.domain.product.repository.ProductJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +41,7 @@ public class ProductAdminController {
         model.put("product", product);
         model.put("attrList", attrList);
         model.put("productId", productId);
+        model.put("skuForm", new SkuFormRequest(product.getSkuList()));
 
         return "prdAttribute";
     }
@@ -60,7 +59,7 @@ public class ProductAdminController {
                                             ProductAttributeFormRequest formRequest) {
         service.refreshAttribute(productId, formRequest);
 
-        return "redirect:/product/" + productId + "/detail";
+        return redirectTo(productId);
     }
 
     @RequestMapping("/product/{productId}/sku/create")
@@ -68,6 +67,16 @@ public class ProductAdminController {
 
         service.createSku(productId, shiftable);
 
+        return redirectTo(productId);
+    }
+
+    @RequestMapping("/sku/update")
+    public String updateSku(String productId, @ModelAttribute("skuForm") SkuFormRequest formRequest) {
+        service.updateSku(productId, formRequest.getSkuList());
+        return redirectTo(productId);
+    }
+
+    private String redirectTo(@RequestParam String productId) {
         return "redirect:/product/" + productId + "/detail";
     }
 }

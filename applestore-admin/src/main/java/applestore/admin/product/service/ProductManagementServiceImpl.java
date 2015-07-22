@@ -57,6 +57,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
         }
     }
 
+    @Transactional
     @Override
     public void createSku(String productId, boolean shiftable) {
         List<Sku> current = sr.findByProductProductIdAndStatus(productId, SkuStatus.OPEN);
@@ -101,8 +102,42 @@ public class ProductManagementServiceImpl implements ProductManagementService {
         if (createSkuList.size() > 0) {
             sr.save(createSkuList);
         }
+    }
 
-        //TODO 동일한 attr-attrValue면 유지하게?!!
+    @Transactional
+    @Override
+    public void updateSku(String productId, List<Sku> updateSkuList) {
+        final Product product = pr.findOne(productId);
+
+        for (Sku updateSku : updateSkuList) {
+            Sku persisted = product.getSku(updateSku.getSkuId());
+            if (persisted != null) {
+                persisted.setDefaultSku(updateSku.isDefaultSku());
+                persisted.setDescription(updateSku.getDescription());
+                persisted.setLabel(updateSku.getLabel());
+                persisted.setRetailPrice(updateSku.getRetailPrice());
+                persisted.setSalesPrice(updateSku.getSalesPrice());
+                persisted.setSalesStock(updateSku.getSalesStock());
+                persisted.setSkuName(updateSku.getSkuName());
+                persisted.setStatus(updateSku.getStatus());
+            }
+        }
+
+        /*
+        for (Sku updateSku : updateSkuList) {
+            Sku persisted = sr.findOne(updateSku.getSkuId());
+            if (persisted != null) {
+                persisted.setDefaultSku(updateSku.isDefaultSku());
+                persisted.setDescription(updateSku.getDescription());
+                persisted.setLabel(updateSku.getLabel());
+                persisted.setRetailPrice(updateSku.getRetailPrice());
+                persisted.setSalesPrice(updateSku.getSalesPrice());
+                persisted.setSalesStock(updateSku.getSalesStock());
+                persisted.setSkuName(updateSku.getSkuName());
+                persisted.setStatus(updateSku.getStatus());
+            }
+        }
+        */
     }
 
     private Sku resolveBeforeSku(List<Sku> list, ProductAttributeValue attrValue) {

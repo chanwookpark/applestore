@@ -47,7 +47,7 @@
 
 <h2>SKU 관리</h2>
 
-<form>
+<form:form action="/sku/update" method="post" modelAttribute="skuForm">
     <table>
         <thead>
         <tr>
@@ -57,27 +57,31 @@
             <td>소매가</td>
             <td>재고</td>
             <td>설명</td>
-            <td>기본SKU여부</td>
+            <td>기본SKU</td>
             <td>상태</td>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="sku" items="${product.skuList}">
+        <c:forEach items="${product.skuList}" varStatus="row">
             <tr>
-                <td>${sku.skuId}</td>
-                <td>${sku.skuName}</td>
-                <td>${sku.salesPrice}</td>
-                <td>${sku.retailPrice}</td>
-                <td>${sku.salesStock}</td>
-                <td>${sku.description}</td>
-                <td>${sku.defaultSku}</td>
-                <td>${sku.status}</td>
+                <td>
+                    <form:input path="skuList[${row.index}].skuId" readonly="true"/>
+                </td>
+                <td><form:input path="skuList[${row.index}].skuName"/></td>
+                <td><form:input path="skuList[${row.index}].salesPrice"/></td>
+                <td><form:input path="skuList[${row.index}].retailPrice"/></td>
+                <td><form:input path="skuList[${row.index}].salesStock"/></td>
+                <td><form:input path="skuList[${row.index}].description"/></td>
+                <td><form:input path="skuList[${row.index}].defaultSku"/></td>
+                <td><form:input path="skuList[${row.index}].status"/></td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
     <a href="/product/${productId}/sku/create?shiftable=yes">SKU생성</a>
-</form>
+    <input type="hidden" name="productId" value="${productId}">
+    <input type="submit" value="SKU저장">
+</form:form>
 <p>
     <a href="/catalog">상품목록으로</a>
 </p>

@@ -179,4 +179,13 @@ public class Product {
     public void resetProductAttribute() {
         this.attributeList = new ArrayList<ProductAttribute>();
     }
+
+    public Sku getSku(long skuId) {
+        for (Sku sku : this.skuList) {
+            if (skuId == sku.getSkuId()) {
+                return sku;
+            }
+        }
+        return null;
+    }
 }
