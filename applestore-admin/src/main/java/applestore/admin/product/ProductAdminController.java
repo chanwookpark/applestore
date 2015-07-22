@@ -40,7 +40,7 @@ public class ProductAdminController {
 
         model.put("product", product);
         model.put("attrList", attrList);
-        model.put("productId", productId);
+        model.put("productMainForm", new ProductMainFormRequest(product));
         model.put("skuForm", new SkuFormRequest(product.getSkuList()));
 
         return "prdAttribute";
@@ -74,6 +74,14 @@ public class ProductAdminController {
     public String updateSku(String productId, @ModelAttribute("skuForm") SkuFormRequest formRequest) {
         service.updateSku(productId, formRequest.getSkuList());
         return redirectTo(productId);
+    }
+
+    @RequestMapping("/product/main")
+    public String updateProductMain(ProductMainFormRequest formRequest) {
+
+        service.updateProductMain(formRequest);
+
+        return redirectTo(formRequest.getProductId());
     }
 
     private String redirectTo(@RequestParam String productId) {

@@ -9,9 +9,36 @@
 </head>
 <body>
 
+<h2>상품 기본 정보 관리(기본 SKU)</h2>
+<form:form action="/product/main" method="post" modelAttribute="productMainForm">
+    <form:hidden path="productId"/>
+    <form:hidden path="categoryId"/>
+    <form:hidden path="skuId"/>
+
+    <p><span>상품명</span> <form:input path="productName" size="50"/></p>
+
+    <p><span>상품상태</span> <form:input path="status" size="50"/></p>
+
+    <p>
+        <span>전시 카테고리</span> <form:input path="categoryName" size="50"/>
+    </p>
+
+    <p><span>기본SKU명</span> <form:input path="skuName" size="50"/></p>
+
+    <p><span>판매가격</span> <form:input path="salesPrice" size="50"/></p>
+
+    <p><span>소매가격</span> <form:input path="retailPrice" size="50"/></p>
+
+    <p><span>판매재고</span> <form:input path="salesStock" size="50"/></p>
+
+    <p><span>기술서</span> <form:textarea path="description" cols="50"/></p>
+
+    <input type="submit" value="저장">
+</form:form>
+
 <h2>상품속성매핑</h2>
 
-<form action="/product/${productId}/attribute" method="POST">
+<form action="/product/${product.productId}/attribute" method="POST">
     <table>
         <thead>
         <tr>
@@ -71,15 +98,15 @@
                 <td><form:input path="skuList[${row.index}].salesPrice"/></td>
                 <td><form:input path="skuList[${row.index}].retailPrice"/></td>
                 <td><form:input path="skuList[${row.index}].salesStock"/></td>
-                <td><form:input path="skuList[${row.index}].description"/></td>
+                <td><form:textarea path="skuList[${row.index}].description"/></td>
                 <td><form:input path="skuList[${row.index}].defaultSku"/></td>
                 <td><form:input path="skuList[${row.index}].status"/></td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a href="/product/${productId}/sku/create?shiftable=yes">SKU생성</a>
-    <input type="hidden" name="productId" value="${productId}">
+    <a href="/product/${product.productId}/sku/create?shiftable=yes">SKU생성</a>
+    <input type="hidden" name="productId" value="${product.productId}">
     <input type="submit" value="SKU저장">
 </form:form>
 <p>

@@ -2,6 +2,7 @@ package applestore.admin.product.service;
 
 import applestore.admin.catalog.model.ProductDataSet;
 import applestore.admin.product.ProductAttributeFormRequest;
+import applestore.admin.product.ProductMainFormRequest;
 import applestore.domain.product.entity.*;
 import applestore.domain.product.repository.ProductAttributeJpaRepository;
 import applestore.domain.product.repository.ProductJpaRepository;
@@ -138,6 +139,28 @@ public class ProductManagementServiceImpl implements ProductManagementService {
             }
         }
         */
+    }
+
+    @Transactional
+    @Override
+    public void updateProductMain(ProductMainFormRequest formRequest) {
+        Product product = pr.findOne(formRequest.getProductId());
+        Sku defaultSku = product.getDefaultSku();
+        if (product.getDefaultSku() == null) {
+            defaultSku = new Sku();
+            defaultSku.setDefaultSku(true);
+            product.setDefaultSku(defaultSku);
+        }
+        bindingSku(formRequest, defaultSku);
+    }
+
+    private void bindingSku(ProductMainFormRequest formRequest, Sku defaultSku) {
+        defaultSku.setSkuName(formRequest.getSkuName());
+        defaultSku.setLabel(formRequest.getSkuLabel());
+        defaultSku.setDescription(formRequest.getDescription());
+        defaultSku.setRetailPrice(formRequest.getRetailPrice());
+        defaultSku.setSalesPrice(formRequest.getSalesPrice());
+        defaultSku.setSalesStock(formRequest.getSalesStock());
     }
 
     private Sku resolveBeforeSku(List<Sku> list, ProductAttributeValue attrValue) {

@@ -2,6 +2,7 @@ package applestore.admin.product.service;
 
 import applestore.admin.catalog.model.ProductDataSet;
 import applestore.admin.product.ProductAttributeFormRequest;
+import applestore.admin.product.ProductMainFormRequest;
 import applestore.domain.product.entity.Product;
 import applestore.domain.product.entity.Sku;
 
@@ -20,4 +21,6 @@ public interface ProductManagementService {
     void createSku(String productId, boolean shiftable);
 
     void updateSku(String productId, List<Sku> skuList);
+
+    void updateProductMain(ProductMainFormRequest formRequest);
 }

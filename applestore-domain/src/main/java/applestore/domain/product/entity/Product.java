@@ -45,6 +45,10 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, targetEntity = Sku.class)
     private List<Sku> skuList = new ArrayList<Sku>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "DEFAULT_SKU_ID")
+    private Sku defaultSku;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "PRD_PRD_ATTRIBUTE_R",
             joinColumns = {@JoinColumn(name = "productId")},
@@ -187,5 +191,13 @@ public class Product {
             }
         }
         return null;
+    }
+
+    public Sku getDefaultSku() {
+        return defaultSku;
+    }
+
+    public void setDefaultSku(Sku defaultSku) {
+        this.defaultSku = defaultSku;
     }
 }
