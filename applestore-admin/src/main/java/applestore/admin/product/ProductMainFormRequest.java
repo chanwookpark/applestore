@@ -45,9 +45,7 @@ public class ProductMainFormRequest {
         this.categoryName = product.getDisplayCategory().getCategoryName();
 
         if (product.getDefaultSku() == null) {
-            final Sku defaultSku = new Sku();
-            defaultSku.setDefaultSku(true);
-            defaultSku.setSkuName(product.getProductId() + "_DEFAULT_SKU");
+            final Sku defaultSku = Sku.createDefaultSku(product);
             product.setDefaultSku(defaultSku);
         }
         this.skuId = product.getDefaultSku().getSkuId();

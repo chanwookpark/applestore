@@ -1,5 +1,7 @@
 package applestore.domain.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +24,25 @@ public class ProductAttributeValue {
 
     @ManyToOne
     @JoinColumn(name = "attributeId")
+    @JsonIgnore //TODO 모델분리요~
     private ProductAttribute attribute;
 
-    @OneToMany(mappedBy = "attributeValue")
+    @ManyToMany(mappedBy = "attributeValueList")
+    @JsonIgnore //TODO 모델분리요~
     private List<Sku> skuList = new ArrayList<Sku>();
 
     public ProductAttributeValue() {
+    }
+
+    public ProductAttributeValue(long valueId, String value, String label) {
+        this.valueId = valueId;
+        this.value = value;
+        this.label = label;
+    }
+
+    public ProductAttributeValue(String value, String label) {
+        this.value = value;
+        this.label = label;
     }
 
     public ProductAttributeValue(String value, String label, ProductAttribute attr) {

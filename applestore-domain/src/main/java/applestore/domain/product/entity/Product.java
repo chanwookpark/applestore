@@ -200,4 +200,5 @@ public class Product {
     public void setDefaultSku(Sku defaultSku) {
         this.defaultSku = defaultSku;
     }
+
 }

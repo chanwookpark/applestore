@@ -1,5 +1,7 @@
 package applestore.domain.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +22,8 @@ public class ProductAttribute {
     @Column(nullable = false, length = 100)
     private String label;
 
-    @Column(nullable = false, unique = true)
-    private int displayOrder;
-
     @ManyToMany(mappedBy = "attributeList")
+    @JsonIgnore //TODO 모델분리요~
     private List<Product> productList = new ArrayList<Product>();
 
     @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL)
@@ -32,11 +32,17 @@ public class ProductAttribute {
     public ProductAttribute() {
     }
 
-    public ProductAttribute(String attributeName, String label, int displayOrder) {
+    public ProductAttribute(String attributeName, String label) {
         this.attributeName = attributeName;
         this.label = label;
-        this.displayOrder = displayOrder;
     }
+
+    public ProductAttribute(long attributeId, String attributeName, String label) {
+        this.attributeId = attributeId;
+        this.attributeName = attributeName;
+        this.label = label;
+    }
+
 
     public long getAttributeId() {
         return attributeId;
@@ -52,14 +58,6 @@ public class ProductAttribute {
 
     public void setAttributeName(String attributeName) {
         this.attributeName = attributeName;
-    }
-
-    public int getDisplayOrder() {
-        return displayOrder;
-    }
-
-    public void setDisplayOrder(int displayOrder) {
-        this.displayOrder = displayOrder;
     }
 
     public List<Product> getProductList() {
@@ -93,5 +91,9 @@ public class ProductAttribute {
 
     public void addProductList(Product product) {
         this.productList.add(product);
+    }
+
+    public int getValueSize() {
+        return this.attrValueList.size();
     }
 }

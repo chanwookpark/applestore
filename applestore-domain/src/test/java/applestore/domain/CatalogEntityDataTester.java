@@ -114,13 +114,11 @@ public class CatalogEntityDataTester {
         // PV와 PAV 생성
         ProductAttribute attr1 = new ProductAttribute();
         attr1.setAttributeName("color");
-        attr1.setDisplayOrder(1);
         attr1.setLabel("색깔");
 
         ProductAttribute attr2 = new ProductAttribute();
         attr2.setAttributeName("size");
         attr2.setLabel("사이즈");
-        attr2.setDisplayOrder(2);
 
         // attr 생성
         par.save(attr1);

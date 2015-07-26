@@ -7,6 +7,7 @@ import applestore.domain.product.entity.*;
 import applestore.domain.product.repository.ProductAttributeJpaRepository;
 import applestore.domain.product.repository.ProductJpaRepository;
 import applestore.domain.product.repository.SkuJpaRepository;
+import org.joda.time.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,35 +74,64 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
         //자, 이제 생성하자
         final Product product = pr.findOne(productId);
+        List<Sku> createSkuList = createNewSkuList(product);
 
-        List<Sku> createSkuList = new ArrayList<Sku>();
-        for (ProductAttribute attr : product.getAttributeList()) {
-            for (ProductAttributeValue attrValue : attr.getAttrValueList()) {
-                Sku createSku = new Sku();
-                createSku.setAttributeValue(attrValue);
-                //이름은 나중에 필요시 변경하는 걸로..
-                createSku.setSkuName(product.getProductName() + "-" + attr.getAttributeName() + "-" + attrValue.getValue());
-                createSku.setStatus(SkuStatus.OPEN);
-                createSku.setProduct(product);
+        for (Sku sku : createSkuList) {
+            //FIXME 이름은 어떻게 생성할까...
+            sku.setSkuName(product.getProductName() + "sku (created" + DateTimeUtils.currentTimeMillis() + ")");
+            sku.setStatus(SkuStatus.OPEN);
+            sku.setProduct(product);
+            StringBuilder labelBuilder = new StringBuilder();
+            for (ProductAttributeValue pav : sku.getAttributeValueList()) {
+                labelBuilder.append(pav.getLabel());
+                labelBuilder.append("/");
+            }
+            sku.setLabel(labelBuilder.toString());
 
-                // 이전 sku의 값을 이어갈 것인가?
-                if (shiftable) {
-                    Sku before = resolveBeforeSku(current, attrValue);
-                    if (before != null) {
-                        createSku.setDefaultSku(before.isDefaultSku());
-                        createSku.setDescription(before.getDescription());
-                        createSku.setLabel(before.getLabel());
-                        createSku.setRetailPrice(before.getRetailPrice());
-                        createSku.setSalesPrice(before.getSalesPrice());
-                        createSku.setSalesStock(before.getSalesStock());
-                    }
+            if (shiftable) {
+                Sku before = resolveBeforeSku(current, sku);
+                if (before != null) {
+                    sku.setDefaultSku(before.isDefaultSku());
+                    sku.setDescription(before.getDescription());
+                    sku.setLabel(before.getLabel());
+                    sku.setRetailPrice(before.getRetailPrice());
+                    sku.setSalesPrice(before.getSalesPrice());
+                    sku.setSalesStock(before.getSalesStock());
                 }
-                createSkuList.add(createSku);
             }
         }
 
         if (createSkuList.size() > 0) {
             sr.save(createSkuList);
+        }
+    }
+
+    public List<Sku> createNewSkuList(Product product) {
+        List<Sku> createSkuList = new ArrayList<Sku>();
+
+        // 첫 번째 pa로 기준을 잡자
+        final List<ProductAttribute> list = product.getAttributeList();
+        final int masterIndex = 0;
+        final ProductAttribute master = list.remove(masterIndex);
+
+        for (ProductAttributeValue pav : master.getAttrValueList()) {
+            final List<ProductAttributeValue> values = new ArrayList<ProductAttributeValue>();
+            values.add(pav);
+            loop(list, masterIndex, createSkuList, values);
+        }
+        return createSkuList;
+    }
+
+    private void loop(List<ProductAttribute> list, int masterIndex, List<Sku> skuList, List<ProductAttributeValue> values) {
+        if (list.size() > masterIndex) {
+            for (ProductAttributeValue pav : list.get(masterIndex++).getAttrValueList()) {
+                final ArrayList<ProductAttributeValue> dest = new ArrayList<ProductAttributeValue>();
+                dest.addAll(values);
+                dest.add(pav);
+                loop(list, masterIndex, skuList, dest);
+            }
+        } else {
+            skuList.add(new Sku(values));
         }
     }
 
@@ -123,22 +153,6 @@ public class ProductManagementServiceImpl implements ProductManagementService {
                 persisted.setStatus(updateSku.getStatus());
             }
         }
-
-        /*
-        for (Sku updateSku : updateSkuList) {
-            Sku persisted = sr.findOne(updateSku.getSkuId());
-            if (persisted != null) {
-                persisted.setDefaultSku(updateSku.isDefaultSku());
-                persisted.setDescription(updateSku.getDescription());
-                persisted.setLabel(updateSku.getLabel());
-                persisted.setRetailPrice(updateSku.getRetailPrice());
-                persisted.setSalesPrice(updateSku.getSalesPrice());
-                persisted.setSalesStock(updateSku.getSalesStock());
-                persisted.setSkuName(updateSku.getSkuName());
-                persisted.setStatus(updateSku.getStatus());
-            }
-        }
-        */
     }
 
     @Transactional
@@ -163,10 +177,24 @@ public class ProductManagementServiceImpl implements ProductManagementService {
         defaultSku.setSalesStock(formRequest.getSalesStock());
     }
 
-    private Sku resolveBeforeSku(List<Sku> list, ProductAttributeValue attrValue) {
+    private Sku resolveBeforeSku(List<Sku> list, Sku target) {
         for (Sku sku : list) {
-            if (sku.getAttributeValue().getValueId() == attrValue.getValueId()) {
-                return sku;
+            final List<ProductAttributeValue> pav1 = sku.getAttributeValueList();
+            final List<ProductAttributeValue> pav2 = target.getAttributeValueList();
+
+            if (pav1.size() == pav1.size()) {
+                int match = 0;
+                for (ProductAttributeValue v1 : pav1) {
+                    for (ProductAttributeValue v2 : pav2) {
+                        if (v1.getValueId() == v2.getValueId()) {
+                            ++match;
+                            break;
+                        }
+                    }
+                }
+                if (match == pav1.size()) {
+                    return sku;
+                }
             }
         }
         return null;

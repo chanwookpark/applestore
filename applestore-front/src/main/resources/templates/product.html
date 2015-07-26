@@ -5,32 +5,56 @@
 </head>
 <body>
 <div class="page-header">
-    <h3>{product.productName}</h3>
+    <h3>{product.productName}</h3> {product.defaultSku.salesStock}개 남았어요!
 </div>
+
 
 <div>
     <!-- TODO SKU 별 주문 가능 수량을 확인해서 1단위로 표시하기 -->
     {#product}
     <form id="productForm" action="/cart/addItem" method="post">
-        {#skuList}
+        <h3>상품 기본 정보</h3>
+        {#defaultSku}
         <ul>
-
+            <li>{label}</li>
+            <li><b>소매가</b>: <span style="text-decoration: line-through;">{retailPrice}</span>원</li>
+            <!--TODO 다국어 어떻게 지원? -->
+            <li><b>ASTORE가: </b><span>{salesPrice}</span>원 부터~</li>
         </ul>
-        {/skuList}
+        {/defaultSku}
+        <h3>상품 옵션</h3>
+
         <ul>
             <li>
-                수량: <input type="hidden" name="productId" value="{productId}">
+                <select name="selectSkuId">
+                    {#mergedSku}
+                    <option value="{skuId}">{label}({salesStock}개 제고)</option>
+                    {/mergedSku}
+                </select>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <!-- TODO 지정된 숫자만큼 for loop 돌도록 수정 -->
                 <select name="selectItemCount">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
             </li>
-            <li>
-                <input type="submit" value="주문하기">
-            </li>
-            <input type="hidden" name="{_csrf.parameterName}" value="{_csrf.token}"/>
         </ul>
+
+        <input type="hidden" name="productId" value="{productId}">
+        <input type="hidden" name="{_csrf.parameterName}" value="{_csrf.token}"/>
+        <input type="submit" value="주문하기">
+
+        <h3>기술서</h3>
+        <!--TODO 링크처리는 어떻게?-->
+        <div>
+            {defaultSku.description}
+        </div>
     </form>
     {/product}
 </div>

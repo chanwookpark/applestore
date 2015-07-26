@@ -45,7 +45,7 @@
             <td>선택</td>
             <td>속성명</td>
             <td>레이블</td>
-            <td>노출순서</td>
+            <td>속성값 갯수</td>
         </tr>
         </thead>
         <tbody>
@@ -54,8 +54,7 @@
                 <td><input type="checkbox" name="selectAttrId" value="${attr.attributeId}" checked></td>
                 <td>${attr.attributeName}</td>
                 <td>${attr.label}</td>
-                <!-- TODO 상품 별로 설정해주어야 하지 않는가? -->
-                <td>${attr.displayOrder}</td>
+                <td>${attr.valueSize}</td>
             </tr>
         </c:forEach>
         <c:forEach var="attr" items="${attrList}">
@@ -63,8 +62,7 @@
                 <td><input type="checkbox" name="selectAttrId" value="${attr.attributeId}"></td>
                 <td>${attr.attributeName}</td>
                 <td>${attr.label}</td>
-                <!-- TODO 상품 별로 설정해주어야 하지 않는가? -->
-                <td>${attr.displayOrder}</td>
+                <td>${attr.valueSize}</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -72,7 +70,7 @@
     <input type="submit" value="저장">
 </form>
 
-<h2>SKU 관리</h2>
+<h2>추가 SKU 관리</h2>
 
 <form:form action="/sku/update" method="post" modelAttribute="skuForm">
     <table>
@@ -80,11 +78,12 @@
         <tr>
             <td>SKU ID</td>
             <td>Sku Name</td>
+            <td>Label</td>
             <td>판매가</td>
             <td>소매가</td>
             <td>재고</td>
+            <td>진열순서</td>
             <td>설명</td>
-            <td>기본SKU</td>
             <td>상태</td>
         </tr>
         </thead>
@@ -95,11 +94,12 @@
                     <form:input path="skuList[${row.index}].skuId" readonly="true"/>
                 </td>
                 <td><form:input path="skuList[${row.index}].skuName"/></td>
+                <td><form:input path="skuList[${row.index}].label"/></td>
                 <td><form:input path="skuList[${row.index}].salesPrice"/></td>
                 <td><form:input path="skuList[${row.index}].retailPrice"/></td>
                 <td><form:input path="skuList[${row.index}].salesStock"/></td>
+                <td><form:input path="skuList[${row.index}].displayOrder"/></td>
                 <td><form:textarea path="skuList[${row.index}].description"/></td>
-                <td><form:input path="skuList[${row.index}].defaultSku"/></td>
                 <td><form:input path="skuList[${row.index}].status"/></td>
             </tr>
         </c:forEach>
