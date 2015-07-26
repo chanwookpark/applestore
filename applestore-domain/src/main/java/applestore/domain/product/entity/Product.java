@@ -29,6 +29,9 @@ public class Product {
     @Column(length = 100, nullable = false)
     private String productName;
 
+    @Column(length = 200)
+    private String displayName;
+
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
@@ -49,7 +52,7 @@ public class Product {
     @JoinColumn(name = "DEFAULT_SKU_ID")
     private Sku defaultSku;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "PRD_PRD_ATTRIBUTE_R",
             joinColumns = {@JoinColumn(name = "productId")},
             inverseJoinColumns = {@JoinColumn(name = "attributeId")})
@@ -201,4 +204,11 @@ public class Product {
         this.defaultSku = defaultSku;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

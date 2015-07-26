@@ -13,6 +13,8 @@ public class ProductMainFormRequest {
 
     private String productName;
 
+    private String displayName;
+
     private ProductStatus status;
 
     private long categoryId;
@@ -40,6 +42,7 @@ public class ProductMainFormRequest {
     public ProductMainFormRequest(Product product) {
         this.productId = product.getProductId();
         this.productName = product.getProductName();
+        this.displayName = product.getDisplayName();
         this.status = product.getStatus();
         this.categoryId = product.getDisplayCategory().getCategoryId();
         this.categoryName = product.getDisplayCategory().getCategoryName();
@@ -151,5 +154,13 @@ public class ProductMainFormRequest {
 
     public void setSkuLabel(String skuLabel) {
         this.skuLabel = skuLabel;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

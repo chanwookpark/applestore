@@ -3,6 +3,8 @@ package applestore.admin.product.service;
 import applestore.admin.catalog.model.ProductDataSet;
 import applestore.admin.product.ProductAttributeFormRequest;
 import applestore.admin.product.ProductMainFormRequest;
+import applestore.domain.catalog.entity.DisplayCategory;
+import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
 import applestore.domain.product.entity.*;
 import applestore.domain.product.repository.ProductAttributeJpaRepository;
 import applestore.domain.product.repository.ProductJpaRepository;
@@ -30,6 +32,9 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
     @Autowired
     SkuJpaRepository sr;
+
+    @Autowired
+    DisplayCategoryJpaRepository dr;
 
     @Override
     public void createProduct(Product product) {
@@ -160,6 +165,11 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     @Override
     public void updateProductMain(ProductMainFormRequest formRequest) {
         Product product = pr.findOne(formRequest.getProductId());
+        product.setProductName(formRequest.getProductName());
+        product.setDisplayName(formRequest.getDisplayName());
+        product.setStatus(formRequest.getStatus());
+        product.setDisplayCategory(resolveCategory(formRequest.getCategoryId()));
+
         Sku defaultSku = product.getDefaultSku();
         if (product.getDefaultSku() == null) {
             defaultSku = new Sku();
@@ -167,6 +177,10 @@ public class ProductManagementServiceImpl implements ProductManagementService {
             product.setDefaultSku(defaultSku);
         }
         bindingSku(formRequest, defaultSku);
+    }
+
+    private DisplayCategory resolveCategory(long categoryId) {
+        return dr.findOne(categoryId);
     }
 
     private void bindingSku(ProductMainFormRequest formRequest, Sku defaultSku) {

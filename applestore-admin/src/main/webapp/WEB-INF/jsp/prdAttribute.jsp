@@ -17,6 +17,8 @@
 
     <p><span>상품명</span> <form:input path="productName" size="50"/></p>
 
+    <p><span>상품노출명</span> <form:input path="displayName" size="200"/></p>
+
     <p><span>상품상태</span> <form:input path="status" size="50"/></p>
 
     <p>
@@ -24,6 +26,8 @@
     </p>
 
     <p><span>기본SKU명</span> <form:input path="skuName" size="50"/></p>
+
+    <p><span>라벨</span> <form:input path="skuLabel" size="50"/></p>
 
     <p><span>판매가격</span> <form:input path="salesPrice" size="50"/></p>
 
