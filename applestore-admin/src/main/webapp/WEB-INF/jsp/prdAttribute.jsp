@@ -54,7 +54,7 @@
                 <td><input type="checkbox" name="selectAttrId" value="${attr.attributeId}" checked></td>
                 <td>${attr.attributeName}</td>
                 <td>${attr.label}</td>
-                <td>${attr.valueSize}</td>
+                <td>${attr.valueSize}개</td>
             </tr>
         </c:forEach>
         <c:forEach var="attr" items="${attrList}">
@@ -62,7 +62,7 @@
                 <td><input type="checkbox" name="selectAttrId" value="${attr.attributeId}"></td>
                 <td>${attr.attributeName}</td>
                 <td>${attr.label}</td>
-                <td>${attr.valueSize}</td>
+                <td>${attr.valueSize}개</td>
             </tr>
         </c:forEach>
         </tbody>

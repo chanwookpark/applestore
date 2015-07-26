@@ -82,11 +82,12 @@ public class ProductManagementServiceImpl implements ProductManagementService {
             sku.setStatus(SkuStatus.OPEN);
             sku.setProduct(product);
             StringBuilder labelBuilder = new StringBuilder();
-            for (ProductAttributeValue pav : sku.getAttributeValueList()) {
-                labelBuilder.append(pav.getLabel());
-                labelBuilder.append("/");
+            for (int i = 0; i < sku.getAttributeValueList().size(); i++) {
+                labelBuilder.append(sku.getAttributeValueList().get(i).getLabel());
+                if (i != sku.getAttributeValueList().size()) {
+                    labelBuilder.append("/");
+                }
             }
-            sku.setLabel(labelBuilder.toString());
 
             if (shiftable) {
                 Sku before = resolveBeforeSku(current, sku);
