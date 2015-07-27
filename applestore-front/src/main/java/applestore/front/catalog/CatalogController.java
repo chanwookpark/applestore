@@ -4,6 +4,7 @@ import applestore.domain.catalog.entity.DisplayCategory;
 import applestore.domain.product.entity.Product;
 import applestore.domain.catalog.repository.DisplayCategoryJpaRepository;
 import applestore.domain.product.repository.ProductJpaRepository;
+import applestore.front.catalog.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -28,7 +28,6 @@ public class CartController {
         Cart cart = cartStore.getCart(session);
 
         OrderItem orderItem = cartService.createOrderItem(request, cart);
-        cartService.addItem(cart, orderItem);
 
         return "redirect:/cart";
     }

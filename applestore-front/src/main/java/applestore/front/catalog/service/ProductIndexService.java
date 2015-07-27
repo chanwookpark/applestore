@@ -1,4 +1,4 @@
-package applestore.front.catalog;
+package applestore.front.catalog.service;
 
 import applestore.domain.catalog.entity.DisplayCategory;
 import org.springframework.data.domain.Pageable;

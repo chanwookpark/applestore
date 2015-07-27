@@ -1,4 +1,4 @@
-package applestore.front.catalog;
+package applestore.front.catalog.service;
 
 /**
  * @author chanwook

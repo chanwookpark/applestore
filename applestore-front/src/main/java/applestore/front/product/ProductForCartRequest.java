@@ -9,7 +9,7 @@ public class ProductForCartRequest {
 
     private int selectSkuId;
 
-    private int selectItemCount;
+    private int selectItemQuantity;
 
     public String getProductId() {
         return productId;
@@ -27,11 +27,11 @@ public class ProductForCartRequest {
         this.selectSkuId = selectSkuId;
     }
 
-    public int getSelectItemCount() {
-        return selectItemCount;
+    public int getSelectItemQuantity() {
+        return selectItemQuantity;
     }
 
-    public void setSelectItemCount(int selectItemCount) {
-        this.selectItemCount = selectItemCount;
+    public void setSelectItemQuantity(int selectItemQuantity) {
+        this.selectItemQuantity = selectItemQuantity;
     }
 }

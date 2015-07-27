@@ -7,7 +7,7 @@ public class OrderItem {
 
     private String productId;
     private int skuId;
-    private int orderCount;
+    private int orderQuantity;
 
     public void setProductId(String productId) {
         this.productId = productId;
@@ -17,8 +17,8 @@ public class OrderItem {
         this.skuId = skuId;
     }
 
-    public void setOrderCount(int orderCount) {
-        this.orderCount = orderCount;
+    public void setOrderQuantity(int orderQuantity) {
+        this.orderQuantity = orderQuantity;
     }
 
     public String getProductId() {
@@ -29,7 +29,7 @@ public class OrderItem {
         return skuId;
     }
 
-    public int getOrderCount() {
-        return orderCount;
+    public int getOrderQuantity() {
+        return orderQuantity;
     }
 }

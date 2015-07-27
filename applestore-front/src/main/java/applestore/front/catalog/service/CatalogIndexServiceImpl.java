@@ -1,4 +1,4 @@
-package applestore.front.catalog;
+package applestore.front.catalog.service;
 
 import applestore.domain.catalog.repository.ProductIndexSolrRepository;
 import applestore.domain.catalog.solr.ProductIndex;
