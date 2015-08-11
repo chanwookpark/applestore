@@ -4,6 +4,10 @@
     {> "header"/}
 </head>
 <body>
+<script type="text/javascript" src="/lib/js/jssor/jssor.js"></script>
+<script type="text/javascript" src="/lib/js/jssor/jssor.slider.js"></script>
+<script type="text/javascript" src="/js/product.js"></script>
+
 <div class="page-header">
     <h3>
         {?product.displayName} {product.displayName}
@@ -12,6 +16,8 @@
     </h3>
     {product.defaultSku.salesStock}개 남았어요!
 </div>
+
+{> "product-image" /}
 
 <div>
     <!-- TODO SKU 별 주문 가능 수량을 확인해서 1단위로 표시하기 -->
@@ -40,7 +46,7 @@
         <ul>
             <li>
                 <!-- TODO 지정된 숫자만큼 for loop 돌도록 수정 -->
-                <select name="selectItemQuantity">
+                <select name="orderQuantity">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

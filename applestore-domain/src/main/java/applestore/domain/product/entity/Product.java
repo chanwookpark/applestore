@@ -1,6 +1,7 @@
 package applestore.domain.product.entity;
 
 import applestore.domain.catalog.entity.DisplayCategory;
+import applestore.domain.product.ProductException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -210,5 +211,20 @@ public class Product {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public boolean hasSku(long selectSkuId) {
+        if (defaultSku == null) {
+            throw new ProductException("상품 정보가 잘못되었습니다(기본 SKU 생성 누락)");
+        }
+        if (defaultSku.getSkuId() == selectSkuId) {
+            return true;
+        }
+        for (Sku sku : this.skuList) {
+            if (sku.getSkuId() == selectSkuId) {
+                return true;
+            }
+        }
+        return false;
     }
 }

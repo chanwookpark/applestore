@@ -9,27 +9,35 @@
 </div>
 
 <div>
-    {#cart}
-    <table>
-        <thead>
+    <form action="/order/createOrder" method="post">
+        <table border="1">
+            <thead>
             <tr>
                 <td>상품이름</td>
                 <td>주문수량</td>
                 <td>주문가격</td>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {#itemList}
             <tr>
-                <td>{productId}</td>
-                <td>{orderCount}</td>
-                <td>TODO</td>
+                <input type="hidden" name="orderItemIds[{$idx}]" value="{orderItem.orderItemId}">
+                <td>
+                    {productName} <br> - {orderItem.orderSku.label}
+                </td>
+                <td>
+                    <input type="number" name="orderQuantities[{$idx}]" value="{orderItem.orderQuantity}">
+                </td>
+                <td>
+                    {orderItem.orderPrice}
+                </td>
             </tr>
             {/itemList}
-        </tbody>
-    </table>
-    {/cart}
-    <a href="#">주문하기</a>
+            </tbody>
+        </table>
+        <input type="hidden" name="{_csrf.parameterName}" value="{_csrf.token}"/>
+        <input type="submit" value="주문하기">
+    </form>
 </div>
 
 </body>

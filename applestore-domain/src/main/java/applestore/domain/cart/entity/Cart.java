@@ -1,6 +1,6 @@
 package applestore.domain.cart.entity;
 
-import applestore.domain.order.OrderItem;
+import applestore.domain.order.entity.OrderItem;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,7 +20,7 @@ public class Cart {
 
     private String owner;
 
-    private List<OrderItem> itemList = new ArrayList<OrderItem>();
+    private List<Long> itemList = new ArrayList<Long>();
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd hh:mm")
     private Date updated;
@@ -37,14 +37,17 @@ public class Cart {
     }
 
     public void addItem(OrderItem item) {
-        this.itemList.add(item);
+        if (item == null) {
+            throw new CartException("카트에 추가하는 아이템이 비어있습니다!");
+        }
+        this.itemList.add(item.getOrderItemId());
     }
 
-    public List<OrderItem> getItemList() {
+    public List<Long> getItemList() {
         return itemList;
     }
 
-    public void setItemList(List<OrderItem> itemList) {
+    public void setItemList(List<Long> itemList) {
         this.itemList = itemList;
     }
 

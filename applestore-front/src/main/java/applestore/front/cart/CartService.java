@@ -1,15 +1,17 @@
 package applestore.front.cart;
 
-import applestore.domain.cart.entity.Cart;
-import applestore.domain.order.OrderItem;
+import applestore.domain.order.entity.OrderItem;
 import applestore.front.product.ProductForCartRequest;
+
+import java.util.List;
 
 /**
  * @author chanwook
  */
 public interface CartService {
 
-    void addItem(Cart cart, OrderItem orderItem);
+    OrderItem createOrderItem(ProductForCartRequest request);
 
-    OrderItem createOrderItem(ProductForCartRequest request, Cart cart);
+    List<OrderItem> getOrderItem(List<Long> idList);
+
 }

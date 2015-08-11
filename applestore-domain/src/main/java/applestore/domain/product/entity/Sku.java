@@ -1,5 +1,6 @@
 package applestore.domain.product.entity;
 
+import applestore.domain.order.entity.OrderItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -51,7 +52,7 @@ public class Sku {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
     @JsonIgnore //TODO 모델분리요~
     private Product product;
@@ -61,6 +62,10 @@ public class Sku {
             joinColumns = {@JoinColumn(name = "skuId")},
             inverseJoinColumns = {@JoinColumn(name = "valueId")})
     private List<ProductAttributeValue> attributeValueList = new ArrayList<ProductAttributeValue>();
+
+    @OneToMany(mappedBy = "orderSku", cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<OrderItem> orderItemList = new ArrayList<OrderItem>();
 
     public Sku() {
     }
@@ -87,7 +92,6 @@ public class Sku {
         replaceProductAttributeValue(values);
 
     }
-
 
     public void replaceProductAttributeValue(ProductAttributeValue[] values) {
         List<ProductAttributeValue> valueList = new ArrayList<ProductAttributeValue>(values.length);
@@ -210,5 +214,13 @@ public class Sku {
         defaultSku.setStatus(SkuStatus.OPEN);
         product.setDefaultSku(defaultSku);
         return defaultSku;
+    }
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
     }
 }
