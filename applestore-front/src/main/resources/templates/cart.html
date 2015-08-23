@@ -10,6 +10,7 @@
 
 <div>
     <form action="/order/createOrder" method="post">
+
         <table border="1">
             <thead>
             <tr>
@@ -35,8 +36,13 @@
             {/itemList}
             </tbody>
         </table>
+
         <input type="hidden" name="{_csrf.parameterName}" value="{_csrf.token}"/>
+
         <input type="submit" value="주문하기">
+        <a href="/checkout/paypal/start">
+            <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;">
+        </a>
     </form>
 </div>
 

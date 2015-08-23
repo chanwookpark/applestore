@@ -33,6 +33,10 @@ public class OrderItem {
     @JoinColumn(name = "orderSkuId", nullable = false, updatable = false)
     private Sku orderSku;
 
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "orderId")
+    private Order order;
+
     public OrderItem() {
     }
 

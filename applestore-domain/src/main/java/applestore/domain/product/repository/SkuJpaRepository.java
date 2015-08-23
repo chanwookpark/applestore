@@ -13,4 +13,5 @@ public interface SkuJpaRepository extends JpaRepository<Sku, Long> {
 
     List<Sku> findByProductProductIdAndStatus(String productId, SkuStatus status);
 
+    List<Sku> findBySkuIdIn(List<Long> skuIdList);
 }

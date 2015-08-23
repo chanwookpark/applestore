@@ -32,4 +32,15 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @Override
+    public void checkProductQuantity(List<Long> skuIdList, List<Integer> orderQuantities) {
+        List<Sku> skuList = sr.findBySkuIdIn(skuIdList);
+        for (int index = 0; index < skuList.size(); index++) {
+            final Sku sku = skuList.get(index);
+            if (sku.getSalesStock() < orderQuantities.get(index)) {
+                throw new NonEnoughSalesStockException(sku.getSkuId(), sku.getSalesStock(), orderQuantities.get(index));
+            }
+        }
+    }
+
 }
