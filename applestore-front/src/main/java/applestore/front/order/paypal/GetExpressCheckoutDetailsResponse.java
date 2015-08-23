@@ -1,0 +1,64 @@
+package applestore.front.order.paypal;
+
+import java.util.HashMap;
+
+/**
+ * @author chanwook
+ */
+public class GetExpressCheckoutDetailsResponse extends HashMap<String, String> {
+
+
+    /**
+     * response text sample
+     *
+     * <200 OK,
+     TOKEN=EC%2d70M185275V782451F
+     BILLINGAGREEMENTACCEPTEDSTATUS=0
+     CHECKOUTSTATUS=PaymentActionNotInitiated
+     TIMESTAMP=2015%2d08%2d23T06%3a14%3a16Z
+     CORRELATIONID=8d3520a7e3433
+     ACK=Success
+     VERSION=124%2e0
+     BUILD=000000
+     EMAIL=lifestone000%2dfacilitator%40gmail%2ecom
+     PAYERID=4U8UX748JGBV8
+     PAYERSTATUS=verified
+     BUSINESS=test%20facilitator%27s%20Test%20Store
+     FIRSTNAME=test
+     LASTNAME=facilitator
+     COUNTRYCODE=US
+     SHIPTONAME=test%20facilitator%27s%20Test%20Store
+     SHIPTOSTREET=1%20Main%20St
+     SHIPTOCITY=San%20Jose
+     SHIPTOSTATE=CA
+     SHIPTOZIP=95131
+     SHIPTOCOUNTRYCODE=US
+     SHIPTOCOUNTRYNAME=United%20States
+     ADDRESSSTATUS=Confirmed
+     CURRENCYCODE=USD
+     AMT=1234000%2e00
+     SHIPPINGAMT=0%2e00
+     HANDLINGAMT=0%2e00
+     TAXAMT=0%2e00
+     INSURANCEAMT=0%2e00
+     SHIPDISCAMT=0%2e00
+     PAYMENTREQUEST_0_CURRENCYCODE=USD
+     PAYMENTREQUEST_0_AMT=1234000%2e00
+     PAYMENTREQUEST_0_SHIPPINGAMT=0%2e00
+     PAYMENTREQUEST_0_HANDLINGAMT=0%2e00
+     PAYMENTREQUEST_0_TAXAMT=0%2e00
+     PAYMENTREQUEST_0_INSURANCEAMT=0%2e00
+     PAYMENTREQUEST_0_SHIPDISCAMT=0%2e00
+     PAYMENTREQUEST_0_INSURANCEOPTIONOFFERED=false
+     PAYMENTREQUEST_0_SHIPTONAME=test%20facilitator%27s%20Test%20Store        PAYMENTREQUEST_0_SHIPTOSTREET=1%20Main%20St
+     PAYMENTREQUEST_0_SHIPTOCITY=San%20Jose
+     PAYMENTREQUEST_0_SHIPTOSTATE=CA
+     PAYMENTREQUEST_0_SHIPTOZIP=95131
+     PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE=US
+     PAYMENTREQUEST_0_SHIPTOCOUNTRYNAME=United%20States
+     PAYMENTREQUEST_0_ADDRESSSTATUS=Confirmed
+     PAYMENTREQUEST_0_ADDRESSNORMALIZATIONSTATUS=None
+     PAYMENTREQUESTINFO_0_ERRORCODE=0,
+     {Date=[Sun, 23 Aug 2015 06:14:15 GMT], Server=[Apache], Connection=[close], Content-Length=[1447], Set-Cookie=[X-PP-SILOVER=name%3DSANDBOX3.API.1%26silo_version%3D880%26app%3Dappdispatcher_apit%26TIME%3D3076839765; domain=.paypal.com; path=/; Secure; HttpOnly, X-PP-SILOVER=; Expires=Thu, 01 Jan 1970 00:00:01 GMT], Content-Type=[text/plain; charset=utf-8]}>
+     */
+}

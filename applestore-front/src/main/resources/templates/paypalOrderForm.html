@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {> "header"/}
+</head>
+<body>
+
+<div class="page-header">
+    <h3>Paypal로 주문하기..</h3>
+</div>
+
+<form action="/checkout/paypal/confirm" method="post">
+
+    <input type="hidden" name="token" value="{token}"/>
+    <input type="hidden" name="payerId" value="{payerId}"/>
+    <input type="hidden" name="{_csrf.parameterName}" value="{_csrf.token}"/>
+
+    <input type="submit" value="Pay NOW!!">
+</form>
+</body>
+</html>
