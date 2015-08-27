@@ -38,7 +38,7 @@
             <li>
                 <select name="selectSkuId">
                     {#skuList}
-                    <option value="{skuId}">{label}({salesStock}개 제고)</option>
+                    <option value="{skuId}">{label} - {salesPrice}원으로 {salesStock}개 구매 가능</option>
                     {/skuList}
                 </select>
             </li>

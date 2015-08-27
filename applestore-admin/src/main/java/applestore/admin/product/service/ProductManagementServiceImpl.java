@@ -36,11 +36,6 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     @Autowired
     DisplayCategoryJpaRepository dr;
 
-    @Override
-    public void createProduct(Product product) {
-        pr.save(product);
-    }
-
     @Transactional
     @Override
     public void flushUpdatedRow(ProductDataSet grid) {
@@ -83,9 +78,14 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
         for (Sku sku : createSkuList) {
             //FIXME 이름은 어떻게 생성할까...
-            sku.setSkuName(product.getProductName() + "sku (created" + DateTimeUtils.currentTimeMillis() + ")");
+            sku.setSkuName(product.getProductName() + "-sku-" + DateTimeUtils.currentTimeMillis());
             sku.setStatus(SkuStatus.OPEN);
             sku.setProduct(product);
+
+            // SKU 기본 가격은 기본 SKU의 가격을 가지고 온다. 그리고 필요하면 직접 수정해서 입력한다!
+            sku.setRetailPrice(product.getDefaultSku().getRetailPrice());
+            sku.setSalesPrice(product.getDefaultSku().getSalesPrice());
+
             StringBuilder labelBuilder = new StringBuilder();
             for (int i = 0; i < sku.getAttributeValueList().size(); i++) {
                 labelBuilder.append(sku.getAttributeValueList().get(i).getLabel());
@@ -113,7 +113,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     }
 
     public List<Sku> createNewSkuList(Product product) {
-        List<Sku> createSkuList = new ArrayList<Sku>();
+        List<Sku> createSkuList = new ArrayList<>();
 
         // 첫 번째 pa로 기준을 잡자
         final List<ProductAttribute> list = product.getAttributeList();

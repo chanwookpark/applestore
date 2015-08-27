@@ -1,0 +1,25 @@
+<table border="1">
+    <thead>
+    <tr>
+        <td>상품이름</td>
+        <td>주문수량</td>
+        <td>주문가격</td>
+    </tr>
+    </thead>
+    <tbody>
+    {#itemList}
+    <tr>
+        <input type="hidden" name="orderItemIds[{$idx}]" value="{orderItem.orderItemId}">
+        <td>
+            {productName} <br> - {orderItem.orderSku.label}
+        </td>
+        <td>
+            <input type="number" name="orderQuantities[{$idx}]" value="{orderItem.orderQuantity}">
+        </td>
+        <td>
+            {orderItem.orderPrice} 원
+        </td>
+    </tr>
+    {/itemList}
+    </tbody>
+</table>

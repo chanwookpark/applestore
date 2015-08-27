@@ -1,0 +1,21 @@
+<!-- TODO 이 코드를 통합하자! -->
+<table border="1">
+    <thead>
+    <tr>
+        <td>상품이름</td>
+        <td>주문수량</td>
+        <td>주문가격</td>
+    </tr>
+    </thead>
+    <tbody>
+    {#itemList}
+    <tr>
+        <td>
+            {productName} <br> - {orderItem.orderSku.label}
+        </td>
+        <td>{orderItem.orderQuantity}</td>
+        <td>{orderItem.orderPrice}</td>
+    </tr>
+    {/itemList}
+    </tbody>
+</table>

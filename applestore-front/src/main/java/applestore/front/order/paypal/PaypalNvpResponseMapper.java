@@ -2,6 +2,7 @@ package applestore.front.order.paypal;
 
 import org.springframework.util.StringUtils;
 
+import java.net.URLDecoder;
 import java.util.Map;
 
 /**
@@ -11,10 +12,10 @@ public class PaypalNvpResponseMapper {
     public static <T> T convert(String text, Class<? extends Map> target) {
         try {
             Map response = target.newInstance();
-            final String[] arr = StringUtils.split(text, "&");
+            final String[] arr = StringUtils.tokenizeToStringArray(text, "&");
             for (String e : arr) {
                 final String[] keyValue = e.split("=");
-                response.put(keyValue[0], keyValue[1]);
+                response.put(keyValue[0], URLDecoder.decode(keyValue[1], "UTF-8"));
             }
             return (T) response;
         } catch (Exception e) {

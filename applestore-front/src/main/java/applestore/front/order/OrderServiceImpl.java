@@ -7,11 +7,13 @@ import applestore.domain.order.entity.OrderItemStatus;
 import applestore.domain.order.repository.OrderItemJpaRepository;
 import applestore.domain.order.repository.OrderJpaRepository;
 import applestore.front.product.ProductService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,9 +61,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 3. 주문 정보 생성
-        Order order = new Order();
-        order.setOrderItemList(orderItemList);
-        or.save(order);
+        Order order = saveOrder(orderItemList);
 
         // 4. 주문 아이템 상태&정보 갱신
         for (int index = 0; index < orderItemList.size(); index++) {
@@ -69,6 +69,32 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setStatus(OrderItemStatus.IN_ORDER);
         }
         oir.save(orderItemList);
+
+        return order;
+    }
+
+    @Transactional
+    @Override
+    public void confirmOrder(Order order) {
+        for (OrderItem oi : order.getOrderItemList()) {
+            oi.setStatus(OrderItemStatus.COMPLETE);
+        }
+
+        oir.save(order.getOrderItemList());
+    }
+
+    private Order saveOrder(List<OrderItem> orderItemList) {
+        Order order = new Order();
+        order.setOrderItemList(orderItemList);
+        for (OrderItem oi : orderItemList) {
+            oi.setOrder(order);
+        }
+
+        final Date now = DateTime.now().toDate();
+        order.setUpdated(now);
+        order.setCreated(now);
+
+        or.save(order);
 
         return order;
     }

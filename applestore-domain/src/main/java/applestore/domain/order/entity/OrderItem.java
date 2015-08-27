@@ -92,4 +92,12 @@ public class OrderItem {
     public void setUpdated(Date updated) {
         this.updated = updated;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

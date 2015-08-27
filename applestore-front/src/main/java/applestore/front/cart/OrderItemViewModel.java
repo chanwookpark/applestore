@@ -2,6 +2,9 @@ package applestore.front.cart;
 
 import applestore.domain.order.entity.OrderItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author chanwook
  */
@@ -23,5 +26,14 @@ public class OrderItemViewModel {
 
     public String getProductName() {
         return productName;
+    }
+
+    public static List<OrderItemViewModel> createViewModel(List<OrderItem> itemList) {
+        List<OrderItemViewModel> viewModel = new ArrayList<OrderItemViewModel>();
+        for (OrderItem oi : itemList) {
+            OrderItemViewModel oivm = new OrderItemViewModel(oi);
+            viewModel.add(oivm);
+        }
+        return viewModel;
     }
 }

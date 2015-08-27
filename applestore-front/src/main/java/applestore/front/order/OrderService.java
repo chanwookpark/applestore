@@ -8,4 +8,6 @@ import applestore.domain.order.entity.Order;
  */
 public interface OrderService {
     Order createOrder(Cart cart, CreateOrderRequestForm requestForm);
+
+    void confirmOrder(Order order);
 }

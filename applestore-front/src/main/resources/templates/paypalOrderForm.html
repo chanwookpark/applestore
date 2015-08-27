@@ -11,11 +11,50 @@
 
 <form action="/checkout/paypal/confirm" method="post">
 
+    <div>
+        <h3>주문 상품 정보</h3>
+
+        {> "order-orderItemForm" /}
+    </div>
+
+    <div>
+        <h3>배송지 정보</h3>
+        <b>배송지명: {orderInfo.PAYMENTREQUEST_0_SHIPTONAME}</b>
+        <table>
+            <tr>
+                <td>배송 국가</td>
+                <td>{orderInfo.PAYMENTREQUEST_0_SHIPTOCOUNTRYNAME}</td>
+            </tr>
+            <tr>
+                <td>우편번호</td>
+                <td>{orderInfo.PAYMENTREQUEST_0_SHIPTOZIP}</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h3>결제 정보</h3>
+        <table>
+            <tr>
+                <td>총 결재 금액</td>
+                <td>{orderInfo.AMT}원</td>
+            </tr>
+            <tr>
+                <td>배송료</td>
+                <td>{orderInfo.SHIPPINGAMT}원</td>
+            </tr>
+        </table>
+    </div>
+
     <input type="hidden" name="token" value="{token}"/>
     <input type="hidden" name="payerId" value="{payerId}"/>
     <input type="hidden" name="{_csrf.parameterName}" value="{_csrf.token}"/>
 
-    <input type="submit" value="Pay NOW!!">
+    <input type="submit" value="결제하기">
 </form>
 </body>
 </html>

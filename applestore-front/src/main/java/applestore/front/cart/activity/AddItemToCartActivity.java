@@ -10,7 +10,7 @@ import applestore.framework.workflow.Activity;
 import applestore.framework.workflow.RequestMap;
 import applestore.framework.workflow.ResponseMap;
 import applestore.framework.workflow.WorkflowException;
-import applestore.front.price.PricingService;
+import applestore.front.price.PriceService;
 import applestore.front.product.ProductForCartRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class AddItemToCartActivity implements Activity {
     OrderItemJpaRepository oir;
 
     @Autowired
-    PricingService ps;
+    PriceService ps;
 
     @Override
     public String getProcessId() {

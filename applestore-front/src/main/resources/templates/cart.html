@@ -11,38 +11,25 @@
 <div>
     <form action="/order/createOrder" method="post">
 
-        <table border="1">
-            <thead>
+        {> "order-orderItemForm" /}
+
+        <table>
             <tr>
-                <td>상품이름</td>
-                <td>주문수량</td>
-                <td>주문가격</td>
-            </tr>
-            </thead>
-            <tbody>
-            {#itemList}
-            <tr>
-                <input type="hidden" name="orderItemIds[{$idx}]" value="{orderItem.orderItemId}">
-                <td>
-                    {productName} <br> - {orderItem.orderSku.label}
-                </td>
-                <td>
-                    <input type="number" name="orderQuantities[{$idx}]" value="{orderItem.orderQuantity}">
-                </td>
-                <td>
-                    {orderItem.orderPrice}
+                <td>총 가격</td>
+                <td colspan="2" align="right">
+                    <input type="hidden" name="totalOrderAmount" value="{totalOrderAmount}">
+                    {totalOrderAmount} 원
                 </td>
             </tr>
-            {/itemList}
-            </tbody>
         </table>
 
         <input type="hidden" name="{_csrf.parameterName}" value="{_csrf.token}"/>
 
         <input type="submit" value="주문하기">
-        <a href="/checkout/paypal/start">
+        <a href="/checkout/paypal/start?toa={totalOrderAmount}">
             <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;">
         </a>
+
     </form>
 </div>
 

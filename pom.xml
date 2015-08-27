@@ -84,18 +84,18 @@
             <version>2.3.2</version>
             <scope>test</scope>
         </dependency>
-        <!--
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>1.1.8</version>
         </dependency>
-        -->
+        <!--
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.35</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>joda-time</groupId>

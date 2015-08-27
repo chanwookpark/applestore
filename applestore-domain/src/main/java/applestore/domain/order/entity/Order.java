@@ -9,15 +9,19 @@ import java.util.List;
  * @author chanwook
  */
 @Entity
+@Table(name = "ORDER_M")
 public class Order {
 
     @Id
     @GeneratedValue
     private long orderId;
 
-    @Version
     @Temporal(TemporalType.TIMESTAMP)
+    @Version
     private Date updated;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     private List<OrderItem> orderItemList = new ArrayList<OrderItem>();
@@ -45,4 +49,13 @@ public class Order {
     public void setUpdated(Date updated) {
         this.updated = updated;
     }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
 }
