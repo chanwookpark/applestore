@@ -6,7 +6,7 @@ import applestore.domain.order.entity.OrderItem;
 import applestore.domain.order.entity.OrderItemStatus;
 import applestore.domain.order.repository.OrderItemJpaRepository;
 import applestore.domain.order.repository.OrderJpaRepository;
-import applestore.front.product.ProductService;
+import applestore.front.product.service.ProductService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

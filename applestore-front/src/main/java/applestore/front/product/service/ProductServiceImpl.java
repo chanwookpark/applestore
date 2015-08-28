@@ -1,10 +1,11 @@
-package applestore.front.product;
+package applestore.front.product.service;
 
 import applestore.domain.product.entity.Product;
 import applestore.domain.product.entity.Sku;
 import applestore.domain.product.entity.SkuStatus;
 import applestore.domain.product.repository.ProductJpaRepository;
 import applestore.domain.product.repository.SkuJpaRepository;
+import applestore.front.product.NonEnoughSalesStockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

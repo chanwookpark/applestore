@@ -1,4 +1,4 @@
-package applestore.front.product;
+package applestore.front.product.service;
 
 import applestore.domain.product.entity.Product;
 

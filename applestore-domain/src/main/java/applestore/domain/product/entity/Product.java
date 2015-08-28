@@ -227,4 +227,8 @@ public class Product {
         }
         return false;
     }
+
+    public boolean salesEnable() {
+        return ProductStatus.SALES.equals(status);
+    }
 }
