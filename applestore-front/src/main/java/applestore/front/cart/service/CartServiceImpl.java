@@ -1,4 +1,4 @@
-package applestore.front.cart;
+package applestore.front.cart.service;
 
 import applestore.domain.order.entity.OrderItem;
 import applestore.domain.order.repository.OrderItemJpaRepository;

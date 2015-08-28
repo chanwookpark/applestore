@@ -3,11 +3,13 @@ package applestore.front.order.paypal;
 import applestore.domain.cart.entity.Cart;
 import applestore.domain.order.entity.Order;
 import applestore.domain.order.entity.OrderItem;
-import applestore.front.cart.CartService;
-import applestore.front.cart.CartStore;
-import applestore.front.cart.OrderItemViewModel;
+import applestore.front.cart.OrderItemDTO;
+import applestore.front.cart.service.CartService;
+import applestore.front.cart.service.CartStore;
 import applestore.front.order.CreateOrderRequestForm;
 import applestore.front.order.OrderService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ import java.util.List;
  */
 @Controller
 public class PaypalCheckoutController {
+
+    final ModelMapper m = new ModelMapper();
 
     public static final String PAYPAL_NVP_SANDBOX = "https://api-3t.sandbox.paypal.com/nvp";
     public static final String VERSION = "124.0";
@@ -96,12 +100,10 @@ public class PaypalCheckoutController {
         Cart cart = cartStore.getCart(session);
 
         List<OrderItem> itemList = cs.getOrderItem(cart.getItemList());
-        List<OrderItemViewModel> itemViewModelList =
-                OrderItemViewModel.createViewModel(itemList);
 
         model.put("token", token);
         model.put("payerId", payerId);
-        model.put("itemList", itemViewModelList);
+        model.put("itemList", m.map(itemList, new TypeToken<List<OrderItemDTO>>(){}.getType()));
         model.put("orderInfo", paypalOrder);
 
         return "paypalOrderForm";

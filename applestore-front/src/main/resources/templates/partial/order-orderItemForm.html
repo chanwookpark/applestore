@@ -9,15 +9,15 @@
     <tbody>
     {#itemList}
     <tr>
-        <input type="hidden" name="orderItemIds[{$idx}]" value="{orderItem.orderItemId}">
+        <input type="hidden" name="orderItemIds[{$idx}]" value="{orderItemId}">
         <td>
-            {productName} <br> - {orderItem.orderSku.label}
+            {skuProductProductName} <br> - {orderSkuLabel}
         </td>
         <td>
-            <input type="number" name="orderQuantities[{$idx}]" value="{orderItem.orderQuantity}">
+            <input type="number" name="orderQuantities[{$idx}]" value="{orderQuantity}">
         </td>
         <td>
-            {orderItem.orderPrice} 원
+            {orderPrice} 원
         </td>
     </tr>
     {/itemList}

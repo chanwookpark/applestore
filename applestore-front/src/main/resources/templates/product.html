@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/lib/js/jssor/jssor.slider.js"></script>
 <script type="text/javascript" src="/js/product.js"></script>
 
-<h4> > {product.displayCategoryName} </h4>
+<h4> ><a href="#">{product.displayCategoryName}</a></h4>
 
 <div class="page-header">
     <h3>
@@ -26,7 +26,7 @@
     <form id="productForm" action="/cart/addItem" method="post">
         <h3>상품 기본 정보</h3>
         <ul>
-            <li>{product.productName}</li>
+            <li><b>상품명</b>: {product.productName}</li>
             {#defaultSku}
             <li><b>소매가</b>: <span style="text-decoration: line-through;">{retailPrice}</span>원</li>
             <!--TODO 다국어 어떻게 지원? -->

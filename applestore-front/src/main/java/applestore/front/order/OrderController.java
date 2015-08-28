@@ -3,7 +3,7 @@ package applestore.front.order;
 import applestore.domain.cart.entity.Cart;
 import applestore.domain.order.entity.Order;
 import applestore.domain.order.repository.OrderJpaRepository;
-import applestore.front.cart.CartStore;
+import applestore.front.cart.service.CartStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
