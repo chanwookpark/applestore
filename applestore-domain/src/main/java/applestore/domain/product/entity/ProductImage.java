@@ -9,6 +9,7 @@ import javax.persistence.*;
  * @author chanwook
  */
 @Entity
+@Table(name = "PRD_PRODUCT_IMG")
 public class ProductImage {
 
     @Id

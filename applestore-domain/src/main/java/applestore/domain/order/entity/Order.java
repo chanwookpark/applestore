@@ -12,7 +12,7 @@ import java.util.List;
  * @author chanwook
  */
 @Entity
-@Table(name = "ORDER_M")
+@Table(name = "ORD_ORDER")
 public class Order {
 
     @Id

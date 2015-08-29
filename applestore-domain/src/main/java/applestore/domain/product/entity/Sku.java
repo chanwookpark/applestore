@@ -14,6 +14,7 @@ import java.util.List;
  * @author chanwook
  */
 @Entity
+@Table(name = "PRD_SKU")
 public class Sku {
 
     public static final String DEFAULT_SKU_NAME_POSTFIX = "_DEFAULT_SKU";

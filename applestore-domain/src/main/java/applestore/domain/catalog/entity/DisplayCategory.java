@@ -12,6 +12,7 @@ import java.util.List;
  * Created by chanwook on 2015. 6. 9..
  */
 @Entity
+@Table(name = "CAT_DISPLAY_CATEGORY")
 @SequenceGenerator(initialValue = 1, name = "DISPLAY_CATEGORY_SEQ")
 public class DisplayCategory {
 

@@ -17,7 +17,7 @@ import java.util.*;
  * Created by chanwook on 2015. 6. 9..
  */
 @Entity
-@Table(name = "PRD_PRODUCT_M", indexes = {@Index(name = "prd-name", columnList = "productName")})
+@Table(name = "PRD_PRODUCT", indexes = {@Index(name = "prd-name", columnList = "productName")})
 public class Product {
 
     @Id

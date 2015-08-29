@@ -10,6 +10,7 @@ import java.util.Date;
  * @author chanwook
  */
 @Entity
+@Table(name = "CAT_PRD_INDEX_HISTORY")
 public class ProductIndexHistory {
 
     @Id

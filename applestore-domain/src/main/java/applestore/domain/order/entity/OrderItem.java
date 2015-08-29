@@ -11,6 +11,7 @@ import java.util.Date;
  * @author chanwook
  */
 @Entity
+@Table(name = "ORD_ORDER_ITEM")
 public class OrderItem {
 
     @Id

@@ -12,6 +12,7 @@ import java.util.List;
  * @author chanwook
  */
 @Entity
+@Table(name = "PRD_PRODUCT_ATTR_VAL")
 public class ProductAttributeValue {
 
     @Id
