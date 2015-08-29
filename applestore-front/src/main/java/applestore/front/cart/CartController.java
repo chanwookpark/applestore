@@ -5,8 +5,6 @@ import applestore.domain.order.entity.OrderItem;
 import applestore.front.cart.service.CartService;
 import applestore.front.cart.service.CartStore;
 import applestore.front.price.PriceService;
-import applestore.front.product.ProductForCartRequest;
-import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +21,6 @@ import java.util.List;
 @Controller
 public class CartController {
 
-    final ModelMapper m = new ModelMapper();
-
     @Autowired
     CartService cs;
 
@@ -35,7 +31,7 @@ public class CartController {
     PriceService ps;
 
     @RequestMapping(value = "/cart/addItem", method = RequestMethod.POST)
-    public String addItem(ProductForCartRequest request, HttpSession session) {
+    public String addItem(ProductOrderRequest request, HttpSession session) {
 
         OrderItem orderItem = cs.createOrderItem(request);
 
@@ -57,7 +53,7 @@ public class CartController {
 //            viewModel.add(d);
 //        }
 
-        model.put("itemList", m.map(itemList, new TypeToken<List<OrderItemDTO>>(){}.getType()));
+        model.bind("itemList", itemList, new TypeToken<List<OrderItemDTO>>(){});
         model.put("cart", cart);
         model.put("totalOrderAmount", ps.getTotalOrderAmount(itemList));
         return "cart";

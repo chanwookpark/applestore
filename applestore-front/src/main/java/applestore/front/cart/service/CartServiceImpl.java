@@ -5,7 +5,7 @@ import applestore.domain.order.repository.OrderItemJpaRepository;
 import applestore.framework.workflow.ProcessEngine;
 import applestore.framework.workflow.RequestMap;
 import applestore.framework.workflow.ResponseMap;
-import applestore.front.product.ProductForCartRequest;
+import applestore.front.cart.ProductOrderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public OrderItem createOrderItem(ProductForCartRequest cartRequest) {
+    public OrderItem createOrderItem(ProductOrderRequest cartRequest) {
 
         // 우선 1개 activity로 만들어 보자
         final RequestMap requestMap = new RequestMap();

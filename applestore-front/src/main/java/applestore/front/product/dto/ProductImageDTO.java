@@ -3,7 +3,7 @@ package applestore.front.product.dto;
 /**
  * @author chanwook
  */
-public class ProducctImageDTO {
+public class ProductImageDTO {
 
     private long imageId;
 

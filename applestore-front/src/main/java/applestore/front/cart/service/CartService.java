@@ -1,7 +1,7 @@
 package applestore.front.cart.service;
 
 import applestore.domain.order.entity.OrderItem;
-import applestore.front.product.ProductForCartRequest;
+import applestore.front.cart.ProductOrderRequest;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface CartService {
 
-    OrderItem createOrderItem(ProductForCartRequest request);
+    OrderItem createOrderItem(ProductOrderRequest request);
 
     List<OrderItem> getOrderItem(List<Long> idList);
 

@@ -1,12 +1,11 @@
 package applestore.front.product;
 
 import applestore.domain.product.entity.Product;
-import applestore.domain.product.entity.ProductImage;
 import applestore.framework.ApplicationException;
 import applestore.front.product.dto.ProductDTO;
+import applestore.front.product.dto.ProductImageDTO;
 import applestore.front.product.dto.SkuDTO;
 import applestore.front.product.service.ProductService;
-import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +20,6 @@ import java.util.List;
  */
 @Controller
 public class ProductController {
-
-    final ModelMapper m = new ModelMapper();
 
     @Autowired
     private ProductService productService;
@@ -39,10 +36,10 @@ public class ProductController {
             throw new ApplicationException("구매가 불가능한 상품입니다!");
         }
 
-        model.put("product", m.map(product, ProductDTO.class));
-        model.put("defaultSku", m.map(product.getDefaultSku(), SkuDTO.class));
-        model.put("imageList", m.map(product.getImageList(), new TypeToken<List<ProductImage>>(){}.getType()));
-        model.put("skuList", m.map(product.getSkuList(), new TypeToken<List<SkuDTO>>(){}.getType()));
+        model.bind("product", product, ProductDTO.class);
+        model.bind("defaultSku", product.getDefaultSku(), SkuDTO.class);
+        model.bind("imageList", product.getImageList(), new TypeToken<List<ProductImageDTO>>(){}); // 더 간소화 할 방법은?@@
+        model.bind("skuList", product.getSkuList(), new TypeToken<List<SkuDTO>>(){}); // 더 간소화 할 방법은?@@
 
         return "product";
     }

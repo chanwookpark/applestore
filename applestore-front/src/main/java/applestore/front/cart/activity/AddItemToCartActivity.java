@@ -11,7 +11,7 @@ import applestore.framework.workflow.RequestMap;
 import applestore.framework.workflow.ResponseMap;
 import applestore.framework.workflow.WorkflowException;
 import applestore.front.price.PriceService;
-import applestore.front.product.ProductForCartRequest;
+import applestore.front.cart.ProductOrderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +46,7 @@ public class AddItemToCartActivity implements Activity {
         // blc는 이 orderItem을 카트때부터 Order와 관련을 맺어 버리던데..
         // workflow는 직접 심플하게 만들자..
 
-        final ProductForCartRequest cartRequest = (ProductForCartRequest) requestMap.get("cartRequest");
+        final ProductOrderRequest cartRequest = (ProductOrderRequest) requestMap.get("cartRequest");
 
         // 1. Product/SKU를 조회해 요청한 주문 정보가 가능한지 확인
         final Product product = pr.findOne(cartRequest.getProductId());
@@ -69,7 +69,7 @@ public class AddItemToCartActivity implements Activity {
         oir.save(orderItem);
     }
 
-    private void validateCartRequest(ProductForCartRequest cartRequest, Product product) {
+    private void validateCartRequest(ProductOrderRequest cartRequest, Product product) {
         if (product == null || !product.getProductId().equals(cartRequest.getProductId())) {
             throw new WorkflowException("상품ID(" + cartRequest.getProductId() + ")에 해당하는 상품이 존재하지 않습니다!");
         }
@@ -83,7 +83,7 @@ public class AddItemToCartActivity implements Activity {
         }
     }
 
-    private OrderItem createOrderItem(ProductForCartRequest request, Product product) {
+    private OrderItem createOrderItem(ProductOrderRequest request, Product product) {
         final Sku orderSku = product.getSku(request.getSelectSkuId());
         OrderItem item = new OrderItem(orderSku, OrderItemStatus.IN_CART);
         item.setOrderQuantity(request.getOrderQuantity());

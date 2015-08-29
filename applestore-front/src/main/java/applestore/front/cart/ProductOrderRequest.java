@@ -1,9 +1,9 @@
-package applestore.front.product;
+package applestore.front.cart;
 
 /**
  * @author chanwook
  */
-public class ProductForCartRequest {
+public class ProductOrderRequest {
 
     private String productId;
 
