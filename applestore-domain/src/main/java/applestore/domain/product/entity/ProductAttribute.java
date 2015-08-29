@@ -1,6 +1,8 @@
 package applestore.domain.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -95,5 +97,23 @@ public class ProductAttribute {
 
     public int getValueSize() {
         return this.attrValueList.size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Product)) return false;
+        ProductAttribute compare = (ProductAttribute) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(attributeId, compare.attributeId);
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(attributeId);
+        return hcb.toHashCode();
     }
 }

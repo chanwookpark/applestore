@@ -5,13 +5,14 @@ import applestore.domain.product.entity.SkuStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author chanwook
  */
 public interface SkuJpaRepository extends JpaRepository<Sku, Long> {
 
-    List<Sku> findByProductProductIdAndStatus(String productId, SkuStatus status);
+    Set<Sku> findByProductProductIdAndStatus(String productId, SkuStatus status);
 
     List<Sku> findBySkuIdIn(List<Long> skuIdList);
 }

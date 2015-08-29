@@ -1,5 +1,8 @@
 package applestore.domain.order.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +23,7 @@ public class Order {
     @Version
     private Date updated;
 
+    @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
@@ -58,4 +62,25 @@ public class Order {
         this.created = created;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Order)) return false;
+
+        Order compare = (Order) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(orderId, compare.orderId);
+        eb.append(created, compare.created);
+
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(orderId);
+        hcb.append(created);
+        return hcb.toHashCode();
+    }
 }

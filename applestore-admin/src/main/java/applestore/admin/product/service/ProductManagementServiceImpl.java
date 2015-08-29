@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author chanwook
@@ -62,7 +63,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     @Transactional
     @Override
     public void createSku(String productId, boolean shiftable) {
-        List<Sku> current = sr.findByProductProductIdAndStatus(productId, SkuStatus.OPEN);
+        Set<Sku> current = sr.findByProductProductIdAndStatus(productId, SkuStatus.OPEN);
 
         // sku 상태 변경
         if (current != null) {
@@ -143,7 +144,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
     @Transactional
     @Override
-    public void updateSku(String productId, List<Sku> updateSkuList) {
+    public void updateSku(String productId, Set<Sku> updateSkuList) {
         final Product product = pr.findOne(productId);
 
         for (Sku updateSku : updateSkuList) {
@@ -192,7 +193,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
         defaultSku.setSalesStock(formRequest.getSalesStock());
     }
 
-    private Sku resolveBeforeSku(List<Sku> list, Sku target) {
+    private Sku resolveBeforeSku(Set<Sku> list, Sku target) {
         for (Sku sku : list) {
             final List<ProductAttributeValue> pav1 = sku.getAttributeValueList();
             final List<ProductAttributeValue> pav2 = target.getAttributeValueList();

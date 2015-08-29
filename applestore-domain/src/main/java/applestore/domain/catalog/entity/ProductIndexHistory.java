@@ -1,5 +1,8 @@
 package applestore.domain.catalog.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,6 +11,7 @@ import java.util.Date;
  */
 @Entity
 public class ProductIndexHistory {
+
     @Id
     @GeneratedValue
     private long id;
@@ -41,5 +45,25 @@ public class ProductIndexHistory {
 
     public void setCount(long count) {
         this.count = count;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof ProductIndexHistory)) return false;
+
+        ProductIndexHistory compare = (ProductIndexHistory) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(id, compare.id);
+
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(id);
+        return hcb.toHashCode();
     }
 }

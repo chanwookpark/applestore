@@ -6,6 +6,7 @@ import applestore.admin.product.ProductMainFormRequest;
 import applestore.domain.product.entity.Sku;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author chanwook
@@ -17,7 +18,7 @@ public interface ProductManagementService {
 
     void createSku(String productId, boolean shiftable);
 
-    void updateSku(String productId, List<Sku> skuList);
+    void updateSku(String productId, Set<Sku> skuList);
 
     void updateProductMain(ProductMainFormRequest formRequest);
 }

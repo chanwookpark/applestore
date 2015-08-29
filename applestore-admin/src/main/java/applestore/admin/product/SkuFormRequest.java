@@ -2,27 +2,27 @@ package applestore.admin.product;
 
 import applestore.domain.product.entity.Sku;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author chanwook
  */
 public class SkuFormRequest {
-    List<Sku> skuList = new ArrayList<Sku>();
+    Set<Sku> skuList = new HashSet<Sku>();
 
     public SkuFormRequest() {
     }
 
-    public SkuFormRequest(List<Sku> skuList) {
+    public SkuFormRequest(Set<Sku> skuList) {
         this.skuList = skuList;
     }
 
-    public List<Sku> getSkuList() {
+    public Set<Sku> getSkuList() {
         return skuList;
     }
 
-    public void setSkuList(List<Sku> skuList) {
+    public void setSkuList(Set<Sku> skuList) {
         this.skuList = skuList;
     }
 }

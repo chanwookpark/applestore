@@ -1,6 +1,8 @@
 package applestore.domain.catalog.entity;
 
 import applestore.domain.product.entity.Product;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -70,5 +72,23 @@ public class DisplayCategory {
         this.productList.add(product);
         product.setDisplayCategory(this);
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Product)) return false;
+        DisplayCategory compare = (DisplayCategory) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(categoryId, compare.categoryId);
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(categoryId);
+        return hcb.toHashCode();
     }
 }

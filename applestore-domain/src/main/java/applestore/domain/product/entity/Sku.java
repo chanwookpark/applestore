@@ -2,6 +2,8 @@ package applestore.domain.product.entity;
 
 import applestore.domain.order.entity.OrderItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +25,10 @@ public class Sku {
 
     @Column(length = 100, nullable = false)
     private String skuName;
+
+    @Version
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
 
     @Column(length = 100)
     private String label;
@@ -48,13 +54,9 @@ public class Sku {
     @Column(nullable = false)
     private SkuStatus status = SkuStatus.CLOSE;
 
-    @Version
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
-    @JsonIgnore //TODO 모델분리요~
     private Product product;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -222,5 +224,27 @@ public class Sku {
 
     public void setOrderItemList(List<OrderItem> orderItemList) {
         this.orderItemList = orderItemList;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Sku)) return false;
+
+        Sku compare = (Sku) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(product.getProductId(), compare.product.getProductId());
+        eb.append(attributeValueList, compare.attributeValueList);
+
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(product.getProductId());
+        hcb.append(attributeValueList);
+        return hcb.toHashCode();
     }
 }

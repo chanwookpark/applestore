@@ -1,6 +1,8 @@
 package applestore.domain.cart.entity;
 
 import applestore.domain.order.entity.OrderItem;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -82,5 +84,25 @@ public class Cart implements Serializable {
 
     public void setStatus(CartStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Cart)) return false;
+
+        Cart compare = (Cart) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(id, compare.id);
+
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(id);
+        return hcb.toHashCode();
     }
 }

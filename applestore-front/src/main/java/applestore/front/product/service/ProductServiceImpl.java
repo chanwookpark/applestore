@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author chanwook
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     public Product getProduct(String productId) {
         final Product product = pr.findOne(productId);
         // 오픈된 sku만 조회해서 설정
-        final List<Sku> sku =
+        final Set<Sku> sku =
                 sr.findByProductProductIdAndStatus(productId, SkuStatus.OPEN);
         product.setSkuList(sku);
         return product;

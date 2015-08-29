@@ -25,9 +25,9 @@ import static org.junit.Assert.assertThat;
  * @author chanwook
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = AppleStoreEntityTestApp.class)
+@SpringApplicationConfiguration(classes = EntityTestApp.class)
 @Transactional
-public class ProductEntityTests {
+public class ProductEntityTest {
 
     @Autowired
     ProductJpaRepository pr;
@@ -99,8 +99,8 @@ public class ProductEntityTests {
         final Iterator<ProductAttribute> iterator = prdInDb.getAttributeList().iterator();
         assertThat(iterator.next().getAttrValueList().size(), is(2));
         assertThat(iterator.next().getAttrValueList().size(), is(3));
-        assertThat(prdInDb.getSkuList().get(0).getAttributeValueList().size(), is(2));
-        assertThat(prdInDb.getSkuList().get(1).getAttributeValueList().size(), is(2));
-        assertThat(prdInDb.getSkuList().get(2).getAttributeValueList().size(), is(2));
+        for (Sku sku : prdInDb.getSkuList()) {
+            assertThat(sku.getAttributeValueList().size(), is(2));
+        }
     }
 }

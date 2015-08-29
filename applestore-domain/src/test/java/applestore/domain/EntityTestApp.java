@@ -9,8 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "applestore")
-public class AppleStoreEntityTestApp {
+public class EntityTestApp {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(AppleStoreEntityTestApp.class, args);
+        SpringApplication.run(EntityTestApp.class, args);
     }
 }

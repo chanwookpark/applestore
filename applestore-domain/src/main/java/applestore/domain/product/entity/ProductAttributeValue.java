@@ -1,6 +1,8 @@
 package applestore.domain.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -95,5 +97,25 @@ public class ProductAttributeValue {
 
     public void addSku(Sku sku) {
         this.skuList.add(sku);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof ProductAttributeValue)) return false;
+
+        ProductAttributeValue compare = (ProductAttributeValue) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(valueId, compare.valueId);
+
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(valueId);
+        return hcb.toHashCode();
     }
 }

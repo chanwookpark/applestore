@@ -21,7 +21,7 @@ import static org.junit.Assert.assertThat;
  * Created by chanwook on 2015. 6. 9..
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = AppleStoreEntityTestApp.class)
+@SpringApplicationConfiguration(classes = EntityTestApp.class)
 //@Transactional
 public class CatalogEntityDataTester {
 

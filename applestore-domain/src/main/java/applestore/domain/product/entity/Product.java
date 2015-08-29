@@ -2,7 +2,8 @@ package applestore.domain.product.entity;
 
 import applestore.domain.catalog.entity.DisplayCategory;
 import applestore.domain.product.ProductException;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
@@ -10,14 +11,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by chanwook on 2015. 6. 9..
  */
 @Entity
+@Table(name = "PRD_PRODUCT_M", indexes = {@Index(name = "prd-name", columnList = "productName")})
 public class Product {
 
     @Id
@@ -27,7 +27,7 @@ public class Product {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String productName;
 
     @Column(length = 200)
@@ -37,19 +37,17 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "categoryId")
-    //TODO 모델 분리요..
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "DS_CATEGORY_ID")
     private DisplayCategory displayCategory;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> imageList = new ArrayList<ProductImage>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, targetEntity = Sku.class)
-    private List<Sku> skuList = new ArrayList<Sku>();
+    private Set<Sku> skuList = new HashSet<Sku>();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "DEFAULT_SKU_ID")
     private Sku defaultSku;
 
@@ -136,11 +134,11 @@ public class Product {
         };
     }
 
-    public List<Sku> getSkuList() {
+    public Set<Sku> getSkuList() {
         return skuList;
     }
 
-    public void setSkuList(List<Sku> skuList) {
+    public void setSkuList(Set<Sku> skuList) {
         this.skuList = skuList;
     }
 
@@ -230,5 +228,27 @@ public class Product {
 
     public boolean salesEnable() {
         return ProductStatus.SALES.equals(status);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Product)) return false;
+
+        Product compare = (Product) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(productName, compare.productName);
+        eb.append(attributeList, compare.attributeList);
+
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(productName);
+        hcb.append(attributeList);
+        return hcb.toHashCode();
     }
 }

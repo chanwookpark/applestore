@@ -1,6 +1,7 @@
 package applestore.domain.product.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 
@@ -35,7 +36,6 @@ public class ProductImage {
 
     @ManyToOne
     @JoinColumn(name = "productId")
-    @JsonIgnore // TODO 제거
     private Product product;
 
     public long getImageId() {
@@ -68,5 +68,25 @@ public class ProductImage {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof ProductImage)) return false;
+
+        ProductImage compare = (ProductImage) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(imageId, compare.imageId);
+
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(imageId);
+        return hcb.toHashCode();
     }
 }

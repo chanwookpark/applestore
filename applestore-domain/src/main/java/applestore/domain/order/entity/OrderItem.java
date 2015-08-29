@@ -1,6 +1,8 @@
 package applestore.domain.order.entity;
 
 import applestore.domain.product.entity.Sku;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -99,5 +101,27 @@ public class OrderItem {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof OrderItem)) return false;
+
+        OrderItem compare = (OrderItem) obj;
+        EqualsBuilder eb = new EqualsBuilder();
+        eb.append(orderItemId, compare.orderItemId);
+        eb.append(orderSku.getSkuId(), compare.orderSku.getSkuId());
+
+        return eb.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(orderItemId);
+        hcb.append(orderSku.getSkuId());
+        return hcb.toHashCode();
     }
 }
