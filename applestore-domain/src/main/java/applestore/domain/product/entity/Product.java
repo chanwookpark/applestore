@@ -2,6 +2,11 @@ package applestore.domain.product.entity;
 
 import applestore.domain.catalog.entity.DisplayCategory;
 import applestore.domain.product.ProductException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,6 +23,11 @@ import java.util.*;
  */
 @Entity
 @Table(name = "PRD_PRODUCT", indexes = {@Index(name = "prd-name", columnList = "productName")})
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
+@Slf4j
 public class Product {
 
     @Id
@@ -70,54 +80,6 @@ public class Product {
         this.status = status;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public DisplayCategory getDisplayCategory() {
-        return displayCategory;
-    }
-
-    public void setDisplayCategory(DisplayCategory displayCategory) {
-        this.displayCategory = displayCategory;
-    }
-
-    public List<ProductImage> getImageList() {
-        return imageList;
-    }
-
-    public void setImageList(List<ProductImage> imageList) {
-        this.imageList = imageList;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    public ProductStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ProductStatus status) {
-        this.status = status;
-    }
-
     public static Specification hasCategory(final long categoryId) {
 //        return new Specification() {
 //            @Override
@@ -132,14 +94,6 @@ public class Product {
                 return cb.equal(root.join("displayCategory").get("categoryId"), categoryId);
             }
         };
-    }
-
-    public Set<Sku> getSkuList() {
-        return skuList;
-    }
-
-    public void setSkuList(Set<Sku> skuList) {
-        this.skuList = skuList;
     }
 
     public Product addImage(ProductImage image) {
@@ -169,14 +123,6 @@ public class Product {
         return this;
     }
 
-    public List<ProductAttribute> getAttributeList() {
-        return attributeList;
-    }
-
-    public void setAttributeList(List<ProductAttribute> attributeList) {
-        this.attributeList = attributeList;
-    }
-
     public void addProductAttribute(ProductAttribute attr) {
         this.attributeList.add(attr);
         attr.addProductList(this);
@@ -193,22 +139,6 @@ public class Product {
             }
         }
         return null;
-    }
-
-    public Sku getDefaultSku() {
-        return defaultSku;
-    }
-
-    public void setDefaultSku(Sku defaultSku) {
-        this.defaultSku = defaultSku;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public boolean hasSku(long selectSkuId) {

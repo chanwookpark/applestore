@@ -112,6 +112,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -119,7 +127,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <configuration>
+                    <compilerVersion>${maven.jdk}</compilerVersion>
+                    <source>${maven.jdk}</source>
+                    <target>${maven.jdk}</target>
+                </configuration>
+                <!--
                 <executions>
                     <execution>
                         <id>default-compile</id>
@@ -144,6 +157,7 @@
                         </configuration>
                     </execution>
                 </executions>
+                -->
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
