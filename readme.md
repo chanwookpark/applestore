@@ -1,5 +1,5 @@
 # 이곳은...
-다양한 Commerce architecture를 실험하기 위한 공간입니다. 
+다양한 Commerce architecture와 기술을 실험하기 위한 공간입니다. 
 
 # 혹시 돌려보고 싶다면..
 
