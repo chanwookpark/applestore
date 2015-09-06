@@ -3,6 +3,10 @@ package applestore.domain.product.entity;
 import applestore.domain.common.AbstractEntity;
 import applestore.domain.order.entity.OrderItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -15,6 +19,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PRD_SKU")
+@Getter
+@Setter
+@AllArgsConstructor
+@Slf4j
 public class Sku extends AbstractEntity {
 
     public static final String DEFAULT_SKU_NAME_POSTFIX = "_DEFAULT_SKU";
@@ -104,102 +112,6 @@ public class Sku extends AbstractEntity {
         this.attributeValueList = valueList;
     }
 
-    public long getSkuId() {
-        return skuId;
-    }
-
-    public void setSkuId(long skuId) {
-        this.skuId = skuId;
-    }
-
-    public String getSkuName() {
-        return skuName;
-    }
-
-    public void setSkuName(String skuName) {
-        this.skuName = skuName;
-    }
-
-    public long getSalesPrice() {
-        return salesPrice;
-    }
-
-    public void setSalesPrice(long salesPrice) {
-        this.salesPrice = salesPrice;
-    }
-
-    public long getSalesStock() {
-        return salesStock;
-    }
-
-    public void setSalesStock(long salesStock) {
-        this.salesStock = salesStock;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public long getRetailPrice() {
-        return retailPrice;
-    }
-
-    public void setRetailPrice(long retailPrice) {
-        this.retailPrice = retailPrice;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<ProductAttributeValue> getAttributeValueList() {
-        return attributeValueList;
-    }
-
-    public void setAttributeValueList(List<ProductAttributeValue> attributeValueList) {
-        this.attributeValueList = attributeValueList;
-    }
-
-    public boolean isDefaultSku() {
-        return defaultSku;
-    }
-
-    public void setDefaultSku(boolean defaultSku) {
-        this.defaultSku = defaultSku;
-    }
-
-    public SkuStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(SkuStatus status) {
-        this.status = status;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public int getDisplayOrder() {
-        return displayOrder;
-    }
-
-    public void setDisplayOrder(int displayOrder) {
-        this.displayOrder = displayOrder;
-    }
-
     public static Sku createDefaultSku(Product product) {
         Sku defaultSku = new Sku();
         defaultSku.setDefaultSku(true);
@@ -209,14 +121,6 @@ public class Sku extends AbstractEntity {
         defaultSku.setStatus(SkuStatus.OPEN);
         product.setDefaultSku(defaultSku);
         return defaultSku;
-    }
-
-    public List<OrderItem> getOrderItemList() {
-        return orderItemList;
-    }
-
-    public void setOrderItemList(List<OrderItem> orderItemList) {
-        this.orderItemList = orderItemList;
     }
 
     @Override

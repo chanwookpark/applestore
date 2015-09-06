@@ -1,6 +1,10 @@
 package applestore.domain.product.entity;
 
 import applestore.domain.common.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,6 +17,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PRD_PRODUCT_ATTR_VAL")
+@Getter
+@Setter
+@AllArgsConstructor
+@Slf4j
 public class ProductAttributeValue extends AbstractEntity {
 
     @Id
@@ -52,50 +60,6 @@ public class ProductAttributeValue extends AbstractEntity {
 
         this.attribute = attr;
         attr.addValue(this);
-    }
-
-    public long getValueId() {
-        return valueId;
-    }
-
-    public void setValueId(long valueId) {
-        this.valueId = valueId;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public void setAttribute(ProductAttribute attribute) {
-        this.attribute = attribute;
-    }
-
-    public ProductAttribute getAttribute() {
-        return attribute;
-    }
-
-    public List<Sku> getSkuList() {
-        return skuList;
-    }
-
-    public void setSkuList(List<Sku> skuList) {
-        this.skuList = skuList;
-    }
-
-    public void addSku(Sku sku) {
-        this.skuList.add(sku);
     }
 
     @Override

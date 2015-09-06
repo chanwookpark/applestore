@@ -20,5 +20,8 @@ public abstract class AbstractEntity {
     @LastModifiedDate
     @Version
     protected Date modifiedDate;
+
+    protected AbstractEntity() {
+    }
 //    LocalDateTime modifiedDate; // VersionType으로 아직 지원하지 않아서 일단 Date로 사용함
 }

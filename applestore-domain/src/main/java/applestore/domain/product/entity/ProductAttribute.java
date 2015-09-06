@@ -1,6 +1,11 @@
 package applestore.domain.product.entity;
 
 import applestore.domain.common.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,6 +18,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PRD_PRODUCT_ATTR")
+@Getter
+@Setter
+@AllArgsConstructor
+@Slf4j
 public class ProductAttribute extends AbstractEntity {
 
     @Id
@@ -45,47 +54,6 @@ public class ProductAttribute extends AbstractEntity {
         this.label = label;
     }
 
-
-    public long getAttributeId() {
-        return attributeId;
-    }
-
-    public void setAttributeId(long attributeId) {
-        this.attributeId = attributeId;
-    }
-
-    public String getAttributeName() {
-        return attributeName;
-    }
-
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public List<ProductAttributeValue> getAttrValueList() {
-        return attrValueList;
-    }
-
-    public void setAttrValueList(List<ProductAttributeValue> attrValueList) {
-        this.attrValueList = attrValueList;
-    }
-
     public void addValue(ProductAttributeValue value) {
         this.attrValueList.add(value);
         value.setAttribute(this);
@@ -93,10 +61,6 @@ public class ProductAttribute extends AbstractEntity {
 
     public void addProductList(Product product) {
         this.productList.add(product);
-    }
-
-    public int getValueSize() {
-        return this.attrValueList.size();
     }
 
     @Override

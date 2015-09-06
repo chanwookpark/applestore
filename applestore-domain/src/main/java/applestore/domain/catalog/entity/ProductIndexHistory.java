@@ -1,6 +1,11 @@
 package applestore.domain.catalog.entity;
 
 import applestore.domain.common.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -12,6 +17,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "CAT_PRD_INDEX_HISTORY")
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
+@Slf4j
 public class ProductIndexHistory extends AbstractEntity {
 
     @Id
@@ -24,30 +34,6 @@ public class ProductIndexHistory extends AbstractEntity {
 
     @Column
     private long count;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Date getExecute() {
-        return execute;
-    }
-
-    public void setExecute(Date execute) {
-        this.execute = execute;
-    }
-
-    public long getCount() {
-        return count;
-    }
-
-    public void setCount(long count) {
-        this.count = count;
-    }
 
     @Override
     public boolean equals(Object obj) {

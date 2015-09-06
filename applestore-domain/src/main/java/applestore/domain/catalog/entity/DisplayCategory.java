@@ -2,6 +2,10 @@ package applestore.domain.catalog.entity;
 
 import applestore.domain.common.AbstractEntity;
 import applestore.domain.product.entity.Product;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -15,6 +19,10 @@ import java.util.List;
 @Entity
 @Table(name = "CAT_DISPLAY_CATEGORY")
 @SequenceGenerator(initialValue = 1, name = "DISPLAY_CATEGORY_SEQ")
+@Getter
+@Setter
+@AllArgsConstructor
+@Slf4j
 public class DisplayCategory extends AbstractEntity {
 
     @Id
@@ -35,38 +43,6 @@ public class DisplayCategory extends AbstractEntity {
 
     public DisplayCategory(String categoryName, String categoryImageUrl) {
         this.categoryName = categoryName;
-        this.categoryImageUrl = categoryImageUrl;
-    }
-
-    public long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
-    public String getCategoryImageUrl() {
-        return categoryImageUrl;
-    }
-
-    public void setCategoryImageUrl(String categoryImageUrl) {
         this.categoryImageUrl = categoryImageUrl;
     }
 

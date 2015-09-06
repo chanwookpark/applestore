@@ -1,6 +1,10 @@
 package applestore.domain.product.entity;
 
 import applestore.domain.common.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -11,6 +15,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "PRD_PRODUCT_IMG")
+@Getter
+@Setter
+@AllArgsConstructor
+@Slf4j
 public class ProductImage extends AbstractEntity {
 
     @Id
@@ -39,38 +47,6 @@ public class ProductImage extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
-
-    public long getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(long imageId) {
-        this.imageId = imageId;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public int getImageOrder() {
-        return imageOrder;
-    }
-
-    public void setImageOrder(int imageOrder) {
-        this.imageOrder = imageOrder;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     @Override
     public boolean equals(Object obj) {

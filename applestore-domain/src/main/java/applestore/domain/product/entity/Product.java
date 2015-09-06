@@ -31,7 +31,6 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@ToString
 @Slf4j
 public class Product extends AbstractEntity {
 

@@ -1,6 +1,10 @@
 package applestore.domain.order.entity;
 
 import applestore.domain.common.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,6 +17,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "ORD_ORDER")
+@Getter
+@Setter
+@AllArgsConstructor
+@Slf4j
 public class Order extends AbstractEntity {
 
     @Id
@@ -22,20 +30,7 @@ public class Order extends AbstractEntity {
     @OneToMany(mappedBy = "order", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     private List<OrderItem> orderItemList = new ArrayList<OrderItem>();
 
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    public List<OrderItem> getOrderItemList() {
-        return orderItemList;
-    }
-
-    public void setOrderItemList(List<OrderItem> orderItemList) {
-        this.orderItemList = orderItemList;
+    public Order() {
     }
 
     @Override

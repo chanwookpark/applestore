@@ -2,6 +2,10 @@ package applestore.domain.order.entity;
 
 import applestore.domain.common.AbstractEntity;
 import applestore.domain.product.entity.Sku;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -12,6 +16,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "ORD_ORDER_ITEM")
+@Getter
+@Setter
+@AllArgsConstructor
+@Slf4j
 public class OrderItem extends AbstractEntity {
 
     @Id
@@ -42,54 +50,6 @@ public class OrderItem extends AbstractEntity {
     public OrderItem(Sku orderSku, OrderItemStatus status) {
         this.orderSku = orderSku;
         this.status = status;
-    }
-
-    public long getOrderItemId() {
-        return orderItemId;
-    }
-
-    public void setOrderItemId(long orderItemId) {
-        this.orderItemId = orderItemId;
-    }
-
-    public long getOrderPrice() {
-        return orderPrice;
-    }
-
-    public void setOrderPrice(long orderPrice) {
-        this.orderPrice = orderPrice;
-    }
-
-    public int getOrderQuantity() {
-        return orderQuantity;
-    }
-
-    public void setOrderQuantity(int orderQuantity) {
-        this.orderQuantity = orderQuantity;
-    }
-
-    public Sku getOrderSku() {
-        return orderSku;
-    }
-
-    public void setOrderSku(Sku orderSku) {
-        this.orderSku = orderSku;
-    }
-
-    public OrderItemStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderItemStatus status) {
-        this.status = status;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     @Override
