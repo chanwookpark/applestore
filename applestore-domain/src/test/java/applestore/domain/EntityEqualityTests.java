@@ -1,6 +1,9 @@
 package applestore.domain;
 
+import applestore.domain.product.SkuException;
 import applestore.domain.product.entity.Product;
+import applestore.domain.product.entity.ProductAttribute;
+import applestore.domain.product.entity.ProductAttributeValue;
 import applestore.domain.product.entity.Sku;
 import applestore.domain.product.repository.ProductJpaRepository;
 import org.junit.Test;
@@ -13,13 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.Assert.fail;
+
 /**
  * @author chanwook
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = EntityTestApp.class)
 @Transactional
-public class EntityEqualityTest {
+public class EntityEqualityTests {
 
     @Autowired
     ProductJpaRepository pr;
@@ -63,9 +68,19 @@ public class EntityEqualityTest {
     @Test
     public void case3() throws Exception {
         // set member
-        final Product p1 = pr.findOne("M101");
+        Product product = new Product();
+        product.setProductId("test101");
+        product.setProductName("비싼상품!");
+        final ProductAttribute pa1 = new ProductAttribute("size0", "size0");
+        final ProductAttribute pa2 = new ProductAttribute("color0", "color0");
+        product.addProductAttribute(pa1);
+        product.addProductAttribute(pa2);
+        product.addSku(new Sku("sku1", new ProductAttributeValue("s", "size-s", pa1), new ProductAttributeValue("red", "color-red", pa2)));
+        product.addSku(new Sku("sku2", new ProductAttributeValue("m", "size-m", pa1), new ProductAttributeValue("red", "color-red", pa2)));
+        product.addSku(new Sku("sku3", new ProductAttributeValue("l", "size-l", pa1), new ProductAttributeValue("red", "color-red", pa2)));
+        final Product p1 = pr.save(product);
 
-        assert p1.getSkuList().size() == 6;
+        assert p1.getSkuList().size() == 3;
 
         // SKU를 추가하려 했지만 Biz key가 동일하기에 추가 불가..
         final Sku currentSku = p1.getSkuList().iterator().next();
@@ -73,9 +88,14 @@ public class EntityEqualityTest {
         newSku.setProduct(p1);
         newSku.setAttributeValueList(currentSku.getAttributeValueList());
         newSku.setSkuName("신상옵션!");
-        p1.addSku(newSku);
+        try {
+            p1.addSku(newSku);
+            fail();
+        } catch (SkuException se) {
+            // OK!
+        }
 
         assert currentSku.equals(newSku);
-        assert p1.getSkuList().size() == 6;
+        assert p1.getSkuList().size() == 3; // sku는 그대로!s
     }
 }

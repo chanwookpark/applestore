@@ -1,19 +1,17 @@
 package applestore.front.order;
 
-import applestore.domain.cart.entity.Cart;
+import applestore.domain.cart.document.Cart;
 import applestore.domain.order.entity.Order;
 import applestore.domain.order.entity.OrderItem;
 import applestore.domain.order.entity.OrderItemStatus;
 import applestore.domain.order.repository.OrderItemJpaRepository;
 import applestore.domain.order.repository.OrderJpaRepository;
 import applestore.front.product.service.ProductService;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,10 +87,6 @@ public class OrderServiceImpl implements OrderService {
         for (OrderItem oi : orderItemList) {
             oi.setOrder(order);
         }
-
-        final Date now = DateTime.now().toDate();
-        order.setUpdated(now);
-        order.setCreated(now);
 
         or.save(order);
 

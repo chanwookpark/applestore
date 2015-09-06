@@ -1,6 +1,6 @@
 package applestore.domain.cart.repository;
 
-import applestore.domain.cart.entity.Cart;
+import applestore.domain.cart.document.Cart;
 
 /**
  * @author chanwook

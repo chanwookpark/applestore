@@ -1,5 +1,6 @@
 package applestore.domain.product.entity;
 
+import applestore.domain.common.AbstractEntity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "PRD_PRODUCT_IMG")
-public class ProductImage {
+public class ProductImage extends AbstractEntity {
 
     @Id
     @GeneratedValue

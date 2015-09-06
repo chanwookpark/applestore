@@ -1,5 +1,6 @@
 package applestore.domain.catalog.entity;
 
+import applestore.domain.common.AbstractEntity;
 import applestore.domain.product.entity.Product;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "CAT_DISPLAY_CATEGORY")
 @SequenceGenerator(initialValue = 1, name = "DISPLAY_CATEGORY_SEQ")
-public class DisplayCategory {
+public class DisplayCategory extends AbstractEntity {
 
     @Id
     @GeneratedValue(generator = "DISPLAY_CATEGORY_SEQ")

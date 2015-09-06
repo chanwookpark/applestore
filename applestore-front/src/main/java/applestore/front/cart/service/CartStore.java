@@ -1,6 +1,6 @@
 package applestore.front.cart.service;
 
-import applestore.domain.cart.entity.Cart;
+import applestore.domain.cart.document.Cart;
 
 import javax.servlet.http.HttpSession;
 

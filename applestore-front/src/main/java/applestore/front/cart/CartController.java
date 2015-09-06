@@ -1,6 +1,6 @@
 package applestore.front.cart;
 
-import applestore.domain.cart.entity.Cart;
+import applestore.domain.cart.document.Cart;
 import applestore.domain.order.entity.OrderItem;
 import applestore.front.cart.service.CartService;
 import applestore.front.cart.service.CartStore;

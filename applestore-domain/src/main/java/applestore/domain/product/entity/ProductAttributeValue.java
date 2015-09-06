@@ -1,6 +1,6 @@
 package applestore.domain.product.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import applestore.domain.common.AbstractEntity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PRD_PRODUCT_ATTR_VAL")
-public class ProductAttributeValue {
+public class ProductAttributeValue extends AbstractEntity {
 
     @Id
     @GeneratedValue
@@ -27,12 +27,10 @@ public class ProductAttributeValue {
 
     @ManyToOne
     @JoinColumn(name = "attributeId")
-    @JsonIgnore //TODO 모델분리요~
     private ProductAttribute attribute;
 
     @ManyToMany(mappedBy = "attributeValueList")
-    @JsonIgnore //TODO 모델분리요~
-    private List<Sku> skuList = new ArrayList<Sku>();
+    private List<Sku> skuList = new ArrayList<>();
 
     public ProductAttributeValue() {
     }
@@ -109,6 +107,8 @@ public class ProductAttributeValue {
         ProductAttributeValue compare = (ProductAttributeValue) obj;
         EqualsBuilder eb = new EqualsBuilder();
         eb.append(valueId, compare.valueId);
+        eb.append(value, compare.value);
+        eb.append(label, compare.label);
 
         return eb.isEquals();
     }
@@ -117,6 +117,8 @@ public class ProductAttributeValue {
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(valueId);
+        hcb.append(value);
+        hcb.append(label);
         return hcb.toHashCode();
     }
 }

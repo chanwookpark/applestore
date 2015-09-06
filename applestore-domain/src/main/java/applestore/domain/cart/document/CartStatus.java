@@ -1,4 +1,4 @@
-package applestore.domain.cart.entity;
+package applestore.domain.cart.document;
 
 /**
  * @author chanwook

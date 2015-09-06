@@ -1,6 +1,6 @@
 package applestore.front.cart.service;
 
-import applestore.domain.cart.entity.Cart;
+import applestore.domain.cart.document.Cart;
 import applestore.domain.cart.repository.CartMongoRepository;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
-import static applestore.domain.cart.entity.CartStatus.EXPIRED;
-import static applestore.domain.cart.entity.CartStatus.OPEN;
+import static applestore.domain.cart.document.CartStatus.EXPIRED;
+import static applestore.domain.cart.document.CartStatus.OPEN;
 
 /**
  * @author chanwook

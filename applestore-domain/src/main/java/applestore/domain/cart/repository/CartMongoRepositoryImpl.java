@@ -1,7 +1,7 @@
 package applestore.domain.cart.repository;
 
-import applestore.domain.cart.entity.Cart;
-import applestore.domain.cart.entity.CartStatus;
+import applestore.domain.cart.document.Cart;
+import applestore.domain.cart.document.CartStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;

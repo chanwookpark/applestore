@@ -1,5 +1,6 @@
 package applestore.domain.product.entity;
 
+import applestore.domain.common.AbstractEntity;
 import applestore.domain.order.entity.OrderItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -7,7 +8,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PRD_SKU")
-public class Sku {
+public class Sku extends AbstractEntity {
 
     public static final String DEFAULT_SKU_NAME_POSTFIX = "_DEFAULT_SKU";
     public static final int DEFAULT_SKU_ORDER = 0;
@@ -26,10 +26,6 @@ public class Sku {
 
     @Column(length = 100, nullable = false)
     private String skuName;
-
-    @Version
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
 
     @Column(length = 100)
     private String label;
@@ -55,7 +51,6 @@ public class Sku {
     @Column(nullable = false)
     private SkuStatus status = SkuStatus.CLOSE;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
     private Product product;
@@ -73,8 +68,13 @@ public class Sku {
     public Sku() {
     }
 
+    public Sku(String skuName, ProductAttributeValue... attributeValues) {
+        this.skuName = skuName;
+        convertAndSetProductAttributeValueList(attributeValues);
+    }
+
     public Sku(ProductAttributeValue... values) {
-        replaceProductAttributeValue(values);
+        convertAndSetProductAttributeValueList(values);
     }
 
     public Sku(List<ProductAttributeValue> values) {
@@ -92,11 +92,11 @@ public class Sku {
         this.salesPrice = salesPrice;
         this.retailPrice = retailPrice;
         this.salesStock = salesStock;
-        replaceProductAttributeValue(values);
+        convertAndSetProductAttributeValueList(values);
 
     }
 
-    public void replaceProductAttributeValue(ProductAttributeValue[] values) {
+    public void convertAndSetProductAttributeValueList(ProductAttributeValue[] values) {
         List<ProductAttributeValue> valueList = new ArrayList<ProductAttributeValue>(values.length);
         for (ProductAttributeValue value : values) {
             valueList.add(value);
@@ -192,14 +192,6 @@ public class Sku {
         this.label = label;
     }
 
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
     public int getDisplayOrder() {
         return displayOrder;
     }
@@ -234,6 +226,8 @@ public class Sku {
         if (!(obj instanceof Sku)) return false;
 
         Sku compare = (Sku) obj;
+        if (product == null) return false; // product가 설정되어 있지 않다면 같은 SKU로 판단할 수가 없음!
+
         EqualsBuilder eb = new EqualsBuilder();
         eb.append(product.getProductId(), compare.product.getProductId());
         eb.append(attributeValueList, compare.attributeValueList);

@@ -3,6 +3,7 @@ package applestore.domain.product.entity;
 import applestore.domain.catalog.entity.DisplayCategory;
 import applestore.domain.common.AbstractEntity;
 import applestore.domain.product.ProductException;
+import applestore.domain.product.SkuException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by chanwook on 2015. 6. 9..
@@ -115,8 +119,11 @@ public class Product extends AbstractEntity {
     }
 
     public Product addSku(Sku sku) {
-        this.skuList.add(sku);
+        if (sku.getProduct() != null && this.skuList.contains(sku)) {
+            throw new SkuException("Already sales SKU! (" + sku + ")");
+        }
         sku.setProduct(this);
+        this.skuList.add(sku);
         return this;
     }
 

@@ -1,26 +1,22 @@
 package applestore.domain.order.entity;
 
+import applestore.domain.common.AbstractEntity;
 import applestore.domain.product.entity.Sku;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @author chanwook
  */
 @Entity
 @Table(name = "ORD_ORDER_ITEM")
-public class OrderItem {
+public class OrderItem extends AbstractEntity {
 
     @Id
     @GeneratedValue
     private long orderItemId;
-
-    @Version
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
 
     @Column(nullable = false)
     private int orderQuantity;
@@ -86,14 +82,6 @@ public class OrderItem {
 
     public void setStatus(OrderItemStatus status) {
         this.status = status;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public Order getOrder() {

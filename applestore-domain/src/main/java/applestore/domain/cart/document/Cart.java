@@ -1,5 +1,6 @@
-package applestore.domain.cart.entity;
+package applestore.domain.cart.document;
 
+import applestore.domain.cart.CartException;
 import applestore.domain.order.entity.OrderItem;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

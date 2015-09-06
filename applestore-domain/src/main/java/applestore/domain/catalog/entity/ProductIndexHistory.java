@@ -1,5 +1,6 @@
 package applestore.domain.catalog.entity;
 
+import applestore.domain.common.AbstractEntity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "CAT_PRD_INDEX_HISTORY")
-public class ProductIndexHistory {
+public class ProductIndexHistory extends AbstractEntity {
 
     @Id
     @GeneratedValue

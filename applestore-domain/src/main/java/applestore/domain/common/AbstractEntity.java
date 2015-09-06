@@ -15,10 +15,10 @@ import java.util.Date;
 public abstract class AbstractEntity {
 
     @CreatedDate
-    LocalDateTime createdDate;
+    protected LocalDateTime createdDate;
 
     @LastModifiedDate
     @Version
-    Date modifiedDate;
+    protected Date modifiedDate;
 //    LocalDateTime modifiedDate; // VersionType으로 아직 지원하지 않아서 일단 Date로 사용함
 }

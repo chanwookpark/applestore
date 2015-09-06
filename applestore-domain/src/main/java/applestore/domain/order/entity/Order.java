@@ -1,11 +1,11 @@
 package applestore.domain.order.entity;
 
+import applestore.domain.common.AbstractEntity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,19 +13,11 @@ import java.util.List;
  */
 @Entity
 @Table(name = "ORD_ORDER")
-public class Order {
+public class Order extends AbstractEntity {
 
     @Id
     @GeneratedValue
     private long orderId;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Version
-    private Date updated;
-
-    @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     private List<OrderItem> orderItemList = new ArrayList<OrderItem>();
@@ -46,22 +38,6 @@ public class Order {
         this.orderItemList = orderItemList;
     }
 
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
@@ -71,7 +47,7 @@ public class Order {
         Order compare = (Order) obj;
         EqualsBuilder eb = new EqualsBuilder();
         eb.append(orderId, compare.orderId);
-        eb.append(created, compare.created);
+        eb.append(super.createdDate, compare.createdDate);
 
         return eb.isEquals();
     }
@@ -80,7 +56,7 @@ public class Order {
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(orderId);
-        hcb.append(created);
+        hcb.append(super.createdDate);
         return hcb.toHashCode();
     }
 }

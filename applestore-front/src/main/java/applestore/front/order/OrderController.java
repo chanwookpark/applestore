@@ -1,6 +1,6 @@
 package applestore.front.order;
 
-import applestore.domain.cart.entity.Cart;
+import applestore.domain.cart.document.Cart;
 import applestore.domain.order.entity.Order;
 import applestore.domain.order.repository.OrderJpaRepository;
 import applestore.front.cart.service.CartStore;

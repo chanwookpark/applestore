@@ -1,6 +1,6 @@
 package applestore.domain.product.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import applestore.domain.common.AbstractEntity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PRD_PRODUCT_ATTR")
-public class ProductAttribute {
+public class ProductAttribute extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +26,6 @@ public class ProductAttribute {
     private String label;
 
     @ManyToMany(mappedBy = "attributeList")
-    @JsonIgnore //TODO 모델분리요~
     private List<Product> productList = new ArrayList<Product>();
 
     @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL)
