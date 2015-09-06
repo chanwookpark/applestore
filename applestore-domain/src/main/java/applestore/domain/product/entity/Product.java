@@ -34,10 +34,6 @@ public class Product extends AbstractEntity {
     @Id
     private String productId;
 
-//    @Version
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private Date updated;
-
     @Column(length = 100, nullable = false, unique = true)
     private String productName;
 
