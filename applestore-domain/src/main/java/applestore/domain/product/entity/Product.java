@@ -1,6 +1,7 @@
 package applestore.domain.product.entity;
 
 import applestore.domain.catalog.entity.DisplayCategory;
+import applestore.domain.common.AbstractEntity;
 import applestore.domain.product.ProductException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,14 +29,14 @@ import java.util.*;
 @AllArgsConstructor
 @ToString
 @Slf4j
-public class Product {
+public class Product extends AbstractEntity {
 
     @Id
     private String productId;
 
-    @Version
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
+//    @Version
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date updated;
 
     @Column(length = 100, nullable = false, unique = true)
     private String productName;
